@@ -6,18 +6,18 @@ use App\Repository\PersonRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\NonUniqueResultException;
-use JetBrains\PhpStorm\Pure;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @method null loadUserByIdentifier(string $identifier)
- * @method string getUserIdentifier()
  */
 #[ORM\Entity(repositoryClass: PersonRepository::class)]
-class Person extends ServiceEntityRepository implements UserLoaderInterface, UserInterface {
+class Person extends EntityRepository implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -33,10 +33,7 @@ class Person extends ServiceEntityRepository implements UserLoaderInterface, Use
     #[ORM\JoinColumn(nullable: false)]
     private Address $address;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
-    private Person $parent;
-
-    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Child::class)]
     #[ORM\JoinColumn(nullable: true)]
     private Collection $children;
 
@@ -55,6 +52,9 @@ class Person extends ServiceEntityRepository implements UserLoaderInterface, Use
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private string $phone;
 
+    #[ORM\Column(type: 'string', nullable: true)]
+    private string $password;
+
     #[ORM\Column(type: 'boolean', nullable: true)]
     private bool $ctu_member;
 
@@ -64,6 +64,9 @@ class Person extends ServiceEntityRepository implements UserLoaderInterface, Use
     #[ORM\OneToMany(mappedBy: 'person', targetEntity: Application::class)]
     private Collection $applications;
 
+    public function getUserIdentifier(): string {
+        return $this->email;
+    }
 
     public function getId(): ?int
     {
@@ -207,14 +210,17 @@ class Person extends ServiceEntityRepository implements UserLoaderInterface, Use
 
         return $this;
     }
+    public function getPassword(): string {
+        return $this->password;
+    }
+    public function setPassword(string $password): self {
+        $this->password = $password;
+        return $this;
+    }
     public function getRoles(): array {
         $roles = $this->roles;
         $roles[] = 'ROLE_USER';
         return array_unique($roles);
-    }
-
-    public function getPassword() {
-        return null;
     }
 
     public function getSalt() {
