@@ -1,0 +1,32 @@
+{# templates/Auth/login.html.twig #}
+{% extends "Admin/base.html.twig" %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<form method="POST" action="{{ path("login") }}">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+    <div class="mb-3">
+        Jste přihlášen jako: {{ app.user.name }} {{ app.user.surname }}, <a href="{{ path("logout") }}">Odhlásit se</a>
+    </div>
+    {% endif %}
+
+    <h1 class="h3 mb-3 font-weight-normal">Prosím, přihlaste se.</h1>
+        <label for="email">Email:</label>
+        <input class="form-control" type="email" id="email" name="_username" value="{{ last_username }}" required autofocus>
+
+        <label for="password">Heslo:</label>
+        <input class="form-control" type="password" id="password" name="_password" required>
+
+        {# TODO: Remember Me #}
+
+        <input type="hidden" name="_target_path" value="/admin/uvod"/>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        <button class="btn btn-lg btn-primary" type="submit">Přihlásit se</button>
+</form>
+{% endblock %}

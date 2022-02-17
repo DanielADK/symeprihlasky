@@ -35,7 +35,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\JoinColumn(nullable: true)]
     private Address $address;
 
-    #[ORM\OneToMany(mappedBy: 'child', targetEntity: Child::class)]
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Child::class)]
     #[ORM\JoinColumn(nullable: true)]
     private Collection $children;
 
