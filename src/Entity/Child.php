@@ -21,6 +21,10 @@ class Child extends EntityRepository {
     #[ORM\Column(type: 'string', length: 255)]
     private string $surname;
 
+    #[ORM\ManyToOne(targetEntity: Person::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private Person $parent;
+
     #[ORM\ManyToOne(targetEntity: Address::class, inversedBy: 'people')]
     #[ORM\JoinColumn(nullable: false)]
     private Address $address;
@@ -201,6 +205,22 @@ class Child extends EntityRepository {
     public function setApplications(Collection $applications): void
     {
         $this->applications = $applications;
+    }
+
+    /**
+     * @return Person
+     */
+    public function getParent(): Person
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param Person $parent
+     */
+    public function setParent(Person $parent): void
+    {
+        $this->parent = $parent;
     }
 
 

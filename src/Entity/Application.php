@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ApplicationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 #[ORM\Entity(repositoryClass: ApplicationRepository::class)]
 class Application
@@ -11,20 +12,24 @@ class Application
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
+
+    #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'applications')]
+    #[ORM\JoinColumn(nullable: false)]
+    private Event $event;
 
     #[ORM\ManyToOne(targetEntity: Person::class, inversedBy: 'applications')]
     #[ORM\JoinColumn(nullable: false)]
-    private $person;
+    private Person $person;
 
     #[ORM\Column(type: 'datetime')]
-    private $sign_date;
+    private \DateTimeInterface $sign_date;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $hash;
+    private string $hash;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $shirt_size;
+    private string $shirt_size;
 
     public function getId(): ?int
     {
@@ -78,4 +83,21 @@ class Application
 
         return $this;
     }
+
+    /**
+     * @return Event
+     */
+    public function getEvent(): Event
+    {
+        return $this->event;
+    }
+
+    /**
+     * @param Event $event
+     */
+    public function setEvent(Event $event): void
+    {
+        $this->event = $event;
+    }
+
 }
