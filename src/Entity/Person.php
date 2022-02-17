@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -17,7 +18,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @method null loadUserByIdentifier(string $identifier)
  */
 #[ORM\Entity(repositoryClass: PersonRepository::class)]
-class Person extends EntityRepository implements UserInterface, PasswordAuthenticatedUserInterface {
+#[UniqueEntity("email")]
+class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -30,10 +32,10 @@ class Person extends EntityRepository implements UserInterface, PasswordAuthenti
     private string $surname;
 
     #[ORM\ManyToOne(targetEntity: Address::class, inversedBy: 'people')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private Address $address;
 
-    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Child::class)]
+    #[ORM\OneToMany(mappedBy: 'child', targetEntity: Child::class)]
     #[ORM\JoinColumn(nullable: true)]
     private Collection $children;
 
@@ -46,10 +48,10 @@ class Person extends EntityRepository implements UserInterface, PasswordAuthenti
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private string $shirt_size;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, unique: true, nullable: false)]
     private string $email;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, unique: true, nullable: true)]
     private string $phone;
 
     #[ORM\Column(type: 'string', nullable: true)]
@@ -62,6 +64,7 @@ class Person extends EntityRepository implements UserInterface, PasswordAuthenti
     private array $roles = [];
 
     #[ORM\OneToMany(mappedBy: 'person', targetEntity: Application::class)]
+    #[ORM\JoinColumn(nullable: true)]
     private Collection $applications;
 
     public function getUserIdentifier(): string {

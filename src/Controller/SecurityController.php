@@ -20,17 +20,17 @@ class SecurityController extends AbstractController {
      */
     #[Route('/prihlaseni', name: 'prihlaseni')]
     public function requestLoginLink(NotifierInterface $notifier, LoginLinkHandlerInterface $loginLinkHandler, PersonRepository $userRepository, Request $request): Response {
-        // check if login form is submitted
+        // check if Auth form is submitted
         if ($request->isMethod('POST')) {
             // load the user in some way (e.g. using the form input)
             $email = $request->request->get('email');
             $user = $userRepository->findOneByEmail($email);
 
-            // create a login link for $user this returns an instance
+            // create a Auth link for $user this returns an instance
             // of LoginLinkDetails
             $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
 
-            // create notification based on the login link details
+            // create notification based on the Auth link details
             $notification = new LoginLinkNotification(
                 $loginLinkDetails,
                 'PŘIHLAŠOVACÍ EMAIL'
@@ -44,14 +44,14 @@ class SecurityController extends AbstractController {
             // ... send the link and return a response (see next section)
         }
 
-        // if it's not submitted, render the "login" form
+        // if it's not submitted, render the "Auth" form
         return $this->render('prihlaseni.html.twig');
     }
 
     #[Route('/overeni', name: 'overeni')]
     public function check(Request $request): Response
     {
-        // get the login link query parameters
+        // get the Auth link query parameters
         $expires = $request->query->get('expires');
         $username = $request->query->get('user');
         $hash = $request->query->get('hash');
