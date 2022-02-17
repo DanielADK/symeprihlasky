@@ -9,18 +9,16 @@ security:
         users:
             entity:
                 class: 'App\Entity\Person'
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-            lazy: true
-            provider: users_in_memory
-            login_link:
-                check_route: prihlaseni
-                signature_properties: [phone, email]
-                lifetime: 600
-                max_uses: 1
+        users:
+            provider: users
+            form_login:
+                enable_csrf: true
+
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
