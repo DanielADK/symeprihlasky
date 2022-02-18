@@ -6,10 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UvodController extends AbstractController {
+class HomeController extends AbstractController {
 
-    #[Route('/admin/uvod', name: 'admin_uvoduvod')]
+    #[Route('/admin/domov', name: 'admin_home')]
     public function index(): Response {
-        return $this->render('base.html.twig');
+        return $this->render('Admin/home.html.twig');
     }
 }
