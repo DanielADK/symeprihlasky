@@ -1,32 +1,71 @@
 {# templates/Auth/login.html.twig #}
 {% extends "Admin/base.html.twig" %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Přihlášení{% endblock %}
 
 {% block body %}
-<form method="POST" action="{{ path("login") }}">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <img src="{{ asset("/images/logoSEVERKA.png") }}" alt="T.O.Severka logo"><br>
+            <a href="#"><b>E-</b>PŘIHLÁŠKY</a>
+        </div>
+        <div class="login-box-body">
+            <p class="login-box-msg">Přihlaste se, prosím.</p>
+            <form method="POST" action="{{ path("login") }}">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
 
-    {% if app.user %}
-    <div class="mb-3">
-        Jste přihlášen jako: {{ app.user.name }} {{ app.user.surname }}, <a href="{{ path("logout") }}">Odhlásit se</a>
+                {% if app.user %}
+                <div class="mb-3">
+                    Jste přihlášen jako: {{ app.user.name }} {{ app.user.surname }}, <a href="{{ path("logout") }}">Odhlásit se</a>
+                </div>
+                {% endif %}
+
+                <div class="form-group has-feedback">
+                    <label for="email">Email:</label>
+                    <input class="form-control" type="email" id="email" name="_username" value="{{ last_username }}" placeholder="janek@seznam.cz" required autofocus>
+                </div>
+                <div class="form-group has-feedback">
+                    <label for="password">Heslo:</label>
+                    <input class="form-control" type="password" id="password" name="_password" placeholder="Vaše heslo" required autocomplete>
+                </div>
+
+                <input type="hidden" name="_target_path" value="/admin/uvod"/>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                {# TODO: Remember Me #}
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="checkbox icheck">
+                            <label>
+                                <input type="checkbox"> Zapamatuj si mě
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <button class="btn btn-primary btn-block btn-flat" type="submit">Přihlásit se</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    {% endif %}
-
-    <h1 class="h3 mb-3 font-weight-normal">Prosím, přihlaste se.</h1>
-        <label for="email">Email:</label>
-        <input class="form-control" type="email" id="email" name="_username" value="{{ last_username }}" required autofocus>
-
-        <label for="password">Heslo:</label>
-        <input class="form-control" type="password" id="password" name="_password" required>
-
-        {# TODO: Remember Me #}
-
-        <input type="hidden" name="_target_path" value="/admin/uvod"/>
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-        <button class="btn btn-lg btn-primary" type="submit">Přihlásit se</button>
-</form>
+    {% block javascripts %}
+        <!-- JavaScripts -->
+        <script src="{{ asset("/adminlte/bower_components/jquery/dist/jquery.min.js") }}"></script>
+        <script src="{{ asset("/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js") }}"></script>
+        <script src="{{ asset("/adminlte/dist/js/adminlte.min.js") }}"></script>
+        <script src="{{ asset("/adminlte/plugins/iCheck/icheck.min.js") }}"></script>
+        <script>
+            $(function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue',
+                    increaseArea: '20%' /* optional */
+                });
+            });
+        </script>
+    {% endblock %}
+</body>
 {% endblock %}
