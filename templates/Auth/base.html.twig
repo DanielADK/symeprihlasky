@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="{{ asset("/adminlte/bower_components/Ionicons/css/ionicons.min.css") }}">
         <link rel="stylesheet" href="{{ asset("/adminlte/dist/css/AdminLTE.min.css") }}">
         <link rel="stylesheet" href="{{ asset("/adminlte/dist/css/skins/skin-green.min.css") }}">
+        <link rel="stylesheet" href="{{ asset("/adminlte/plugins/iCheck/square/blue.css") }}">
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
         <!--[if lt IE 9]>
@@ -21,12 +22,5 @@
         <![endif]-->
     {% endblock %}
 </head>
-<body class="hold-transition skin-green">
-    <section class="wrapper">
-        {% include "Admin/header.html.twig" %}
-        {% include "Admin/navigation.html.twig" %}
-        {% block content %}{% endblock %}
-        {% include "Admin/footer.html.twig" %}
-    </section>
-</body>
+{% block body %}{% endblock %}
 </html>
