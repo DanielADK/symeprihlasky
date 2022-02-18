@@ -1,0 +1,17 @@
+{# src/templates/Gadgets/role_badges.html.twig #}
+<br>
+{% for role in app.user.roles %}
+    {% if role == "ROLE_ADMIN" %}
+        <span class="label label-danger">Admin</span>
+    {% endif %}
+    {% if role == "ROLE_LEADER" %}
+        <span class="label label-warning">Vedoucí</span>
+    {% endif %}
+    {% if role == "ROLE_HELPER" %}
+        <span class="label label-success">Instruktor</span>
+    {% endif %}
+    {% if role == "ROLE_PARENT" %}
+        <span class="label label-primary">Rodič</span>
+    {% endif %}
+{% endfor %}
+<br><br><br>

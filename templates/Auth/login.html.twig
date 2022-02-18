@@ -1,5 +1,5 @@
 {# templates/Auth/login.html.twig #}
-{% extends "Admin/base.html.twig" %}
+{% extends "Auth/base.html.twig" %}
 
 {% block title %}Přihlášení{% endblock %}
 
@@ -18,9 +18,9 @@
                 {% endif %}
 
                 {% if app.user %}
-                <div class="mb-3">
-                    Jste přihlášen jako: {{ app.user.name }} {{ app.user.surname }}, <a href="{{ path("logout") }}">Odhlásit se</a>
-                </div>
+                <article class="callout callout-info">
+                    <h4>Jste přihlášen jako: {{ app.user.name }} {{ app.user.surname }}</h4> <a class="btn btn-block btn-primary btn-flat" href="{{ path("admin_home") }}">Přejít do administrace</a>
+                </article>
                 {% endif %}
 
                 <div class="form-group has-feedback">
@@ -32,7 +32,7 @@
                     <input class="form-control" type="password" id="password" name="_password" placeholder="Vaše heslo" required autocomplete>
                 </div>
 
-                <input type="hidden" name="_target_path" value="/admin/uvod"/>
+                <input type="hidden" name="_target_path" value="/admin/domov"/>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                 {# TODO: Remember Me #}
@@ -40,7 +40,7 @@
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
-                                <input type="checkbox"> Zapamatuj si mě
+                                <input type="checkbox" name="_remember_me"> Zapamatovat
                             </label>
                         </div>
                     </div>
