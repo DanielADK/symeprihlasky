@@ -60,6 +60,9 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Column(type: 'boolean', nullable: true)]
     private bool $ctu_member;
 
+    #[ORM\Column(type: 'boolean', nullable: true, options: ["default" => true])]
+    private bool $active;
+
     #[ORM\Column(type: 'json', nullable: true)]
     private array $roles = [];
 
