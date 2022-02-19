@@ -34,6 +34,27 @@ security:
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
 
+    # Role hierarchy
+    # {VIEW,ADD,EDIT,DELETE}_{PERSON,PARENT,CHILD,EVENT,APPLICATION}
+    # {VIEW,ADD,EDIT,DELETE}_OWN_{PERSON,CHILD,APPLICATION}
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_LEADER,
+            ADD_PERSON, EDIT_PERSON, DELETE_PERSON,
+            ADD_PARENT, EDIT_PARENT, DELETE_PARENT,
+            ADD_CHILD, EDIT_CHILD, DELETE_CHILD,
+            ADD_EVENT, EDIT_EVENT, DELETE_EVENT,
+            ADD_APPLICATION, EDIT_APPLICATION, DELETE_APPLICATION
+        ROLE_LEADER: ROLE_INSTRUCTOR,  
+            VIEW_PERSON, 
+            VIEW_PARENT, 
+            VIEW_CHILD,
+        ROLE_INSTRUCTOR: VIEW_OWN_APPLICATION, ADD_OWN_APPLICATION, EDIT_OWN_APPLICATION, DELETE_OWN_APPLICATION,
+            VIEW_OWN_PERSON, EDIT_OWN_PERSON,
+            VIEW_APPLICATION,
+            VIEW_EVENT
+        ROLE_PARENT: VIEW_OWN_CHILD, ADD_OWN_CHILD, EDIT_OWN_CHILD, DELETE_OWN_CHILD,
+            VIEW_OWN_PERSON, EDIT_OWN_PERSON,
+            VIEW_EVENT
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
