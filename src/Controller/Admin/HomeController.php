@@ -10,6 +10,9 @@ class HomeController extends AbstractController {
 
     #[Route('/admin/domov', name: 'admin_home')]
     public function index(): Response {
-        return $this->render('Admin/home.html.twig');
+        return $this->render('Admin/home.html.twig', [
+            "page_name" => "Domovská stránka",
+            "page_path" => array("Domov")
+        ]);
     }
 }
