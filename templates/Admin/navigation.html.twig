@@ -1,51 +1,165 @@
 {# /src/templates/Admin/navigation.html.twig #}
+{% set route_name = app.request.attributes.get('_route') %}
 {% block navigation %}
 <nav class="main-sidebar">
-
-    <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-
-        <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="{{ asset("images/logoSEVERKA.png") }}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
                 <p>{{ app.user.name }} {{ app.user.surname }} {% include "Gadgets/role_badges.html.twig" %}</p>
-                <!-- Status -->
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
 
-        <!-- search form (Optional) -->
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search...">
-                <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
-            </div>
-        </form>
-        <!-- /.search form -->
-
-        <!-- Sidebar Menu -->
+        <!-- Menu -->
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">HEADER</li>
-            <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-            <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-            <li class="treeview">
-                <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-                    <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+            <li class="header">NAVIGACE</li>
+            <li class="treeview {% if route_name=='admin_home' %}active{% endif %}" >
+                <a href="{{ path("admin_home") }}" {% if route_name=='admin_home' %}class="active"{% endif %}>
+                    <i class="fa fa-home"></i> <span>Úvodní obrazovka</span>
                 </a>
+            </li>
+            <li class="treeview {% if route_name=='admin_event_view' or route_name=='admin_event_edit' %}active{% endif %}">
+                <a href="#"><i class="fa fa-map-signs"></i>
+                    <span>Akce</span><span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i></span></a>
                 <ul class="treeview-menu">
-                    <li><a href="#">Link in level 2</a></li>
-                    <li><a href="#">Link in level 2</a></li>
+                    <li {% if route_name=='admin_event_view' %}class="active"{% endif %}>
+                        <a href="#">
+                            <i class="fa fa-list nav-icon"></i><span>Seznam akcí</span>
+                        </a>
+                    </li>
+                {% if is_granted("ROLE_EDIT_EVENT") %}
+                    <li {% if route_name=='admin_event_edit' %}class="active"{% endif %}>
+                        <a href="#">
+                            <i class="fa fa-edit"></i><span>Správa akcí</span>
+                        </a>
+                    </li>
+                {% endif %}
                 </ul>
             </li>
+            {% if is_granted("ROLE_VIEW_CHILD") %}
+            <li class="treeview {% if route_name=='admin_child_view' or route_name=='admin_child_edit' %}active{% endif %}">
+                <a href="#"><i class="nav-icon fa fa-child"></i>
+                    <span>Děti</span><span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i></span></a>
+                <ul class="treeview-menu">
+                    <li {% if route_name=='admin_child_view' %}class="active"{% endif %}>
+                        <a href="#">
+                            <i class="fa fa-list"></i><span>Seznam dětí</span>
+                        </a>
+                    </li>
+                    {% if is_granted("ROLE_EDIT_CHILD") %}
+                        <li {% if route_name=='admin_child_edit' %}class="active"{% endif %}>
+                            <a href="#">
+                                <i class="fa fa-edit"></i><span>Správa dětí</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </li>
+            {% endif %}
+            {% if is_granted("ROLE_VIEW_PARENT") %}
+                <li class="treeview {% if route_name=='admin_parent_view' or route_name=='admin_parent_edit' %}active{% endif %}">
+                    <a href="#"><i class="nav-icon fa fa-users"></i>
+                        <span>Rodiče</span><span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i></span></a>
+                    <ul class="treeview-menu">
+                        <li {% if route_name=='admin_parent_view' %}class="active"{% endif %}>
+                            <a href="#">
+                                <i class="fa fa-list"></i><span>Seznam rodičů</span>
+                            </a>
+                        </li>
+                        {% if is_granted("ROLE_EDIT_PARENT") %}
+                            <li {% if route_name=='admin_parent_edit' %}class="active"{% endif %}>
+                                <a href="#">
+                                    <i class="fa fa-edit"></i><span>Správa rodičů</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_VIEW_INSTRUCTOR") %}
+                <li class="treeview {% if route_name=='admin_instructor_view' or route_name=='admin_instructor_edit' %}active{% endif %}">
+                    <a href="#"><i class="nav-icon fa fa-id-card"></i>
+                        <span>Instruktoři</span><span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i></span></a>
+                    <ul class="treeview-menu">
+                        <li {% if route_name=='admin_instructor_view' %}class="active"{% endif %}>
+                            <a href="#">
+                                <i class="fa fa-list"></i><span>Seznam instruktorů</span>
+                            </a>
+                        </li>
+                        {% if is_granted("ROLE_EDIT_INSTRUCTOR") %}
+                            <li {% if route_name=='admin_instructor_edit' %}class="active"{% endif %}>
+                                <a href="#">
+                                    <i class="fa fa-edit"></i><span>Správa instruktorů</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_VIEW_LEADER") %}
+                <li class="treeview {% if route_name=='admin_leader_view' or route_name=='admin_leader_edit' %}active{% endif %}">
+                    <a href="#"><i class="nav-icon fa fa-users"></i>
+                        <span>Vedoucí</span><span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i></span></a>
+                    <ul class="treeview-menu">
+                        <li {% if route_name=='admin_leader_view' %}class="active"{% endif %}>
+                            <a href="#">
+                                <i class="fa fa-list"></i><span>Seznam vedoucích</span>
+                            </a>
+                        </li>
+                        {% if is_granted("ROLE_EDIT_LEADER") %}
+                            <li {% if route_name=='admin_leader_edit' %}class="active"{% endif %}>
+                                <a href="#">
+                                    <i class="fa fa-edit"></i><span>Správa vedoucích</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_VIEW_PERSON") %}
+                <li class="treeview {% if route_name=='admin_person_view' or route_name=='admin_person_edit' %}active{% endif %}">
+                    <a href="#"><i class="nav-icon fa fa-address-book"></i>
+                        <span>Uživatelé</span><span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i></span></a>
+                    <ul class="treeview-menu">
+                        <li {% if route_name=='admin_person_view' %}class="active"{% endif %}>
+                            <a href="#">
+                                <i class="fa fa-list"></i><span>Seznam uživatelé</span>
+                            </a>
+                        </li>
+                        {% if is_granted("ROLE_EDIT_PERSON") %}
+                            <li {% if route_name=='admin_person_edit' %}class="active"{% endif %}>
+                                <a href="#">
+                                    <i class="fa fa-edit"></i><span>Správa uživatelé</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_VIEW_NEWSLETTER") %}
+                <li>
+                    <a href="#" {% if route_name=='admin_newsletter' %}class="active"{% endif %}>
+                    <i class="nav-icon fa fa-envelope"></i><span>Newslettery</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_VIEW_LOGS") %}
+                <li>
+                    <a href="#" {% if route_name=='admin_logs' %}class="active"{% endif %}>
+                        <i class="nav-icon fa fa-archive"></i><span>Bezpečnostní záznamy</span>
+                    </a>
+                </li>
+            {% endif %}
+            <li class="header">UŽIVATELSKÁ NASTAVENÍ</li>
+            <li class=""><a href="#"><i class="fa fa-link"></i> <span>Nastavení</span></a></li>
         </ul>
         <!-- /.sidebar-menu -->
     </section>

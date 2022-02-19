@@ -6,12 +6,12 @@
         <!-- Page Header -->
         <section class="content-header">
             <h1>
-                ADsdadsd
-                <small>Optional description</small>
+                {{ page_name }}
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                <li class="active">Here</li>
+                {% for path_part in page_path %}
+                <li class="active">{{ path_part }}</li>
+                {% endfor %}
             </ol>
         </section>
 
