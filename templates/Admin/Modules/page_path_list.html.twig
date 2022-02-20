@@ -1,0 +1,13 @@
+{# /src/templates/Modules/page_path.html.twig #}
+{% block page_path_list %}
+<section class="content-header">
+    <h1>
+        {{ page_name }}
+    </h1>
+    <ol class="breadcrumb">
+        {% for path_part in page_path %}
+        <li class="active">{{ path_part }}</li>
+        {% endfor %}
+    </ol>
+</section>
+{% endblock %}
