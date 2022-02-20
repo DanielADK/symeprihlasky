@@ -10,10 +10,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\EventRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
+#[UniqueEntity("name_short")]
 #[ApiResource(
     collectionOperations: ["get", "post"],
     itemOperations: ["get", "put", "patch"], # Deletion is missing because of archiving.

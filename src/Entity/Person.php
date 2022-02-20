@@ -26,8 +26,15 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ORM\Entity(repositoryClass: PersonRepository::class)]
 #[UniqueEntity("email")]
 #[ApiResource(
-    collectionOperations: ["get", "post"],
-    itemOperations: ["get", "put", "patch"],
+    collectionOperations: [
+        "get" => ["security" => "is_granted(ROLE_VIEW_PERSON, object)"],
+        "post" => ["security" => "is_granted(ROLE_ADD_PERSON, object)"]
+    ],
+    itemOperations: [
+        "get" => ["security" => "is_granted(ROLE_VIEW_PERSON)"],
+        "put" => ["security" => "is_granted(ROLE_ADD_PERSON)"],
+        "patch" => ["security" => "is_granted(ROLE_EDIT_PERSON)"]
+    ],
     denormalizationContext: ["groups" => ["write"]],
     normalizationContext: ["groups" => ["read"]],
 )]
