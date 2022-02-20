@@ -1,9 +1,8 @@
 {# /src/templates/Modules/footer.html.twig #}
-{% set version = "4.0" %}
 <!-- Footer -->
 <footer class="main-footer">
     <div class="pull-right d-none d-sm-block">
-        <b>Version</b> {{ version }}
+        <b>Version</b> {{ version }} <small>{{ env }}</small>
     </div>
     <strong>Copyright &copy; 2018-{{ "now"|date("Y") }} <a href="https://osadaseverka.cz">T.O.Severka</a></strong>. Všechna
     práva vyhrazena.<br>
