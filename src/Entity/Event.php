@@ -2,39 +2,70 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\EventRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
-class Event
-{
+#[ApiResource(
+    collectionOperations: ["get", "post"],
+    itemOperations: ["get", "put", "patch"], # Deletion is missing because of archiving.
+    denormalizationContext: ["groups" => ["write"]],
+    normalizationContext: ["groups" => ["read"]],
+)]
+#[ApiFilter(BooleanFilter::class, properties: ["active"])]
+#[ApiFilter(SearchFilter::class, properties: ["name_short" => "partial", "type" => "exact"])]
+#[ApiFilter(DateFilter::class, properties: ["date_start", "date_end"])]
+class Event {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[ApiProperty(identifier: true)]
+    #[Groups(["read"])]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
+    #[Groups(["read", "write"])]
+    #[NotBlank]
     private $name_short;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read", "write"])]
+    #[NotBlank]
     private $name_full;
 
     #[ORM\Column(type: 'date')]
+    #[Groups(["read", "write"])]
+    #[NotBlank]
     private $date_start;
 
     #[ORM\Column(type: 'date')]
+    #[Groups(["read", "write"])]
+    #[NotBlank]
     private $date_end;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read", "write"])]
+    #[NotBlank]
     private $type;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: 'boolean', options: ["default" => false])]
+    #[Groups(["read", "write"])]
     private $active;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(["read", "write"])]
     private $price_member;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(["read", "write"])]
     private $price_other;
 
     public function getId(): ?int

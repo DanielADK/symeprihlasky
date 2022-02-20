@@ -2,35 +2,62 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\AddressRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
-class Address
-{
+#[ApiResource(
+    collectionOperations: ["get", "post"],
+    itemOperations: ["get", "put", "patch"], # Deletion is missing because of archiving.
+    denormalizationContext: ["groups" => ["write"]],
+    normalizationContext: ["groups" => ["read"]],
+)]
+#[ApiFilter(SearchFilter::class, properties: ["street" => "partial", "city" => "partial", "postcode" => "exact", "people" => "partial"])]
+class Address {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    #[ApiProperty(identifier: true)]
+    #[Groups(["read"])]
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $street;
+    #[Groups(["read", "write"])]
+    #[NotBlank]
+    private string $street;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $city;
+    #[Groups(["read", "write"])]
+    #[NotBlank]
+    private string $city;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $postcode;
+    #[Groups(["read", "write"])]
+    #[NotBlank]
+    private string $postcode;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $country;
+    #[Groups(["read", "write"])]
+    #[NotBlank]
+    private string $country;
 
     #[ORM\OneToMany(mappedBy: 'address', targetEntity: Person::class)]
-    private $people;
+    #[MaxDepth(1)]
+    #[ApiSubresource( maxDepth: 1 )]
+    private ArrayCollection $people;
 
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->people = new ArrayCollection();
     }
@@ -89,7 +116,7 @@ class Address
     }
 
     /**
-     * @return Collection|Person[]
+     * @return Collection
      */
     public function getPeople(): Collection
     {
