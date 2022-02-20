@@ -10,11 +10,13 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\ApplicationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: ApplicationRepository::class)]
+#[UniqueEntity("hash")]
 #[ApiResource(
     collectionOperations: ["get", "post"],
     itemOperations: ["get", "put", "patch"],
@@ -27,7 +29,6 @@ class Application {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[ApiProperty(identifier: true)]
     #[Groups(["read"])]
     private int $id;
 
@@ -53,6 +54,7 @@ class Application {
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["read"])]
+    #[ApiProperty(identifier: true)]
     #[NotBlank]
     private string $hash;
 

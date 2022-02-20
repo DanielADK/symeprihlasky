@@ -55,9 +55,9 @@ class Address {
     #[ORM\OneToMany(mappedBy: 'address', targetEntity: Person::class)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
-    private ArrayCollection $people;
+    private Collection $people;
 
-    #[Pure] public function __construct()
+    public function __construct()
     {
         $this->people = new ArrayCollection();
     }
