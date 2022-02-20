@@ -2,33 +2,62 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\ApplicationRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: ApplicationRepository::class)]
-class Application
-{
+#[ApiResource(
+    collectionOperations: ["get", "post"],
+    itemOperations: ["get", "put", "patch"],
+    denormalizationContext: ["groups" => ["write"]],
+    normalizationContext: ["groups" => ["read"]],
+)]
+#[ApiFilter(SearchFilter::class, properties: ["hash" => "exact", "event" => "exact", "person" => "exact"])]
+#[ApiFilter(DateFilter::class, properties: ["sign_date"])]
+class Application {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[ApiProperty(identifier: true)]
+    #[Groups(["read"])]
     private int $id;
 
-    #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'applications')]
+    #[ORM\ManyToOne(targetEntity: Event::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[NotBlank]
+    #[MaxDepth(2)]
+    #[ApiSubresource( maxDepth: 2 )]
+    #[Groups(["read"])]
     private Event $event;
 
     #[ORM\ManyToOne(targetEntity: Person::class, inversedBy: 'applications')]
     #[ORM\JoinColumn(nullable: false)]
+    #[NotBlank]
+    #[MaxDepth(1)]
+    #[ApiSubresource( maxDepth: 1 )]
+    #[Groups(["read"])]
     private Person $person;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(["read"])]
     private \DateTimeInterface $sign_date;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read"])]
+    #[NotBlank]
     private string $hash;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read", "write"])]
     private string $shirt_size;
 
     public function getId(): ?int

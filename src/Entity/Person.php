@@ -2,72 +2,111 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\PersonRepository;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\NonUniqueResultException;
-use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method null loadUserByIdentifier(string $identifier)
  */
 #[ORM\Entity(repositoryClass: PersonRepository::class)]
 #[UniqueEntity("email")]
+#[ApiResource(
+    collectionOperations: ["get", "post"],
+    itemOperations: ["get", "put", "patch"],
+    denormalizationContext: ["groups" => ["write"]],
+    normalizationContext: ["groups" => ["read"]],
+)]
+#[ApiFilter(BooleanFilter::class, properties: ["active", "ctu_member"])]
+#[ApiFilter(SearchFilter::class, properties: ["name" => "partial", "surname" => "partial", "address" => "exact"])]
 class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[ApiProperty(identifier: true)]
+    #[Groups(["read"])]
     private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read", "write"])]
+    #[NotBlank]
     private string $name;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read", "write"])]
+    #[NotBlank]
     private string $surname;
 
     #[ORM\ManyToOne(targetEntity: Address::class, inversedBy: 'people')]
     #[ORM\JoinColumn(nullable: true)]
+    #[MaxDepth(1)]
+    #[ApiSubresource( maxDepth: 1 )]
+    #[Groups(["read", "write"])]
     private Address $address;
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Child::class)]
     #[ORM\JoinColumn(nullable: true)]
+    #[ApiSubresource( maxDepth: 1 )]
+    #[MaxDepth(1)]
+    #[Groups(["read", "write"])]
     private Collection $children;
 
     #[ORM\Column(type: 'date', nullable: true)]
+    #[Groups(["read", "write"])]
     private \DateTimeInterface $birth_date;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(["read", "write"])]
     private string $sex;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(["read", "write"])]
     private string $shirt_size;
 
     #[ORM\Column(type: 'string', length: 255, unique: true, nullable: false)]
+    #[Groups(["read", "write"])]
+    #[NotBlank]
     private string $email;
 
     #[ORM\Column(type: 'string', length: 255, unique: true, nullable: true)]
+    #[Groups(["read", "write"])]
     private string $phone;
 
     #[ORM\Column(type: 'string', nullable: true)]
+    #[Groups(["read", "write"])]
     private string $password;
 
-    #[ORM\Column(type: 'boolean', nullable: true)]
+    #[ORM\Column(type: 'boolean', nullable: true, options: ["default" => false])]
+    #[Groups(["read", "write"])]
     private bool $ctu_member;
 
     #[ORM\Column(type: 'boolean', nullable: true, options: ["default" => true])]
+    #[Groups(["read", "write"])]
     private bool $active;
 
     #[ORM\Column(type: 'json', nullable: true)]
+    #[Groups(["read", "write"])]
     private array $roles = [];
 
     #[ORM\OneToMany(mappedBy: 'person', targetEntity: Application::class)]
     #[ORM\JoinColumn(nullable: true)]
+    #[ApiSubresource( maxDepth: 1 )]
+    #[MaxDepth(1)]
+    #[Groups(["read", "write"])]
     private Collection $applications;
 
     public function getUserIdentifier(): string {
