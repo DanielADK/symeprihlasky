@@ -90,12 +90,12 @@ class Event
         return $this;
     }
 
-    public function getType(): ?EventType
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function setType(?EventType $type): self
+    public function setType(?string $type): self
     {
         $this->type = $type;
 
