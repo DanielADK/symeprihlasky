@@ -2,49 +2,91 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\ChildRepository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\NonUniqueResultException;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: ChildRepository::class)]
+#[ApiResource(
+    collectionOperations: ["get", "post"],
+    itemOperations: ["get", "put", "patch"],
+    denormalizationContext: ["groups" => ["write"]],
+    normalizationContext: ["groups" => ["read"]],
+)]
+#[ApiFilter(BooleanFilter::class, properties: ["active", "ctu_member"])]
+#[ApiFilter(SearchFilter::class, properties: ["name" => "partial", "surname" => "partial", "parent" => "exact", "address" => "exact"])]
+#[ApiFilter(DateFilter::class, properties: ["birth_date"])]
 class Child extends EntityRepository {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[ApiProperty(identifier: true)]
+    #[Groups(["read"])]
     private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read", "write"])]
+    #[NotBlank]
     private string $name;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read", "write"])]
+    #[NotBlank]
     private string $surname;
 
-    #[ORM\ManyToOne(targetEntity: Person::class)]
+    #[ORM\ManyToOne(targetEntity: Person::class, inversedBy: 'children')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["read", "write"])]
+    #[NotBlank]
+    #[MaxDepth(1)]
+    #[ApiSubresource( maxDepth: 1 )]
     private Person $parent;
 
-    #[ORM\ManyToOne(targetEntity: Address::class, inversedBy: 'people')]
+    #[ORM\ManyToOne(targetEntity: Address::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[ApiSubresource( maxDepth: 1 )]
+    #[MaxDepth(1)]
+    #[Groups(["read", "write"])]
     private Address $address;
 
     #[ORM\Column(type: 'date', nullable: true)]
+    #[Groups(["read", "write"])]
+    #[NotBlank]
     private \DateTimeInterface $birth_date;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(["read", "write"])]
     private string $sex;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(["read", "write"])]
     private string $shirt_size;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private string $email;
-
-    #[ORM\Column(type: 'boolean', nullable: true)]
+    #[ORM\Column(type: 'boolean', nullable: true, options: ["default" => false])]
+    #[Groups(["read", "write"])]
     private bool $ctu_member;
 
+    #[ORM\Column(type: 'boolean', nullable: true, options: ["default" => true])]
+    #[Groups(["read", "write"])]
+    private bool $active;
+
     #[ORM\OneToMany(mappedBy: 'person', targetEntity: Application::class)]
+    #[MaxDepth(1)]
+    #[ApiSubresource(
+        maxDepth: 1
+    )]
+    #[Groups(["read", "write"])]
     private Collection $applications;
 
     /**
