@@ -47,16 +47,16 @@ class Child extends EntityRepository {
 
     #[ORM\ManyToOne(targetEntity: Person::class, inversedBy: 'children')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["read", "write"])]
-    #[NotBlank]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
+    #[Groups(["read", "write"])]
+    #[NotBlank]
     private Person $parent;
 
     #[ORM\ManyToOne(targetEntity: Address::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[ApiSubresource( maxDepth: 1 )]
     #[MaxDepth(1)]
+    #[ApiSubresource( maxDepth: 1 )]
     #[Groups(["read", "write"])]
     private Address $address;
 

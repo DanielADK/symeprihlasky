@@ -27,16 +27,17 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[UniqueEntity("email")]
 #[ApiResource(
     collectionOperations: [
-        "get" => ["security" => "is_granted(ROLE_VIEW_PERSON, object)"],
-        "post" => ["security" => "is_granted(ROLE_ADD_PERSON, object)"]
+        "get" => ["security" => "is_granted('ROLE_VIEW_PERSON')"],
+        "post" => ["security" => "is_granted('ROLE_ADD_PERSON')"]
     ],
     itemOperations: [
-        "get" => ["security" => "is_granted(ROLE_VIEW_PERSON)"],
-        "put" => ["security" => "is_granted(ROLE_ADD_PERSON)"],
-        "patch" => ["security" => "is_granted(ROLE_EDIT_PERSON)"]
+        "get" => ["security" => "is_granted('ROLE_VIEW_PERSON')"],
+        "put" => ["security" => "is_granted('ROLE_ADD_PERSON')"],
+        "patch" => ["security" => "is_granted('ROLE_EDIT_PERSON')"]
     ],
     denormalizationContext: ["groups" => ["write"]],
-    normalizationContext: ["groups" => ["read"]],
+    forceEager: false,
+    normalizationContext: ["groups" => ["read"]]
 )]
 #[ApiFilter(BooleanFilter::class, properties: ["active", "ctu_member"])]
 #[ApiFilter(SearchFilter::class, properties: ["name" => "partial", "surname" => "partial", "address" => "exact"])]
@@ -58,7 +59,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     #[NotBlank]
     private string $surname;
 
-    #[ORM\ManyToOne(targetEntity: Address::class, inversedBy: 'people')]
+    #[ORM\ManyToOne(targetEntity: Address::class, fetch: 'EAGER', inversedBy: 'people')]
     #[ORM\JoinColumn(nullable: true)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
@@ -67,8 +68,8 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Child::class)]
     #[ORM\JoinColumn(nullable: true)]
-    #[ApiSubresource( maxDepth: 1 )]
     #[MaxDepth(1)]
+    #[ApiSubresource( maxDepth: 1 )]
     #[Groups(["read", "write"])]
     private Collection $children;
 
@@ -111,8 +112,8 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
 
     #[ORM\OneToMany(mappedBy: 'person', targetEntity: Application::class)]
     #[ORM\JoinColumn(nullable: true)]
-    #[ApiSubresource( maxDepth: 1 )]
     #[MaxDepth(1)]
+    #[ApiSubresource( maxDepth: 1 )]
     #[Groups(["read", "write"])]
     private Collection $applications;
 
@@ -275,7 +276,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
         return array_unique($roles);
     }
 
-    public function getSalt() {
+    public function getSalt(): ?string {
         return null;
     }
 
