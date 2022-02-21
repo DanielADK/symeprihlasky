@@ -95,7 +95,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     private string $phone;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    #[Groups(["read", "write"])]
+    #[Groups(["write"])]
     private string $password;
 
     #[ORM\Column(type: 'boolean', nullable: true, options: ["default" => false])]
