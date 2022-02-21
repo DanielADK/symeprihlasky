@@ -28,13 +28,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ApiResource(
     collectionOperations: [
         "get" => ["security" => "is_granted('ROLE_VIEW_PERSON')"],
-        "post" => ["security" => "is_granted('ROLE_ADD_PERSON')"]
+        "post" => ["security" => "is_granted('ROLE_ADD_PERSON')"],
     ],
     itemOperations: [
         "get" => ["security" => "is_granted('ROLE_VIEW_PERSON')"],
         "put" => ["security" => "is_granted('ROLE_ADD_PERSON')"],
         "patch" => ["security" => "is_granted('ROLE_EDIT_PERSON')"]
-    ],
+    ], # Deletion is missing because of archiving.
     denormalizationContext: ["groups" => ["write"]],
     forceEager: false,
     normalizationContext: ["groups" => ["read"]]

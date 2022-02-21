@@ -19,8 +19,15 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: ChildRepository::class)]
 #[ApiResource(
-    collectionOperations: ["get", "post"],
-    itemOperations: ["get", "put", "patch"],
+    collectionOperations: [
+        "get" => ["security" => "is_granted('ROLE_VIEW_CHILD')"],
+        "post" => ["security" => "is_granted('ROLE_ADD_CHILD')"],
+    ],
+    itemOperations: [
+        "get" => ["security" => "is_granted('ROLE_VIEW_CHILD')"],
+        "put" => ["security" => "is_granted('ROLE_ADD_CHILD')"],
+        "patch" => ["security" => "is_granted('ROLE_EDIT_CHILD')"]
+    ], # Deletion is missing because of archiving.
     denormalizationContext: ["groups" => ["write"]],
     normalizationContext: ["groups" => ["read"]],
 )]

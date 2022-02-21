@@ -18,8 +18,15 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
 #[ApiResource(
-    collectionOperations: ["get", "post"],
-    itemOperations: ["get", "put", "patch"], # Deletion is missing because of archiving.
+    collectionOperations: [
+        "get" => ["security" => "is_granted('ROLE_VIEW_ADDRESS')"],
+        "post" => ["security" => "is_granted('ROLE_ADD_ADDRESS')"],
+    ],
+    itemOperations: [
+        "get" => ["security" => "is_granted('ROLE_VIEW_ADDRESS')"],
+        "put" => ["security" => "is_granted('ROLE_ADD_ADDRESS')"],
+        "patch" => ["security" => "is_granted('ROLE_EDIT_ADDRESS')"]
+    ], # Deletion is missing because of archiving.
     denormalizationContext: ["groups" => ["write"]],
     normalizationContext: ["groups" => ["read"]],
 )]
