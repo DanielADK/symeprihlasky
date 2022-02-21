@@ -17,8 +17,15 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 #[UniqueEntity("name_short")]
 #[ApiResource(
-    collectionOperations: ["get", "post"],
-    itemOperations: ["get", "put", "patch"], # Deletion is missing because of archiving.
+    collectionOperations: [
+        "get" => ["security" => "is_granted('ROLE_VIEW_EVENT')"],
+        "post" => ["security" => "is_granted('ROLE_ADD_EVENT')"],
+    ],
+    itemOperations: [
+        "get" => ["security" => "is_granted('ROLE_VIEW_EVENT')"],
+        "put" => ["security" => "is_granted('ROLE_ADD_EVENT')"],
+        "patch" => ["security" => "is_granted('ROLE_EDIT_EVENT')"]
+    ], # Deletion is missing because of archiving.
     denormalizationContext: ["groups" => ["write"]],
     normalizationContext: ["groups" => ["read"]],
 )]
