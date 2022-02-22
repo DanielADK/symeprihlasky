@@ -84,9 +84,9 @@ class Child extends EntityRepository {
     #[Groups(["read", "write"])]
     private bool $ctu_member;
 
-    #[ORM\Column(type: 'boolean', nullable: true, options: ["default" => true])]
+    #[ORM\Column(type: 'boolean', nullable: true, options: ["default" => false])]
     #[Groups(["read", "write"])]
-    private bool $active;
+    private bool $deleted;
 
     #[ORM\OneToMany(mappedBy: 'person', targetEntity: Application::class)]
     #[MaxDepth(1)]
