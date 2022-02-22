@@ -69,6 +69,10 @@ class Application {
     #[Groups(["read", "write"])]
     private string $shirt_size;
 
+    #[ORM\Column(type: 'boolean', options: ["default" => false])]
+    #[Groups(["read", "write"])]
+    private string $deleted;
+
     public function getId(): ?int
     {
         return $this->id;

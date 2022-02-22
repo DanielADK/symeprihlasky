@@ -39,24 +39,23 @@ class Address {
     #[Groups(["read"])]
     private int $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: false)]
     #[Groups(["read", "write"])]
     #[NotBlank]
     private string $street;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: false)]
     #[Groups(["read", "write"])]
     #[NotBlank]
     private string $city;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: false)]
     #[Groups(["read", "write"])]
     #[NotBlank]
     private string $postcode;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["read", "write"])]
-    #[NotBlank]
     private string $country;
 
     #[ORM\OneToMany(mappedBy: 'address', targetEntity: Person::class)]

@@ -67,7 +67,11 @@ class Event {
 
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
     #[Groups(["read", "write"])]
-    private $active;
+    private $active_assignment;
+
+    #[ORM\Column(type: 'boolean', options: ["default" => false])]
+    #[Groups(["read", "write"])]
+    private $deleted;
 
     #[ORM\Column(type: 'integer')]
     #[Groups(["read", "write"])]

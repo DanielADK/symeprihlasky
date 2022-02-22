@@ -102,9 +102,9 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     #[Groups(["read", "write"])]
     private bool $ctu_member;
 
-    #[ORM\Column(type: 'boolean', nullable: true, options: ["default" => true])]
+    #[ORM\Column(type: 'boolean', options: ["default" => false])]
     #[Groups(["read", "write"])]
-    private bool $active;
+    private bool $deleted;
 
     #[ORM\Column(type: 'json', nullable: true)]
     #[Groups(["read", "write"])]
