@@ -29,7 +29,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
     denormalizationContext: ["groups" => ["write"]],
     normalizationContext: ["groups" => ["read"]],
 )]
-#[ApiFilter(BooleanFilter::class, properties: ["active"])]
+#[ApiFilter(BooleanFilter::class, properties: ["deleted"])]
 #[ApiFilter(SearchFilter::class, properties: ["name_short" => "partial", "type" => "exact"])]
 #[ApiFilter(DateFilter::class, properties: ["date_start", "date_end"])]
 class Event {
@@ -63,23 +63,23 @@ class Event {
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["read", "write"])]
     #[NotBlank]
-    private $type;
+    private string $type;
 
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
     #[Groups(["read", "write"])]
-    private $active_assignment;
+    private bool $active_assignment;
 
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
-    #[Groups(["read", "write"])]
-    private $deleted;
+    #[Groups(["write"])]
+    private bool $deleted;
 
     #[ORM\Column(type: 'integer')]
     #[Groups(["read", "write"])]
-    private $price_member;
+    private int $price_member;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(["read", "write"])]
-    private $price_other;
+    private int $price_other;
 
     public function getId(): ?int
     {

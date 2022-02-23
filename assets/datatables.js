@@ -10,3 +10,6 @@ require( 'datatables.net-datetime' )();
 require( 'datatables.net-fixedcolumns-bs' )();
 require( 'datatables.net-fixedheader-bs' )();
 require( 'datatables.net-responsive-bs' )();
+
+var $  = require( 'jquery' );
+var dt = require( 'datatables.net' )( window, $ );

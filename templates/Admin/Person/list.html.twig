@@ -2,7 +2,7 @@
 {% extends "Admin/base.html.twig" %}
 {% block title %}E-Přihlášky - Seznam uživatelů{% endblock %}
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/bower_components/datatables/datatables.min.css') }}">
 {% endblock %}
 {% block content %}
     <section class="content-wrapper">
@@ -15,7 +15,7 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <i class="fa fa-list"></i>
-                        <h1 class="box-title"> Všechny děti</h1>
+                        <h1 class="box-title"> Všichni uživatelé </h1>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>
@@ -28,9 +28,10 @@
                             <tr class="text-center">
                                 <th>ID</th>
                                 <th>Jméno <br>a příjmení</th>
-                                <th>Pohlaví</th>
-                                <th>Bydliště</th>
-                                <th>Bydliště</th>
+                                <th>Email</th>
+                                <th>Telefon</th>
+                                <th>Role</th>
+
                             </tr>
                             </thead>
                         </table>
@@ -39,69 +40,11 @@
                 </div>
                 <!-- /.box -->
             </section>
-            <script>
-                $(document).ready(function () {
-                    $('#allPeople').DataTable({
-                        "ajax": {
-                            "url": "/api/people?active=true",
-                            "dataSrc": ""
-                        },
-                        "paging": true,
-                        responsive: true,
-                        dom: 'Bfrtipl',
-                        buttons: [
-                            {
-                                text: "<i class=\"fa fa-refresh\"></i>",
-                                action: function (e, dt) {
-                                    dt.ajax.reload();
-                                }
-                            }, 'excel', 'csv'],
-                        "columns": [
-                            {"data": "id"},
-                            {
-                                "data": null,
-                                render: function (data) {
-                                    return "<a href=\"/admin/seznamdite/" + data.id + "\">" +
-                                        data.name +
-                                        " " +
-                                        data.surname +
-                                        "</a>";
-                                }
-                            },
-                            {
-                                "data": null,
-                                render: function (data) {
-                                    return ajaxPrepare("sex", data);
-                                }
-                            },
-                            {
-                                "data": null,
-                                render: function (data) {
-                                    return ajaxPrepare("address", data.address);
-                                }
-                            },
-                            {"data": "shirt_size"},
-                            /*{
-                                "data": null,
-                                "className": "text-center",
-                                render: function (data) {
-                                    return ajaxPrepare("yesno", data.ctu_member);
-                                }
-                            }*/
-                        ],
-                        "language": {
-                            "url": "https://cdn.datatables.net/plug-ins/1.11.0/i18n/cs.json"
-                        },
-                        "order": [[0, 'asc']]
-                    });
-                });
-
-            </script>
+            <script src="{{ asset("js/datatables/person-list.js") }}"></script>
 
         </section>
     </section>
 {% endblock %}
 {% block javascripts %}
-    <script src="{{ asset("adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js") }}"></script>
-    <script src="{{ asset("adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js") }}"></script>
+    <script src="{{ asset("adminlte/bower_components/datatables/datatables.min.js") }}"></script>
 {% endblock %}
