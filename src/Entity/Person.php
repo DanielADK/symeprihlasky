@@ -39,7 +39,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
     forceEager: false,
     normalizationContext: ["groups" => ["read"]]
 )]
-#[ApiFilter(BooleanFilter::class, properties: ["active", "ctu_member"])]
+#[ApiFilter(BooleanFilter::class, properties: ["deleted", "ctu_member"])]
 #[ApiFilter(SearchFilter::class, properties: ["name" => "partial", "surname" => "partial", "address" => "exact"])]
 class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Id]
@@ -92,6 +92,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
 
     #[ORM\Column(type: 'string', length: 255, unique: true, nullable: true)]
     #[Groups(["read", "write"])]
+    #[NotBlank]
     private string $phone;
 
     #[ORM\Column(type: 'string', nullable: true)]
@@ -103,7 +104,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     private bool $ctu_member;
 
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
-    #[Groups(["read", "write"])]
+    #[Groups(["write"])]
     private bool $deleted;
 
     #[ORM\Column(type: 'json', nullable: true)]
@@ -116,6 +117,34 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ApiSubresource( maxDepth: 1 )]
     #[Groups(["read", "write"])]
     private Collection $applications;
+
+    /**
+     * @return string
+     */
+    public function getPhone(): string {
+        return $this->phone;
+    }
+
+    /**
+     * @param string $phone
+     */
+    public function setPhone(string $phone): void {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeleted(): bool {
+        return $this->deleted;
+    }
+
+    /**
+     * @param bool $deleted
+     */
+    public function setDeleted(bool $deleted): void {
+        $this->deleted = $deleted;
+    }
 
     public function getUserIdentifier(): string {
         return $this->email;

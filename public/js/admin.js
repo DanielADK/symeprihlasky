@@ -77,13 +77,35 @@ function ajaxPrepare(typ, data, type) {
             '</a>';
 
     } else if (typ === 'phone') {
-        return '<a href="tel:' + data.phone + '">' +
-            data.phone +
-            '</a>';
+        if (typeof(data.phone) === 'undefined')
+            return '<span class=\"label label-danger\">NEVYPLNĚNO!</span>';
+        else
+            return '<a href="tel:' + data.phone + '">' +
+                    data.phone +
+                    '</a>';
 
     } else if (typ === 'fullname') {
         return data.name + ' ' + data.surname;
     } else if (typ === 'fullEvent') {
         return data.shortName + ',<br>' + data.fullName;
+    } else if (typ === 'role') {
+        var retval = "";
+        data.forEach(function(role) {
+            switch (role) {
+                case "ROLE_ADMIN":
+                    retval = retval + ' <span class="label label-danger">Admin</span>';
+                    break;
+                case "ROLE_LEADER":
+                    retval = retval + ' <span class="label label-warning">Vedoucí</span>';
+                    break;
+                case "ROLE_INSTRUCTOR":
+                    retval = retval + ' <span class="label label-success">Instruktor</span>';
+                    break;
+                case "ROLE_PARENT":
+                    retval = retval + ' <span class="label label-primary">Rodič</span>';
+                    break;
+            }
+        });
+        return retval;
     }
 }

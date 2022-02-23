@@ -4,11 +4,11 @@
         "@popperjs/core": "^2.11.2",
         "@symfony/stimulus-bridge": "^3.0.0",
         "@symfony/webpack-encore": "^1.8.1",
-        "font-awesome": "^4.7.0",
         "admin-lte": "^2.3.11",
         "bootstrap": "^3.4.1",
         "core-js": "^3.0.0",
-        "jquery": "^3.2.1",
+        "font-awesome": "^4.7.0",
+        "jquery": "^3.6.0",
         "regenerator-runtime": "^0.13.2",
         "webpack-notifier": "^1.6.0"
     },
@@ -21,6 +21,15 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "datatables.net-bs": "^1.11.4",
+        "datatables.net-buttons-bs": "^2.2.2",
+        "datatables.net-colreorder-bs": "^1.5.5",
+        "datatables.net-datetime": "^1.1.2",
+        "datatables.net-fixedcolumns-bs": "^4.0.2",
+        "datatables.net-fixedheader-bs": "^3.2.2",
+        "datatables.net-responsive-bs": "^2.2.9",
+        "jszip": "^3.7.1",
+        "pdfmake": "^0.2.4",
         "yarn": "^1.22.17"
     }
 }

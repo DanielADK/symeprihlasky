@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8d25bb170818e4f5e01fb3f007ef75fd",
+    "content-hash": "db45432a0844b8f5dbfb41583340dc6d",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -2122,6 +2122,71 @@
                 "source": "https://github.com/lorenzo/pinky/tree/1.0.5"
             },
             "time": "2019-09-16T21:23:31+00:00"
+        },
+        {
+            "name": "m2mtech/api-platform-datatables-format",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/m2mtech/api-platform-datatables-format.git",
+                "reference": "999e037b71425bee303e8ff57f8e7504d6a7ef90"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/m2mtech/api-platform-datatables-format/zipball/999e037b71425bee303e8ff57f8e7504d6a7ef90",
+                "reference": "999e037b71425bee303e8ff57f8e7504d6a7ef90",
+                "shasum": ""
+            },
+            "require": {
+                "api-platform/core": "^2.5",
+                "php": ">=7.2.5",
+                "symfony/config": "^5.4|^6.0",
+                "symfony/dependency-injection": "^5.4|^6.0",
+                "symfony/http-kernel": "^5.4|^6.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.4",
+                "phpunit/phpunit": "^8.5.22|^9.5",
+                "roave/security-advisories": "dev-latest",
+                "symfony/phpunit-bridge": "^5.4|^6.0",
+                "symfony/stopwatch": "^5.4|^6.0",
+                "symplify/easy-coding-standard": "^10.0"
+            },
+            "suggest": {
+                "metaclass-nl/filter-bundle": "dev-master"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "M2MTech\\ApiPlatformDatatablesFormat\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Martin Mandl",
+                    "email": "tech@m2m.at",
+                    "homepage": "https://cms.m2m.at",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Datatables format extension for API Platform.",
+            "homepage": "https://github.com/m2mtech/api-platform-datatables-format",
+            "keywords": [
+                "api",
+                "api-platform",
+                "datatables",
+                "extension",
+                "format"
+            ],
+            "support": {
+                "issues": "https://github.com/m2mtech/api-platform-datatables-format/issues",
+                "source": "https://github.com/m2mtech/api-platform-datatables-format/tree/v1.1.1"
+            },
+            "time": "2022-02-11T21:36:13+00:00"
         },
         {
             "name": "monolog/monolog",
