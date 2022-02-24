@@ -10,6 +10,7 @@
 
         <!-- Main content -->
         <section class="content container-fluid">
+            {% include "Admin/Person/header-stats.html.twig" %}
 
             <section class="col-xs-12">
                 <div class="box box-primary">
@@ -23,7 +24,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <table id="allPeople" class="table table-hover table-striped table-bordered table-responsive">
+                        <table id="people" class="table table-hover table-striped table-bordered table-responsive">
                             <thead>
                             <tr class="text-center">
                                 <th>ID</th>
@@ -31,6 +32,9 @@
                                 <th>Email</th>
                                 <th>Telefon</th>
                                 <th>Role</th>
+                                {% if is_granted("ROLE_EDIT_PERSON") or is_granted("ROLE_DELETE_PERSON") %}
+                                    <th>Akce</th>
+                                {% endif %}
 
                             </tr>
                             </thead>
@@ -40,6 +44,46 @@
                 </div>
                 <!-- /.box -->
             </section>
+            <script>
+                var ajaxURL = "/api/people?deleted=false";
+                var columns = [
+                    {"data": "id"},
+                    {
+                        "data": null,
+                        render: function (data) {
+                            return data.name + " " + data.surname;
+                        }
+                    },
+                    {
+                        "data": null,
+                        render: function (data) {
+                            return ajaxPrepare("email", data);
+                        }
+                    },
+                    {
+                        "data": null,
+                        render: function (data) {
+                            return ajaxPrepare("phone", data);
+                        }
+                    },
+                    {
+                        "data": null,
+                        render: function (data) {
+                            return ajaxPrepare("role", data.roles);
+                        }
+                    },
+                    {% if is_granted("ROLE_EDIT_PERSON") or is_granted("ROLE_DELETE_PERSON") %}
+                    {
+                        "data": null,
+                        render: function(data) {
+                            return '<a href="/admin/uzivatele/upravit/'+data.id+'" class="btn btn-block btn-sm btn-success">Upravit<i class="fa fa-fw fa-wrench"></a>'
+                        }
+                    }
+                    {% endif %}
+
+
+                ];
+            </script>
             <script src="{{ asset("js/datatables/person-list.js") }}"></script>
 
         </section>

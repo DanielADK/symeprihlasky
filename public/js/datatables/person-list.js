@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    $('#allPeople').DataTable({
+    var table = $('#people').DataTable({
         "ajax": {
-            "url": "/api/people?deleted=false",
+            "url": ajaxURL,
             "dataSrc": ""
         },
         responsive: true,
@@ -13,41 +13,27 @@ $(document).ready(function () {
                     dt.ajax.reload();
                 }
             }, 'excel', 'csv'],
-        "columns": [
-            {"data": "id"},
-            {
-                "data": null,
-                render: function (data) {
-                    return "<a href=\"/admin/seznamdite/" + data.id + "\">" +
-                        data.name +
-                        " " +
-                        data.surname +
-                        "</a>";
-                }
-            },
-            {
-                "data": null,
-                render: function (data) {
-                    return ajaxPrepare("email", data);
-                }
-            },
-            {
-                "data": null,
-                render: function (data) {
-                    return ajaxPrepare("phone", data);
-                }
-            },
-            {
-                "data": null,
-                render: function (data) {
-                    return ajaxPrepare("role", data.roles);
-                }
-            },
-
-        ],
+        "columns": columns,
         "language": {
             "url": "https://cdn.datatables.net/plug-ins/1.11.0/i18n/cs.json"
         },
-        "order": [[0, 'asc']]
+        "order": [[0, 'asc']],
+        "fnInitComplete": function () {
+            document.getElementById("countOfUsers").innerText = table.rows().data().length;
+            document.getElementById("countOfAdmins").innerText =
+                table.rows().data().filter(function(row) {
+                    return (row.roles.indexOf("ROLE_ADMIN") > -1);
+                    }).length;
+            document.getElementById("countOfLeaders").innerText =
+                table.rows().data().filter(function(row) {
+                    return (row.roles.indexOf("ROLE_LEADER") > -1);
+                }).length;
+            document.getElementById("countOfParents").innerText =
+                table.rows().data().filter(function(row) {
+                    return (row.roles.indexOf("ROLE_PARENT") > -1);
+                }).length;
+
+        }
     });
+
 });
