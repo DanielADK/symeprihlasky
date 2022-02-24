@@ -104,7 +104,7 @@
             {% endif %}
             {% if is_granted("ROLE_VIEW_LEADER") %}
                 <li class="treeview {% if section=="leader" %}active{% endif %}">
-                    <a href="#"><i class="nav-icon fa fa-users"></i>
+                    <a href="#"><i class="nav-icon fa fa-user-circle-o"></i>
                         <span>Vedoucí</span><span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i></span></a>
                     <ul class="treeview-menu">
@@ -124,24 +124,10 @@
                 </li>
             {% endif %}
             {% if is_granted("ROLE_VIEW_PERSON") %}
-                <li class="treeview {% if section=="person" %}active{% endif %}">
-                    <a href="#"><i class="nav-icon fa fa-address-book"></i>
-                        <span>Uživatelé</span><span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i></span></a>
-                    <ul class="treeview-menu">
-                        <li {% if route_name=="admin_person_list" or route_name=='admin_person_view' %}class="active"{% endif %}>
-                            <a href="{{ path('admin_person_list') }}">
-                                <i class="fa fa-list"></i><span>Seznam uživatelé</span>
-                            </a>
-                        </li>
-                        {% if is_granted("ROLE_EDIT_PERSON") %}
-                            <li {% if route_name=='admin_person_edit' %}class="active"{% endif %}>
-                                <a href="#">
-                                    <i class="fa fa-edit"></i><span>Správa uživatelé</span>
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
+                <li {% if route_name=='admin_person_view' or route_name=='admin_person_edit' %}class="active"{% endif %}>
+                    <a href="{{ path('admin_person_view') }}">
+                        <i class="fa fa-user-circle"></i><span>Uživatelé</span>
+                    </a>
                 </li>
             {% endif %}
             {% if is_granted("ROLE_VIEW_NEWSLETTER") %}
