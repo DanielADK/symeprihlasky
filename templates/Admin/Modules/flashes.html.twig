@@ -1,0 +1,20 @@
+{# display any flash message #}
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }} alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>
+            {% if label == "danger" %}
+                <i class="icon fa fa-ban"></i>
+            {% elseif label == "warning" %}
+                <i class="icon fa fa-warning"></i>
+            {% elseif label == "info" %}
+                <i class="icon fa fa-info"></i>
+            {% elseif label == "success" %}
+                <i class="icon fa fa-check"></i>
+            {% endif %}
+            Upozornění!</h4>
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}

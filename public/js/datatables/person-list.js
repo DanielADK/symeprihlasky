@@ -8,7 +8,7 @@ $(document).ready(function () {
         dom: 'Bfrtipl',
         buttons: [
             {
-                text: "<i class=\"fa fa-refresh\"></i>",
+                text: '<i class=\"fa fa-refresh\" id="tableRefresh"></i>',
                 action: function (e, dt) {
                     dt.ajax.reload();
                 }

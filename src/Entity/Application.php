@@ -33,11 +33,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ApiFilter(SearchFilter::class, properties: ["hash" => "exact", "event" => "exact", "person" => "exact"])]
 #[ApiFilter(DateFilter::class, properties: ["sign_date"])]
 class Application {
+    #[ORM\Column(type: 'string', length: 255)]
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
     #[Groups(["read"])]
-    private int $id;
+    #[ApiProperty(identifier: true)]
+    #[NotBlank]
+    private string $hash;
 
     #[ORM\ManyToOne(targetEntity: Event::class)]
     #[ORM\JoinColumn(nullable: false)]
@@ -59,24 +60,14 @@ class Application {
     #[Groups(["read"])]
     private \DateTimeInterface $sign_date;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["read"])]
-    #[ApiProperty(identifier: true)]
-    #[NotBlank]
-    private string $hash;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["read", "write"])]
-    private string $shirt_size;
+    private string $shirtSize;
 
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
     #[Groups(["read", "write"])]
     private string $deleted;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getPerson(): ?Person
     {
@@ -116,12 +107,12 @@ class Application {
 
     public function getShirtSize(): ?string
     {
-        return $this->shirt_size;
+        return $this->shirtSize;
     }
 
     public function setShirtSize(string $shirt_size): self
     {
-        $this->shirt_size = $shirt_size;
+        $this->shirtSize = $shirt_size;
 
         return $this;
     }

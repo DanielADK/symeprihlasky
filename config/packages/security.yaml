@@ -69,7 +69,7 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/tabornik, roles: [ROLE_INSTRUCTOR, ROLE_PARENT] }
-        - { path: ^/api, roles: ROLE_USER }
+        - { path: ^/api, roles: [ROLE_PARENT, ROLE_ADMIN] }
 
 when@test:
     security:

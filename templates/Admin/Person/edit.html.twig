@@ -1,0 +1,23 @@
+{# /src/templates/Admin/Person/edit.html.twig #}
+{% extends "Admin/base.html.twig" %}
+{% block title %}E-Přihlášky - Seznam uživatelů{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/bower_components/datatables/datatables.min.css') }}">
+{% endblock %}
+{% block content %}
+    <section class="content-wrapper">
+        {% include "Admin/Modules/page_path_list.html.twig" %}
+
+        <section class="content container-fluid">
+            {% include "Admin/Modules/flashes.html.twig" %}
+            {% include "Admin/Person/header-stats.html.twig" %}
+            {% include "Admin/Person/single-person-edit.html.twig" %}
+
+            {% include "Admin/Person/person-list.html.twig" %}
+
+        </section>
+    </section>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset("adminlte/bower_components/datatables/datatables.min.js") }}"></script>
+{% endblock %}
