@@ -70,7 +70,7 @@ class Child extends EntityRepository {
     #[ORM\Column(type: 'date', nullable: true)]
     #[Groups(["read", "write"])]
     #[NotBlank]
-    private \DateTimeInterface $birth_date;
+    private \DateTimeInterface $birthDate;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(["read", "write"])]
@@ -78,11 +78,11 @@ class Child extends EntityRepository {
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(["read", "write"])]
-    private string $shirt_size;
+    private string $shirtSize;
 
     #[ORM\Column(type: 'boolean', nullable: true, options: ["default" => false])]
     #[Groups(["read", "write"])]
-    private bool $ctu_member;
+    private bool $ctuMember;
 
     #[ORM\Column(type: 'boolean', nullable: true, options: ["default" => false])]
     #[Groups(["read", "write"])]
@@ -145,6 +145,22 @@ class Child extends EntityRepository {
     }
 
     /**
+     * @return Person
+     */
+    public function getParent(): Person
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param Person $parent
+     */
+    public function setParent(Person $parent): void
+    {
+        $this->parent = $parent;
+    }
+
+    /**
      * @return Address
      */
     public function getAddress(): Address
@@ -165,15 +181,15 @@ class Child extends EntityRepository {
      */
     public function getBirthDate(): \DateTimeInterface
     {
-        return $this->birth_date;
+        return $this->birthDate;
     }
 
     /**
-     * @param \DateTimeInterface $birth_date
+     * @param \DateTimeInterface $birthDate
      */
-    public function setBirthDate(\DateTimeInterface $birth_date): void
+    public function setBirthDate(\DateTimeInterface $birthDate): void
     {
-        $this->birth_date = $birth_date;
+        $this->birthDate = $birthDate;
     }
 
     /**
@@ -197,31 +213,15 @@ class Child extends EntityRepository {
      */
     public function getShirtSize(): string
     {
-        return $this->shirt_size;
+        return $this->shirtSize;
     }
 
     /**
-     * @param string $shirt_size
+     * @param string $shirtSize
      */
-    public function setShirtSize(string $shirt_size): void
+    public function setShirtSize(string $shirtSize): void
     {
-        $this->shirt_size = $shirt_size;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param string $email
-     */
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
+        $this->shirtSize = $shirtSize;
     }
 
     /**
@@ -229,15 +229,31 @@ class Child extends EntityRepository {
      */
     public function isCtuMember(): bool
     {
-        return $this->ctu_member;
+        return $this->ctuMember;
     }
 
     /**
-     * @param bool $ctu_member
+     * @param bool $ctuMember
      */
-    public function setCtuMember(bool $ctu_member): void
+    public function setCtuMember(bool $ctuMember): void
     {
-        $this->ctu_member = $ctu_member;
+        $this->ctuMember = $ctuMember;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeleted(): bool
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param bool $deleted
+     */
+    public function setDeleted(bool $deleted): void
+    {
+        $this->deleted = $deleted;
     }
 
     /**
@@ -254,22 +270,6 @@ class Child extends EntityRepository {
     public function setApplications(Collection $applications): void
     {
         $this->applications = $applications;
-    }
-
-    /**
-     * @return Person
-     */
-    public function getParent(): Person
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @param Person $parent
-     */
-    public function setParent(Person $parent): void
-    {
-        $this->parent = $parent;
     }
 
 

@@ -43,22 +43,22 @@ class Event {
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     #[Groups(["read", "write"])]
     #[NotBlank]
-    private $name_short;
+    private $nameShort;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["read", "write"])]
     #[NotBlank]
-    private $name_full;
+    private $nameFull;
 
     #[ORM\Column(type: 'date')]
     #[Groups(["read", "write"])]
     #[NotBlank]
-    private $date_start;
+    private $dateStart;
 
     #[ORM\Column(type: 'date')]
     #[Groups(["read", "write"])]
     #[NotBlank]
-    private $date_end;
+    private $dateEnd;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["read", "write"])]
@@ -67,7 +67,7 @@ class Event {
 
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
     #[Groups(["read", "write"])]
-    private bool $active_assignment;
+    private bool $activeAssignment;
 
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
     #[Groups(["write"])]
@@ -75,110 +75,171 @@ class Event {
 
     #[ORM\Column(type: 'integer')]
     #[Groups(["read", "write"])]
-    private int $price_member;
+    private int $priceMember;
 
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(["read", "write"])]
-    private int $price_other;
+    private int $priceOther;
 
-    public function getId(): ?int
+    /**
+     * @return mixed
+     */
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getNameShort(): ?string
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
     {
-        return $this->name_short;
+        $this->id = $id;
     }
 
-    public function setNameShort(string $name_short): self
+    /**
+     * @return mixed
+     */
+    public function getNameShort()
     {
-        $this->name_short = $name_short;
-
-        return $this;
+        return $this->nameShort;
     }
 
-    public function getNameFull(): ?string
+    /**
+     * @param mixed $nameShort
+     */
+    public function setNameShort($nameShort): void
     {
-        return $this->name_full;
+        $this->nameShort = $nameShort;
     }
 
-    public function setNameFull(string $name_full): self
+    /**
+     * @return mixed
+     */
+    public function getNameFull()
     {
-        $this->name_full = $name_full;
-
-        return $this;
+        return $this->nameFull;
     }
 
-    public function getDateStart(): ?\DateTimeInterface
+    /**
+     * @param mixed $nameFull
+     */
+    public function setNameFull($nameFull): void
     {
-        return $this->date_start;
+        $this->nameFull = $nameFull;
     }
 
-    public function setDateStart(\DateTimeInterface $date_start): self
+    /**
+     * @return mixed
+     */
+    public function getDateStart()
     {
-        $this->date_start = $date_start;
-
-        return $this;
+        return $this->dateStart;
     }
 
-    public function getDateEnd(): ?\DateTimeInterface
+    /**
+     * @param mixed $dateStart
+     */
+    public function setDateStart($dateStart): void
     {
-        return $this->date_end;
+        $this->dateStart = $dateStart;
     }
 
-    public function setDateEnd(\DateTimeInterface $date_end): self
+    /**
+     * @return mixed
+     */
+    public function getDateEnd()
     {
-        $this->date_end = $date_end;
-
-        return $this;
+        return $this->dateEnd;
     }
 
-    public function getType(): ?string
+    /**
+     * @param mixed $dateEnd
+     */
+    public function setDateEnd($dateEnd): void
+    {
+        $this->dateEnd = $dateEnd;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
     {
         return $this->type;
     }
 
-    public function setType(?string $type): self
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
     {
         $this->type = $type;
-
-        return $this;
     }
 
-    public function getActive(): ?bool
+    /**
+     * @return bool
+     */
+    public function isActiveAssignment(): bool
     {
-        return $this->active;
+        return $this->activeAssignment;
     }
 
-    public function setActive(bool $active): self
+    /**
+     * @param bool $activeAssignment
+     */
+    public function setActiveAssignment(bool $activeAssignment): void
     {
-        $this->active = $active;
-
-        return $this;
+        $this->activeAssignment = $activeAssignment;
     }
 
-    public function getPriceMember(): ?int
+    /**
+     * @return bool
+     */
+    public function isDeleted(): bool
     {
-        return $this->price_member;
+        return $this->deleted;
     }
 
-    public function setPriceMember(int $price_member): self
+    /**
+     * @param bool $deleted
+     */
+    public function setDeleted(bool $deleted): void
     {
-        $this->price_member = $price_member;
-
-        return $this;
+        $this->deleted = $deleted;
     }
 
-    public function getPriceOther(): ?int
+    /**
+     * @return int
+     */
+    public function getPriceMember(): int
     {
-        return $this->price_other;
+        return $this->priceMember;
     }
 
-    public function setPriceOther(int $price_other): self
+    /**
+     * @param int $priceMember
+     */
+    public function setPriceMember(int $priceMember): void
     {
-        $this->price_other = $price_other;
-
-        return $this;
+        $this->priceMember = $priceMember;
     }
+
+    /**
+     * @return int
+     */
+    public function getPriceOther(): int
+    {
+        return $this->priceOther;
+    }
+
+    /**
+     * @param int $priceOther
+     */
+    public function setPriceOther(int $priceOther): void
+    {
+        $this->priceOther = $priceOther;
+    }
+
+
 }

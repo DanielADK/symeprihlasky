@@ -68,86 +68,101 @@ class Address {
         $this->people = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getStreet(): ?string
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStreet(): string
     {
         return $this->street;
     }
 
-    public function setStreet(string $street): self
+    /**
+     * @param string $street
+     */
+    public function setStreet(string $street): void
     {
         $this->street = $street;
-
-        return $this;
     }
 
-    public function getCity(): ?string
+    /**
+     * @return string
+     */
+    public function getCity(): string
     {
         return $this->city;
     }
 
-    public function setCity(string $city): self
+    /**
+     * @param string $city
+     */
+    public function setCity(string $city): void
     {
         $this->city = $city;
-
-        return $this;
     }
 
-    public function getPostcode(): ?string
+    /**
+     * @return string
+     */
+    public function getPostcode(): string
     {
         return $this->postcode;
     }
 
-    public function setPostcode(string $postcode): self
+    /**
+     * @param string $postcode
+     */
+    public function setPostcode(string $postcode): void
     {
         $this->postcode = $postcode;
-
-        return $this;
     }
 
-    public function getCountry(): ?string
+    /**
+     * @return string
+     */
+    public function getCountry(): string
     {
         return $this->country;
     }
 
-    public function setCountry(string $country): self
+    /**
+     * @param string $country
+     */
+    public function setCountry(string $country): void
     {
         $this->country = $country;
-
-        return $this;
     }
 
     /**
-     * @return Collection
+     * @return ArrayCollection|Collection
      */
-    public function getPeople(): Collection
+    public function getPeople(): ArrayCollection|Collection
     {
         return $this->people;
     }
 
-    public function addPerson(Person $person): self
+    /**
+     * @param ArrayCollection|Collection $people
+     */
+    public function setPeople(ArrayCollection|Collection $people): void
     {
-        if (!$this->people->contains($person)) {
-            $this->people[] = $person;
-            $person->setAddress($this);
-        }
-
-        return $this;
+        $this->people = $people;
     }
 
-    public function removePerson(Person $person): self
-    {
-        if ($this->people->removeElement($person)) {
-            // set the owning side to null (unless already changed)
-            if ($person->getAddress() === $this) {
-                $person->setAddress(null);
-            }
-        }
 
-        return $this;
-    }
 }

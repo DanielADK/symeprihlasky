@@ -75,7 +75,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
 
     #[ORM\Column(type: 'date', nullable: true)]
     #[Groups(["read", "write"])]
-    private \DateTimeInterface $birth_date;
+    private \DateTimeInterface $birthDate;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(["read", "write"])]
@@ -83,7 +83,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(["read", "write"])]
-    private string $shirt_size;
+    private string $shirtSize;
 
     #[ORM\Column(type: 'string', length: 255, unique: true, nullable: false)]
     #[Groups(["read", "write"])]
@@ -101,7 +101,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
 
     #[ORM\Column(type: 'boolean', nullable: true, options: ["default" => false])]
     #[Groups(["read", "write"])]
-    private bool $ctu_member;
+    private bool $ctuMember;
 
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
     #[Groups(["write"])]
@@ -118,191 +118,9 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     #[Groups(["read", "write"])]
     private Collection $applications;
 
-    /**
-     * @return string
-     */
-    public function getPhone(): string {
-        return $this->phone;
-    }
-
-    /**
-     * @param string $phone
-     */
-    public function setPhone(string $phone): void {
-        $this->phone = $phone;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDeleted(): bool {
-        return $this->deleted;
-    }
-
-    /**
-     * @param bool $deleted
-     */
-    public function setDeleted(bool $deleted): void {
-        $this->deleted = $deleted;
-    }
 
     public function getUserIdentifier(): string {
         return $this->email;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getSurname(): ?string
-    {
-        return $this->surname;
-    }
-
-    public function setSurname(string $surname): self
-    {
-        $this->surname = $surname;
-
-        return $this;
-    }
-
-    public function getAddress(): ?Address
-    {
-        return $this->address;
-    }
-
-    public function setAddress(?Address $address): self
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    public function getParent(): ?self
-    {
-        return $this->parent;
-    }
-
-    public function setParent(?self $parent): self
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getChildren(): Collection
-    {
-        return $this->children;
-    }
-
-    public function addChild(self $child): self
-    {
-        if (!$this->children->contains($child)) {
-            $this->children[] = $child;
-            $child->setParent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeChild(self $child): self
-    {
-        if ($this->children->removeElement($child)) {
-            // set the owning side to null (unless already changed)
-            if ($child->getParent() === $this) {
-                $child->setParent(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getBirthDate(): ?\DateTimeInterface
-    {
-        return $this->birth_date;
-    }
-
-    public function setBirthDate(?\DateTimeInterface $birth_date): self
-    {
-        $this->birth_date = $birth_date;
-
-        return $this;
-    }
-
-    public function getSex(): ?string
-    {
-        return $this->sex;
-    }
-
-    public function setSex(?string $sex): self
-    {
-        $this->sex = $sex;
-
-        return $this;
-    }
-
-    public function getShirtSize(): ?string
-    {
-        return $this->shirt_size;
-    }
-
-    public function setShirtSize(?string $shirt_size): self
-    {
-        $this->shirt_size = $shirt_size;
-
-        return $this;
-    }
-
-    public function getCtuMember(): ?bool
-    {
-        return $this->ctu_member;
-    }
-
-    public function setCtuMember(?bool $ctu_member): self
-    {
-        $this->ctu_member = $ctu_member;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-    public function getPassword(): string {
-        return $this->password;
-    }
-    public function setPassword(string $password): self {
-        $this->password = $password;
-        return $this;
-    }
-    public function getRoles(): array {
-        $roles = $this->roles;
-        $roles[] = 'ROLE_USER';
-        return array_unique($roles);
     }
 
     public function getSalt(): ?string {
@@ -320,6 +138,230 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     }
 
     /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSurname(): string
+    {
+        return $this->surname;
+    }
+
+    /**
+     * @param string $surname
+     */
+    public function setSurname(string $surname): void
+    {
+        $this->surname = $surname;
+    }
+
+    /**
+     * @return Address
+     */
+    public function getAddress(): Address
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param Address $address
+     */
+    public function setAddress(Address $address): void
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getChildren(): Collection
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param Collection $children
+     */
+    public function setChildren(Collection $children): void
+    {
+        $this->children = $children;
+    }
+
+    /**
+     * @return \DateTimeInterface
+     */
+    public function getBirthDate(): \DateTimeInterface
+    {
+        return $this->birthDate;
+    }
+
+    /**
+     * @param \DateTimeInterface $birthDate
+     */
+    public function setBirthDate(\DateTimeInterface $birthDate): void
+    {
+        $this->birthDate = $birthDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSex(): string
+    {
+        return $this->sex;
+    }
+
+    /**
+     * @param string $sex
+     */
+    public function setSex(string $sex): void
+    {
+        $this->sex = $sex;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShirtSize(): string
+    {
+        return $this->shirtSize;
+    }
+
+    /**
+     * @param string $shirtSize
+     */
+    public function setShirtSize(string $shirtSize): void
+    {
+        $this->shirtSize = $shirtSize;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhone(): string
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param string $phone
+     */
+    public function setPhone(string $phone): void
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCtuMember(): bool
+    {
+        return $this->ctuMember;
+    }
+
+    /**
+     * @param bool $ctuMember
+     */
+    public function setCtuMember(bool $ctuMember): void
+    {
+        $this->ctuMember = $ctuMember;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeleted(): bool
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param bool $deleted
+     */
+    public function setDeleted(bool $deleted): void
+    {
+        $this->deleted = $deleted;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param array $roles
+     */
+    public function setRoles(array $roles): void
+    {
+        $this->roles = $roles;
+    }
+
+    /**
      * @return Collection
      */
     public function getApplications(): Collection
@@ -327,27 +369,15 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
         return $this->applications;
     }
 
-    public function addApplication(Application $application): self
+    /**
+     * @param Collection $applications
+     */
+    public function setApplications(Collection $applications): void
     {
-        if (!$this->applications->contains($application)) {
-            $this->applications[] = $application;
-            $application->setPerson($this);
-        }
-
-        return $this;
+        $this->applications = $applications;
     }
 
-    public function removeApplication(Application $application): self
-    {
-        if ($this->applications->removeElement($application)) {
-            // set the owning side to null (unless already changed)
-            if ($application->getPerson() === $this) {
-                $application->setPerson(null);
-            }
-        }
 
-        return $this;
-    }
 
     /**
      * @throws NonUniqueResultException
