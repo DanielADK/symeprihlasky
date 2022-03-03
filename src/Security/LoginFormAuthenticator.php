@@ -2,6 +2,8 @@
 
 namespace App\Security;
 
+use App\Entity\Log;
+use App\Repository\PersonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,9 +26,11 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator implements P
 
     public const LOGIN_ROUTE = 'prihlaseni';
     private UrlGeneratorInterface $urlGenerator;
+    private PersonRepository $personRepository;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator) {
+    public function __construct(UrlGeneratorInterface $urlGenerator, PersonRepository $personRepository) {
         $this->urlGenerator = $urlGenerator;
+        $this->personRepository = $personRepository;
     }
 
     public function authenticate(Request $request): Passport {
@@ -48,9 +52,12 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator implements P
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        $user = $this->personRepository->findOneByEmail($token->getUserIdentifier());
+        $log = new Log(new \DateTime(), $user, "Byl úspěšně přihlášen!");
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
+
 
         // For example:
         //return new RedirectResponse($this->urlGenerator->generate('some_route'));

@@ -20,7 +20,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ApiResource(
     collectionOperations: [
         "get" => ["security" => "is_granted('ROLE_VIEW_ADDRESS')"],
-        "post" => ["security" => "is_granted('ROLE_ADD_ADDRESS')"],
     ],
     itemOperations: [
         "get" => ["security" => "is_granted('ROLE_VIEW_ADDRESS')"],
@@ -54,18 +53,26 @@ class Address {
     #[NotBlank]
     private string $postcode;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["read", "write"])]
-    private string $country;
-
     #[ORM\OneToMany(mappedBy: 'address', targetEntity: Person::class)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
     private Collection $people;
 
-    public function __construct()
-    {
+    public function __construct(
+        string $street,
+        string $city,
+        string $postcode
+    ) {
+        $this->street = $street;
+        $this->city = $city;
+        $this->postcode = $postcode;
+
         $this->people = new ArrayCollection();
+    }
+    public function deepCopy(Address $address) {
+        $this->street = $address->street;
+        $this->city = $address->city;
+        $this->postcode = $address->postcode;
     }
 
     /**
@@ -133,22 +140,6 @@ class Address {
     }
 
     /**
-     * @return string
-     */
-    public function getCountry(): string
-    {
-        return $this->country;
-    }
-
-    /**
-     * @param string $country
-     */
-    public function setCountry(string $country): void
-    {
-        $this->country = $country;
-    }
-
-    /**
      * @return ArrayCollection|Collection
      */
     public function getPeople(): ArrayCollection|Collection
@@ -162,6 +153,12 @@ class Address {
     public function setPeople(ArrayCollection|Collection $people): void
     {
         $this->people = $people;
+    }
+
+    public static function cmp(Address &$a1, Address &$a2): bool {
+        return ($a1->getStreet() == $a2->getStreet()) &&
+            ($a1->getCity() == $a2->getCity()) &&
+            ($a1->getPostcode() == $a2->getPostcode());
     }
 
 

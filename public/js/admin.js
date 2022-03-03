@@ -77,7 +77,7 @@ function ajaxPrepare(typ, data, type) {
             '</a>';
 
     } else if (typ === 'phone') {
-        if (typeof(data.phone) === 'undefined')
+        if (data.phone === null)
             return '<span class=\"label label-danger\">NEVYPLNĚNO!</span>';
         else
             return '<a href="tel:' + data.phone + '">' +

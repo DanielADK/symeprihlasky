@@ -19,7 +19,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ApiResource(
     collectionOperations: [
         "get" => ["security" => "is_granted('ROLE_VIEW_EVENT')"],
-        "post" => ["security" => "is_granted('ROLE_ADD_EVENT')"],
     ],
     itemOperations: [
         "get" => ["security" => "is_granted('ROLE_VIEW_EVENT')"],
