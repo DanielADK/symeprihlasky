@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Address;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -22,19 +23,28 @@ class AddressRepository extends ServiceEntityRepository
     // /**
     //  * @return Address[] Returns an array of Address objects
     //  */
-    /*
-    public function findByExampleField($value)
-    {
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findById(int $id) {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('a.id = :id')
+            ->setParameter('id', $id)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
     }
-    */
+    public function findByFullText(string $street, string $city, string $postcode) {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.street = :street')
+            ->andWhere('a.city = :city')
+            ->andWhere('a.postcode = :postcode')
+            ->setParameter('street', $street)
+            ->setParameter('city', $city)
+            ->setParameter('postcode', $postcode)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 
     /*
     public function findOneBySomeField($value): ?Address

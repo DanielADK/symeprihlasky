@@ -19,6 +19,7 @@
                     <th>Role</th>
                     {% if is_granted("ROLE_EDIT_PERSON") or is_granted("ROLE_DELETE_PERSON") %}
                         <th>Akce</th>
+                        <th>Smazán?</th>
                     {% endif %}
 
                 </tr>
@@ -66,7 +67,17 @@
             render: function(data) {
                 return '<a href="/admin/uzivatele/upravit/'+data.id+'" class="btn btn-block btn-sm btn-success">Upravit<i class="fa fa-fw fa-wrench"></a>'
             }
-        }
+        },
+        {
+            "data": null,
+            render: function(data) {
+                if (data.deleted) {
+                    return '<span class="label label-danger">SMAZÁN!</span>'
+                } else {
+                    return '';
+                }
+            }
+        },
         {% endif %}
 
 

@@ -13,6 +13,7 @@
         "api-platform/core": "^2.6",
         "doctrine/annotations": "^1.13",
         "doctrine/doctrine-bundle": "^2.5",
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.11",
         "m2mtech/api-platform-datatables-format": "^1.1",
@@ -45,7 +46,8 @@
         "twig/extra-bundle": "^3.3",
         "twig/inky-extra": "^3.3",
         "twig/string-extra": "^3.3",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "zenstruck/foundry": "^1.16"
     },
     "config": {
         "allow-plugins": {

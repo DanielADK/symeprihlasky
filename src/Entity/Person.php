@@ -27,7 +27,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ApiResource(
     collectionOperations: [
         "get" => ["security" => "is_granted('ROLE_VIEW_PERSON')"],
-        "post" => ["security" => "is_granted('ROLE_ADD_PERSON')"],
     ],
     itemOperations: [
         "get" => ["security" => "is_granted('ROLE_VIEW_PERSON')"],
@@ -70,19 +69,19 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
     #[Groups(["read", "write"])]
-    private Collection $children;
+    private ?Collection $children;
 
     #[ORM\Column(type: 'date', nullable: true)]
     #[Groups(["read", "write"])]
-    private \DateTimeInterface $birthDate;
+    private ?\DateTimeInterface $birthDate = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(["read", "write"])]
-    private string $sex;
+    private ?string $sex;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(["read", "write"])]
-    private string $shirtSize;
+    private ?string $shirtSize;
 
     #[ORM\Column(type: 'string', length: 255, unique: true, nullable: false)]
     #[Groups(["read", "write"])]
@@ -91,8 +90,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
 
     #[ORM\Column(type: 'string', length: 255, unique: true, nullable: true)]
     #[Groups(["read", "write"])]
-    #[NotBlank]
-    private string $phone;
+    private ?string $phone;
 
     #[ORM\Column(type: 'string', nullable: true)]
     #[Groups(["write"])]
@@ -100,22 +98,22 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
 
     #[ORM\Column(type: 'boolean', nullable: true, options: ["default" => false])]
     #[Groups(["read", "write"])]
-    private bool $ctuMember;
+    private ?bool $ctuMember;
 
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
-    #[Groups(["write"])]
+    #[Groups(["read", "write"])]
     private bool $deleted;
 
     #[ORM\Column(type: 'json', nullable: true)]
     #[Groups(["read", "write"])]
-    private array $roles = [];
+    private ?array $roles = [];
 
     #[ORM\OneToMany(mappedBy: 'person', targetEntity: Application::class)]
     #[ORM\JoinColumn(nullable: true)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
     #[Groups(["read", "write"])]
-    private Collection $applications;
+    private ?Collection $applications;
 
 
     public function getUserIdentifier(): string {
@@ -169,9 +167,9 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSurname(): string
+    public function getSurname(): ?string
     {
         return $this->surname;
     }
@@ -185,9 +183,9 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     }
 
     /**
-     * @return Address
+     * @return Address|null
      */
-    public function getAddress(): Address
+    public function getAddress(): ?Address
     {
         return $this->address;
     }
@@ -203,7 +201,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @return Collection
      */
-    public function getChildren(): Collection
+    public function getChildren(): ?Collection
     {
         return $this->children;
     }
@@ -219,7 +217,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @return \DateTimeInterface
      */
-    public function getBirthDate(): \DateTimeInterface
+    public function getBirthDate(): ?\DateTimeInterface
     {
         return $this->birthDate;
     }
@@ -251,7 +249,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @return string
      */
-    public function getShirtSize(): string
+    public function getShirtSize(): ?string
     {
         return $this->shirtSize;
     }
@@ -283,8 +281,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @return string
      */
-    public function getPhone(): string
-    {
+    public function getPhone(): ?string {
         return $this->phone;
     }
 
@@ -347,7 +344,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @return array
      */
-    public function getRoles(): array
+    public function getRoles(): ?array
     {
         return $this->roles;
     }
@@ -363,7 +360,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @return Collection
      */
-    public function getApplications(): Collection
+    public function getApplications(): ?Collection
     {
         return $this->applications;
     }

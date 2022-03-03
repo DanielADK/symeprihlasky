@@ -20,7 +20,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ApiResource(
     collectionOperations: [
         "get" => ["security" => "is_granted('ROLE_VIEW_APPLICATION')"],
-        "post" => ["security" => "is_granted('ROLE_ADD_APPLICATION')"],
     ],
     itemOperations: [
         "get" => ["security" => "is_granted('ROLE_VIEW_APPLICATION')"],
