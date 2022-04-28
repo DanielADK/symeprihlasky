@@ -17,6 +17,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
+#[ORM\UniqueConstraint(name: "address", columns: ["street", "city", "postcode"])]
 #[ApiResource(
     collectionOperations: [
         "get" => ["security" => "is_granted('ROLE_VIEW_ADDRESS')"],
@@ -154,6 +155,11 @@ class Address {
     {
         $this->people = $people;
     }
+
+    public function __toString(): string {
+        return "{\"id\":$this->id, \"street\":$this->street, \"city\":$this->city, \"postcode\":$this->postcode}";
+    }
+
 
     public static function cmp(Address &$a1, Address &$a2): bool {
         return ($a1->getStreet() == $a2->getStreet()) &&
