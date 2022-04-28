@@ -66,7 +66,8 @@ class PersonDataPersister implements DataPersisterInterface {
 
         }
 
-        if ($data->getPassword()) {
+        if ($data->getPassword() != $this->entityManager->getRepository(Person::class)->findOneBy(array("id" => $data->getId()))->getPassword()) {
+            error_log("PASSWORD CHANGED:");
             error_log(print_r($data->getPassword()));
             $data->setPassword(
                 $this->userPasswordHasher->hashPassword(

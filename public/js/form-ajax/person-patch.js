@@ -32,13 +32,12 @@ function editChildren(event) {
         }
     }
 
-    console.log(ret);
-    console.log(JSON.stringify(ret));
-
     $.ajax({
         type: "PATCH",
         headers: {'Content-Type': 'application/json'},
         url: "/api/people/"+ret.id,
         data: JSON.stringify(ret)
+    }).done(function() {
+        $('#people').DataTable().ajax.reload();
     });
 }
