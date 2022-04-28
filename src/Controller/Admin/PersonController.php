@@ -53,8 +53,10 @@ class PersonController extends AbstractController {
             ->add('birth_date', DateType::class, [
                 "label" => "Datum narození",
             ])
-            ->add('sex', )
-        ;
+            ->add('sex', DateType::class, [
+                "label" => "Pohlaví",
+                "empty_data" => "Neznámé",
+            ]);
 
         return $this->render('Admin/Person/edit.html.twig', [
             "section" => "person",

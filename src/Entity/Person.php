@@ -199,7 +199,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     }
 
     /**
-     * @return Collection
+     * @return Collection|null
      */
     public function getChildren(): ?Collection
     {
@@ -215,7 +215,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     }
 
     /**
-     * @return \DateTimeInterface
+     * @return \DateTimeInterface|null
      */
     public function getBirthDate(): ?\DateTimeInterface
     {
@@ -233,7 +233,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @return string
      */
-    public function getSex(): string
+    public function getSex(): ?string
     {
         return $this->sex;
     }
@@ -247,7 +247,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getShirtSize(): ?string
     {
@@ -344,8 +344,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @return array
      */
-    public function getRoles(): ?array
-    {
+    public function getRoles(): array {
         return $this->roles;
     }
 

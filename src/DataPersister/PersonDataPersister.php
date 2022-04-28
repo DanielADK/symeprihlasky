@@ -23,47 +23,51 @@ class PersonDataPersister implements DataPersisterInterface {
         return $data instanceof Person;
     }
 
-    public function persist($data) {
+    public function persist($data): void {
+        $repository = $this->entityManager->getRepository(Address::class);
         $address = $data->getAddress();
         if ($address) {
-            $this->entityManager->detach($address);
-            $newAddress = $this->entityManager
-                ->getRepository(Address::class)->findById(3);
+            $newAddress = $repository->findOneBy(
+                    array('id' => $address->getId())
+            );
+
             error_log(print_r($address->getId(), TRUE));
             error_log(print_r($address->getStreet(), TRUE));
             error_log(print_r($newAddress->getId(), TRUE));
             error_log(print_r($newAddress->getStreet(), TRUE));
 
+            /** Changed address? */
             if (!Address::cmp($newAddress, $address)) {
-                $existing = $this->entityManager
-                    ->getRepository(Address::class)
-                    ->findByFullText(
-                        $address->getStreet(),
-                        $address->getCity(),
-                        $address->getPostcode()
-                    );
+                error_log("Neshoda!");
+                $existing = $repository->findOneBy(
+                    array('street' => $address->getStreet()),
+                    array('city' => $address->getCity()),
+                    array('postcode' => $address->getPostcode())
+                );
 
-                if ($existing !== null) {
-                    $data->setAddress($existing);
-                    error_log("Existuje!".$data->getAddress()->getId());
-                } else {
-                    error_log(print_r($address->getId(), TRUE));
-                    $newAddress = new Address(
-                        $address->getStreet(),
-                        $address->getCity(),
-                        $address->getPostcode()
-                    );
-                    $this->entityManager->persist($newAddress);
-                    $this->entityManager->flush($newAddress);
-                    error_log(print_r($address->getId(), TRUE));
-                    $data->setAddress($newAddress);
-                    error_log("Vytvářím novou!".$newAddress->getId(), TRUE);
+                if (!Address::cmp($existing, $address)) {
+                    if ($existing !== null) {
+                        $data->setAddress($existing);
+                        error_log("Existuje!".$data->getAddress()->getId());
+                    } else {
+                        error_log(print_r($address->getId(), TRUE));
+                        $newAddress = new Address(
+                            $address->getStreet(),
+                            $address->getCity(),
+                            $address->getPostcode()
+                        );
+                        $this->entityManager->persist($newAddress);
+                        error_log(print_r($newAddress->getId(), TRUE));
+                        $data->setAddress($newAddress);
+                        error_log("Vytvářím novou!".$newAddress->getId(), TRUE);
+                    }
                 }
             }
 
         }
 
         if ($data->getPassword()) {
+            error_log(print_r($data->getPassword()));
             $data->setPassword(
                 $this->userPasswordHasher->hashPassword(
                     $data,
@@ -73,6 +77,7 @@ class PersonDataPersister implements DataPersisterInterface {
             $data->eraseCredentials();
 
         }
+        $this->entityManager->persist($data->getAddress());
         $this->entityManager->persist($data);
         $this->entityManager->flush();
     }
