@@ -5,13 +5,9 @@ function editChildren(event) {
         customPopUpMin($('#emptySubmit'));
         return;
     }
-    console.log(($('#editPerson').data("default")));
-
-    //get default values
 
     //parse from array to json format
     var ret = {"roles":[], address: {}};
-    console.log(sendData);
     for (var i = 0; i < sendData.length; i++) {
         // console.log(sendData[i]);
         if (sendData[i].value === "" || sendData[i].value === "Neznámé")
@@ -19,7 +15,6 @@ function editChildren(event) {
         if (sendData[i].name === "roles") {
             ret[sendData[i].name].push(sendData[i].value);
         } else if(sendData[i].name.search("address") > -1) {
-            console.log(sendData[i].defaultValue);
             ret.address[sendData[i].name.split('.')[1]] = sendData[i].value;
         } else {
             if (sendData[i].value === "false") {
@@ -38,6 +33,10 @@ function editChildren(event) {
         url: "/api/people/"+ret.id,
         data: JSON.stringify(ret)
     }).done(function() {
-        $('#people').DataTable().ajax.reload();
+        customPopUpMin($("#successSubmit"));
+        $('#people').DataTable().ajax.reload(reloadPersonStats, false);
+    }).fail(function () {
+        customPopUpMin($("#failSubmit"));
+        reloadPersonStats();
     });
 }

@@ -31,14 +31,14 @@ class PersonDataPersister implements DataPersisterInterface {
                     array('id' => $address->getId())
             );
 
-            error_log(print_r($address->getId(), TRUE));
-            error_log(print_r($address->getStreet(), TRUE));
-            error_log(print_r($newAddress->getId(), TRUE));
-            error_log(print_r($newAddress->getStreet(), TRUE));
+//            error_log(print_r($address->getId(), TRUE));
+//            error_log(print_r($address->getStreet(), TRUE));
+//            error_log(print_r($newAddress->getId(), TRUE));
+//            error_log(print_r($newAddress->getStreet(), TRUE));
 
             /** Changed address? */
             if (!Address::cmp($newAddress, $address)) {
-                error_log("Neshoda!");
+//                error_log("Neshoda!");
                 $existing = $repository->findOneBy(
                     array('street' => $address->getStreet()),
                     array('city' => $address->getCity()),
@@ -48,18 +48,18 @@ class PersonDataPersister implements DataPersisterInterface {
                 if (!Address::cmp($existing, $address)) {
                     if ($existing !== null) {
                         $data->setAddress($existing);
-                        error_log("Existuje!".$data->getAddress()->getId());
+//                        error_log("Existuje!".$data->getAddress()->getId());
                     } else {
-                        error_log(print_r($address->getId(), TRUE));
+//                        error_log(print_r($address->getId(), TRUE));
                         $newAddress = new Address(
                             $address->getStreet(),
                             $address->getCity(),
                             $address->getPostcode()
                         );
                         $this->entityManager->persist($newAddress);
-                        error_log(print_r($newAddress->getId(), TRUE));
+//                        error_log(print_r($newAddress->getId(), TRUE));
                         $data->setAddress($newAddress);
-                        error_log("Vytvářím novou!".$newAddress->getId(), TRUE);
+//                        error_log("Vytvářím novou!".$newAddress->getId(), TRUE);
                     }
                 }
             }
@@ -67,8 +67,8 @@ class PersonDataPersister implements DataPersisterInterface {
         }
 
         if ($data->getPassword() != $this->entityManager->getRepository(Person::class)->findOneBy(array("id" => $data->getId()))->getPassword()) {
-            error_log("PASSWORD CHANGED:");
-            error_log(print_r($data->getPassword()));
+//            error_log("PASSWORD CHANGED:");
+//            error_log(print_r($data->getPassword()));
             $data->setPassword(
                 $this->userPasswordHasher->hashPassword(
                     $data,
@@ -84,6 +84,6 @@ class PersonDataPersister implements DataPersisterInterface {
     }
 
     public function remove($data) {
-        $this->dataPersister->remove($data);
+        $this->entityManager->remove($data);
     }
 }
