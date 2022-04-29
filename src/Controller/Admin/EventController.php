@@ -10,7 +10,7 @@ class EventController extends AbstractController {
 
     #[Route('/admin/akce/seznam', name: 'admin_event_list')]
     public function index(): Response {
-        return $this->render('Admin/home.html.twig', [
+        return $this->render('Admin/Event/list.html.twig', [
             "section" => "event",
             "page_name" => "Seznam akcí",
             "page_path" => array("Domov", "Akce", "Seznam")

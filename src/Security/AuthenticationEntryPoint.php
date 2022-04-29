@@ -19,7 +19,7 @@ class AuthenticationEntryPoint implements AuthenticationEntryPointInterface {
      * @inheritDoc
      */
     public function start(Request $request, AuthenticationException $authException = null) {
-        $request->getSession()->getFlashBag()->add("note", "Pro tuto sekci se musíte příhlásit.");
+        $request->getSession()->getFlashBag()->add("info", "Pro tuto sekci se musíte příhlásit.");
         return new RedirectResponse($this->urlGenerator->generate("login"));
     }
 }
