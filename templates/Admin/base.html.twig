@@ -7,6 +7,8 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     <!-- Stylesheets -->
+{#    {{ encore_entry_link_tags('admin-lte') }}#}
+{#    {{ encore_entry_link_tags('admin') }}#}
     <link rel="stylesheet" href="{{ asset("/adminlte/bower_components/font-awesome/css/font-awesome.min.css") }}">
     <link rel="stylesheet" href="{{ asset("/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css") }}">
     <link rel="stylesheet" href="{{ asset("/adminlte/bower_components/jvectormap/jquery-jvectormap.css") }}">
@@ -14,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset("/adminlte/bower_components/morris.js/morris.css") }}">
     <link rel="stylesheet" href="{{ asset("/adminlte/dist/css/AdminLTE.min.css") }}">
     <link rel="stylesheet" href="{{ asset("/adminlte/dist/css/skins/skin-green.min.css") }}">
+
     <link rel="stylesheet" href="{{ asset("/admin.css") }}">
     {% block stylesheets %}
     {% endblock %}
@@ -34,6 +37,8 @@
         {% include "Admin/Modules/footer.html.twig" %}
     </section>
     <scripts>
+{#        {{ encore_entry_script_tags('admin-lte') }}#}
+{#        {{ encore_entry_script_tags('admin') }}#}
         <script>
             $.widget.bridge('uibutton', $.ui.button);
         </script>

@@ -1,0 +1,8 @@
+@import 'admin-lte/bower_components/font-awesome/css/font-awesome.min.css';
+@import 'admin-lte/bower_components/bootstrap/dist/css/bootstrap.min.css';
+@import 'admin-lte/bower_components/jvectormap/jquery-jvectormap.css';
+@import 'admin-lte/bower_components/Ionicons/css/ionicons.css';
+@import 'admin-lte/bower_components/morris.js/morris.css';
+@import 'admin-lte/dist/css/AdminLTE.min.css';
+@import 'admin-lte/dist/css/skins/skin-green.min.css';
+@import '/public/admin.css';
