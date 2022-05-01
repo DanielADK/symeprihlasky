@@ -4,6 +4,13 @@ function customPopUpMin(object) {
     });
 }
 
+function numberToThousandsSep(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+const months = ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'];
+const days = ["Po", "Út", "St", "Čt", "Pá", "So", "Ne"];
+
 function ajaxPrepare(typ, data, type) {
     if (typ === 'address') {
         return '<a target="_blank" href="https://www.google.com/maps?q=' +
@@ -29,42 +36,39 @@ function ajaxPrepare(typ, data, type) {
         return data.sex === "Z" ?
             'Dívka <i class=\"fa fa-female fa-lg text-red\" aria-hidden=\"true\"></i>' :
             'Chlapec <i class=\"fa fa-male fa-lg text-blue\" aria-hidden=\"true\"></i>';
-    } else if (typ === 'simpleDate') {
-        var dateSplit = data.date.split(' ')[0].split('-');
-        return type === 'display' || type === 'filter' ?
-            dateSplit[2] + '.' + dateSplit[1] + '.' + dateSplit[0] :
-            data;
     } else if (typ === 'type') {
-        switch (data) {
-            case 0:
-                return '<h4><span class=\"label label-primary\"><i class=\"fa fa-map-o\"></i> Jednodenní</span></h4>';
-            case 1:
-                return '<h4><span class=\"label label-danger\"><i class=\"fa fa-map-signs\"></i> Vícedenní</span></h4>';
-            case 2:
-                return '<h4><span class=\"label label-success\"><i class=\"fa fa-fire\"></i> Letní tábor</span></h4>';
-            case 3:
-                return '<h4><span class=\"label label-warning\"><i class=\"fa fa-beer\"></i> Dospělácká</span></h4>';
+        switch (data.type) {
+            case "JD":
+                return '<h4><span class="label label-primary"><i class="fa fa-map-o"></i> Jednodenní</span></h4>';
+            case "VA":
+                return '<h4><span class="label label-danger"><i class="fa fa-map-signs"></i> Vícedenní</span></h4>';
+            case "LT":
+                return '<h4><span class="label label-success"><i class="fa fa-fire"></i> Letní tábor</span></h4>';
+            case "APV":
+                return '<h4><span class="label label-warning"><i class="fa fa-beer"></i> Dospělácká</span></h4>';
             default:
                 return 'Neznámé';
         }
     } else if (typ === 'activeApplication') {
-        switch (data) {
-            case 1:
+        switch (data.activeApplication) {
+            case true:
                 return '<h4><span class=\"label label-success\"><i class=\"fa fa-check\"></i> Aktivní</span></h4>';
-            case 0:
+            case false:
                 return '<h4><span class=\"label label-danger\"><i class=\"fa fa-times\"></i> Neaktivní</span></h4>';
             default:
                 return "Neznámé";
         }
-
+    } else if (typ === 'simpleDate') {
+        var date = new Date(data);
+        return date.getDate() + ". " + (date.getMonth()+1) + ". " + date.getFullYear();
     } else if (typ === 'birthDateWithAge') {
-        var dateSplitt = data.dateOfBirth.date.split(' ')[0].split('-');
+        var dateSplitt = data.split(' ')[0].split('-');
         return type === 'display' || type === 'filter' ?
             dateSplitt[2] + '.' + dateSplitt[1] + '.' + dateSplitt[0] + ' (' + data.age + ' let)' :
             data;
 
     } else if (typ === 'signDateTime') {
-        var DateTime = data.date.split(' ');
+        var DateTime = data.split(' ');
         var dateSplit2 = DateTime[0].split('-');
         var timeSplit = DateTime[1].split('.')[0].split(':');
         return type === 'display' || type === 'filter' ?
@@ -88,6 +92,18 @@ function ajaxPrepare(typ, data, type) {
         return data.name + ' ' + data.surname;
     } else if (typ === 'fullEvent') {
         return data.shortName + ',<br>' + data.fullName;
+    } else if (typ === 'priceOther') {
+        if (typeof data.priceOther === "undefined") {
+            return "-";
+        } else {
+            return numberToThousandsSep(data.priceOther) + " Kč";
+        }
+    } else if (typ === 'priceMember') {
+        if (typeof data.priceMember === "undefined") {
+            return "-";
+        } else {
+            return numberToThousandsSep(data.priceMember) + " Kč";
+        }
     } else if (typ === 'role') {
         var retval = "";
         data.forEach(function(role) {

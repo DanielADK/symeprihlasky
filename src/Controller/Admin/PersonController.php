@@ -32,7 +32,7 @@ class PersonController extends AbstractController {
     public function edit(int $id, EntityManagerInterface $em, Request $request): Response {
         $usr = $em->getRepository("App:Person")->findOneByID($id);
         if ($usr == null) {
-            $this->addFlash('warning', 'Tento uživatel nebyl nalezen.');
+            $this->addFlash('warning', 'Tento uživatel nebyl nalezen!');
             return new RedirectResponse($this->generateUrl("admin_person_view"));
         }
 

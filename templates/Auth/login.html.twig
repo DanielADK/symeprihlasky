@@ -13,9 +13,8 @@
         <div class="login-box-body">
             <p class="login-box-msg">Přihlaste se, prosím.</p>
             <form method="POST" action="{{ path("login") }}">
-                {% if error %}
-                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                {% endif %}
+                {% include "Admin/Modules/flashes.html.twig" %}
+                {% include "Admin/Modules/db_save_flashes.html.twig" %}
 
                 {% if app.user %}
                 <article class="callout callout-info">

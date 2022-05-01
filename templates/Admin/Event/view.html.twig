@@ -1,6 +1,6 @@
-{# /src/templates/Admin/Person/list.html.twig #}
+{# /src/templates/Admin/Ev/view.html.twig #}
 {% extends "Admin/base.html.twig" %}
-{% block title %}E-Přihlášky - Seznam akcí{% endblock %}
+{% block title %}E-Přihlášky - Zobrazení akce{% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/bower_components/datatables/datatables.min.css') }}">
 {% endblock %}
@@ -13,6 +13,9 @@
             {% include "Admin/Modules/flashes.html.twig" %}
             {% include "Admin/Modules/db_save_flashes.html.twig" %}
             {% include "Admin/Event/header-stats.html.twig" %}
+
+            {% include "Admin/Event/single-event-view.html.twig" %}
+            {# TODO: Signed people/children #}
 
             {% include "Admin/Event/event-list.html.twig" %}
 

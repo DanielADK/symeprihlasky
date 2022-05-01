@@ -66,7 +66,7 @@ class Event {
 
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
     #[Groups(["read", "write"])]
-    private bool $activeAssignment;
+    private bool $activeApplication;
 
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
     #[Groups(["write"])]
@@ -179,17 +179,17 @@ class Event {
     /**
      * @return bool
      */
-    public function isActiveAssignment(): bool
+    public function isActiveApplication(): bool
     {
-        return $this->activeAssignment;
+        return $this->activeApplication;
     }
 
     /**
-     * @param bool $activeAssignment
+     * @param bool $activeApplication
      */
-    public function setActiveAssignment(bool $activeAssignment): void
+    public function setActiveApplication(bool $activeApplication): void
     {
-        $this->activeAssignment = $activeAssignment;
+        $this->activeApplication = $activeApplication;
     }
 
     /**
