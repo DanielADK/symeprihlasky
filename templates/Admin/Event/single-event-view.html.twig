@@ -4,214 +4,125 @@
     <div class="box box-success">
         <div class="box-header">
             <i class="fa fa-list"></i>
-            <h1 class="box-title"> Úprava uživatele: {{ event.nameShort }} {{ event.nameFull }}</h1>
+            <h1 class="box-title"> Statistiky o akci : <b>{{ event.nameFull }}</b> ({{ event.nameShort }}, ID:  {{ event.id }})</h1>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
             </div>
         </div>
         <div class="box-body">
-            <form id=editPerson autocomplete=off>
-                <h3>Základní informace</h3>
-                <input type="hidden" name="id" value="{{ editedPerson.id }}">
-                <div class="row">
-                    <div class="form-group col-lg-6">
-                        <label for="name">Jméno:</label>
-
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-edit"></i>
-                            </div>
-                            <input type="text" class="form-control pull-right" name="name" id="name" data-default="{{ editedPerson.name }}" required
-                                   value="{{ editedPerson.name }}">
-                        </div>
-
-                    </div>
-                    <div class="form-group col-lg-6">
-                        <label for="surname">Příjmení:</label>
-
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-edit"></i>
-                            </div>
-                            <input type="text" class="form-control pull-right" name="surname" id="surname"
-                                   data-default="{{ editedPerson.surname }}" required
-                                   value="{{ editedPerson.surname }}">
-                        </div>
-
-                    </div>
-                    <div class="form-group col-lg-6">
-                        <label for="email">E-mail</label>
-                        <div class="input-group">
-                            <span class="input-group-addon">@</span>
-                            <input type="email" class="form-control pull-right" name="email" id="email"
-                                   data-default="{{ editedPerson.email }}" required
-                                   value="{{ editedPerson.email }}">
-                        </div>
-                    </div>
-                    <div class="form-group col-lg-6">
-                        <label for="phone">Telefon</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                            <input type="email" class="form-control pull-right" name="phone" id="phone"
-                                   data-default="{{ editedPerson.phone }}"
-                                   value="{{ editedPerson.phone }}">
-                        </div>
-                    </div>
-                    <div class="form-group col-lg-5">
-                        <label for="birthDate">Datum narození:</label>
-
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                            </div>
-                            <input type="date" class="form-control pull-right" id="birthDate" name="birthDate"
-                                   data-default="{{ editedPerson.birthDate is empty ? "": editedPerson.birthDate|date('Y-m-d') }}"
-                                   value="{{ editedPerson.birthDate is empty ? "": editedPerson.birthDate|date('Y-m-d') }}" data-inputmask="'alias': 'dd.mm.yyyy'" data-mask="">
-                        </div>
-                    </div>
-                    <div class="form-group col-lg-4">
-                        <label for="sex">Pohlaví</label>
-                        <select class="form-control" style="width: 100%;" id="sex" name="sex" data-default="{{ editedPerson.sex }}">
-                            <option value="M" {% if editedPerson.sex == "M" %}selected{% endif %}>
-                                Muž
-                            </option>
-                            <option value="Z" {% if editedPerson.sex == "Z" %}selected{% endif %}>
-                                Žena
-                            </option>
-                            <option value="N" {% if (editedPerson.sex != "M" and editedPerson.sex != "Z") or editedPerson.sex is not defined%}selected{% endif %}>
-                                Neznámé
-                            </option>
-                        </select>
-                    </div>
-                    <div class="form-group col-lg-4">
-                        <label for="shirtSize">Velikost trička:</label>
-
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-black-tie"></i>
-                            </div>
-                            <select class="form-control pull-right" name="shirtSize" id="shirtSize"
-                                    data-default="{{ editedPerson.shirtSize }}" autocomplete=off>
-                                {% set shirtSizes = ["XS", "S", "M", "L", "XL", "XXL", "3XL", "4XL"] %}
-                                {% for size in shirtSizes %}
-                                    <option {% if editedPerson.shirtSize == size %}selected{% endif %}>{{ size }}</option>
-                                {% endfor %}
-                                <option {% if editedPerson.shirtSize == null %}selected{% endif %}>Neznámé</option>
-                            </select>
-                        </div>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-green-gradient"><i class="fa fa-child"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Přihlášených dětí</span>
+                        <span class="info-box-number" id=countOfSignedChildren>
+                            <i class="fa fa-spinner fa-spin fa-fw"></i>
+                            Načítání...
+                        </span>
                     </div>
                 </div>
-                <h3>Bydliště & ostatní</h3>
-                <div class="row">
-                    <input type="hidden" name="address.id"
-                           value="{{ editedPerson.address.id is empty ? "": editedPerson.address.id }}">
-                    <div class="form-group col-lg-6">
-                        <label for="address.street">Ulice:</label>
-
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-home"></i>
-                            </div>
-                            <input type="text" class="form-control pull-right smartform-street-and-number" data-mask name="address.street" id="address.street"
-                                   data-default="{{ editedPerson.address.street }}" required
-                                   value="{{ editedPerson.address.street }}">
-                        </div>
-
-                    </div>
-                    <div class="form-group col-lg-6">
-                        <label for="address.city">Město:</label>
-
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-map-o"></i>
-                            </div>
-                            <input type="text"  class="form-control pull-right smartform-city" name="address.city" id="address.city"
-                                   data-default="{{ editedPerson.address.city }}" required
-                                   value="{{ editedPerson.address.city }}">
-                        </div>
-
-                    </div>
-                    <div class="form-group col-lg-4">
-                        <label for="address.postcode">PSČ:</label>
-
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-map-pin"></i>
-                            </div>
-                            <input type="text" class="form-control pull-right smartform-zip" name="address.postcode" id="address.postcode"
-                                   data-default="{{ editedPerson.address.postcode }}" required
-                                   value="{{ editedPerson.address.postcode }}">
-                        </div>
-
-                    </div>
-                    <div class="form-group col-lg-4 col-md-4">
-                        <label for="ctuMember">Člen ČTU</label>
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-id-card"></i>
-                            </div>
-                            <select class="form-control pull-right" id="ctuMember" name="ctuMember"
-                                    data-default="{{ editedPerson.ctuMember }}" autocomplete="off">
-                                <option value=true {% if editedPerson.ctuMember %}selected{% endif %}>Ano</option>
-                                <option value=false {% if not editedPerson.ctuMember %}selected{% endif %}>Ne</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group col-lg-4 col-md-4">
-                        <label for="deleted">Smazán</label>
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-user-times"></i>
-                            </div>
-                            <select class="form-control pull-right" name="deleted" id="deleted"
-                                    data-default="{{ editedPerson.deleted }}" required autocomplete="off">
-                                <option value=true {% if editedPerson.deleted %}selected{% endif %}>Ano</option>
-                                <option value=false {% if not editedPerson.deleted %}selected{% endif %}>Ne</option>
-                            </select>
-                        </div>
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-yellow-gradient"><i class="fa fa-id-card"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Přihlášených instruktorů</span>
+                        <span class="info-box-number">
+                            <i class="fa fa-spinner fa-spin fa-fw"></i>
+                            Načítání...
+                        </span>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="form-group col-lg-6 col-md-6">
-                        <label for="roles">Role</label>
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-users"></i>
-                            </div>
-                            <select class="form-control pull-right" name="roles" id="roles"
-                                    data-default="{{ editedPerson.roles|json_encode }}" multiple>
-                                {% set roles = ["ROLE_PARENT", "ROLE_LEADER", "ROLE_ADMIN"] %}
-                                {% for role in roles %}
-                                    <option value="{{ role }}" {% if role in editedPerson.roles %}selected{% endif %}>
-                                        {% if role == "ROLE_PARENT" %}
-                                            RODIČ
-                                        {% elseif role == "ROLE_LEADER" %}
-                                            VEDOUCÍ
-                                        {% elseif role == "ROLE_ADMIN" %}
-                                            ADMINISTRÁTOR
-                                        {% endif %}
-                                    </option>
-                                {% endfor %}
-                                </select>
-                        </div>
-                    </div>
-                    <div class="form-group col-lg-4 col-md-4 pull-right">
-                        <label></label>
-                        <input type="submit" onclick="editChildren(event)" class="btn btn-block btn-success" style="margin-top: 60px">
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-red-gradient"><i class="fa fa-user-circle-o"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Přihlášených vedoucích</span>
+                        <span class="info-box-number">
+                            <i class="fa fa-spinner fa-spin fa-fw"></i>
+                            Načítání...
+                        </span>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </section>
-<script type="text/javascript" src="https://secure.smartform.cz/api/v1/smartform.js" async>
-</script>
+<section class="col-xs-12 col-md-12 col-lg-6">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-list"></i>
+            <h1 class="box-title"> Informace o akci: <b>{{ event.nameFull }}</b> ({{ event.nameShort }}, ID:  {{ event.id }})</h1>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="col-12">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td><b>Zkratka:</b></td>
+                        <td>{{ event.nameShort }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Celé jméno:</b></td>
+                        <td>{{ event.nameFull }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Začátek:</b></td>
+                        <td>{{ event.dateStart|date('d.m.Y') }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Konec:</b></td>
+                        <td>{{ event.dateEnd|date('d.m.Y') }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Typ:</b></td>
+                        <td id=typeOfEvent>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Aktivní přihláška:</b></td>
+                        <td id=activeApplication></td>
+                    </tr>
+                    <tr>
+                        <td><b>Kapacita:</b></td>
+                        <td id=capacity></td>
+                    </tr>
+                    <tr>
+                        <td><b>Cena člen/nečlen:</b></td>
+                        <td><span id=priceMember></span>/<span id=priceOther></span></td>
+                    </tr>
+                    <tr>
+                        <td><b>Místo konání:</b></td>
+                        <td><a target="_blank" href="https://www.google.com/maps?q=
+                            {{ event.address.street|replace({' ': '+'}) }} +
+                            {{ event.address.city|replace({' ': '+'}) }} +
+                            {{ event.address.postcode }}">
+                                {{ event.address.street }}, <br>
+                                {{ event.address.city }}, <br>
+                                {{ event.address.postcode }}
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody></table>
+            </div>
+        </div>
+    </div>
+</section>
 <script type="text/javascript">
-    var smartform = smartform || {};
-
-    smartform.beforeInit = function initialize() {
-        smartform.setClientId('XF9XMJ5oqQ');
-    }
+$(document).ready(function () {
+    document.getElementById("activeApplication").innerHTML = ajaxPrepare("activeApplication", "{{ event.activeApplication }}");
+    document.getElementById("typeOfEvent").innerHTML = ajaxPrepare("type", "{{ event.type }}");
+    document.getElementById("capacity").innerHTML = ajaxPrepare("capacity", {{ event.capacity }});
+    document.getElementById("priceMember").innerHTML = ajaxPrepare("priceMember", "{{ event.priceMember }}");
+    document.getElementById("priceOther").innerHTML = ajaxPrepare("priceOther", "{{ event.priceOther }}");
+    document.getElementById("address").innerHTML = ajaxPrepare("address", "{{ event.address }}");
+});
 </script>
-<script src="{{ asset("js/form-ajax/person-patch.js") }}"></script>
+
+<script src="{{ asset("js/datatables/event-info.js") }}"></script>

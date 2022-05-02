@@ -1,8 +1,7 @@
 {# /src/templates/Admin/Person/header-stats.html.twig #}
-<section class="col-md-3 col-sm-6 col-xs-12">
+<section class="col-md-6 col-sm-6 col-xs-12">
     <section class="info-box">
         <span class="info-box-icon bg-green-gradient"><i class="fa fa-users"></i></span>
-
         <div class="info-box-content">
             <span class="info-box-text">Celkový počet uživatelů</span>
             <span class="info-box-number" id="countOfUsers">
@@ -12,10 +11,9 @@
         </div>
     </section>
 </section>
-<section class="col-md-3 col-sm-6 col-xs-12">
+<section class="col-md-6 col-sm-6 col-xs-12">
     <section class="info-box">
         <span class="info-box-icon bg-red-gradient"><i class="fa fa-user-secret"></i></span>
-
         <div class="info-box-content">
             <span class="info-box-text">Počet administrátorů</span>
             <span class="info-box-number" id="countOfAdmins">
@@ -24,10 +22,19 @@
         </div>
     </section>
 </section>
-<section class="col-md-3 col-sm-6 col-xs-12">
+<section class="col-md-6 col-sm-6 col-xs-12">
+    <section class="info-box">
+        <span class="info-box-icon bg-yellow-gradient"><i class="fa fa-id-card"></i></span>
+        <div class="info-box-content">
+            <span class="info-box-text">Počet instruktorů</span>
+            <span class="info-box-number" id="countOfInstructors">
+                <i class="fa fa-spinner fa-spin fa-fw"></i>
+                Načítání...</span>
+        </div>
+    </section>
+</section><section class="col-md-6 col-sm-6 col-xs-12">
     <section class="info-box">
         <span class="info-box-icon bg-yellow-gradient"><i class="fa fa-user-circle-o"></i></span>
-
         <div class="info-box-content">
             <span class="info-box-text">Počet vedoucích</span>
             <span class="info-box-number" id="countOfLeaders">
@@ -36,10 +43,9 @@
         </div>
     </section>
 </section>
-<section class="col-md-3 col-sm-6 col-xs-12">
+<section class="col-md-6 col-sm-6 col-xs-12">
     <section class="info-box">
         <span class="info-box-icon bg-blue-gradient"><i class="fa fa-users"></i></span>
-
         <div class="info-box-content">
             <span class="info-box-text">Počet rodičů</span>
             <span class="info-box-number" id="countOfParents">
