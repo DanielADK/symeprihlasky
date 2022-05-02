@@ -37,7 +37,7 @@ function ajaxPrepare(typ, data, type) {
             'Dívka <i class=\"fa fa-female fa-lg text-red\" aria-hidden=\"true\"></i>' :
             'Chlapec <i class=\"fa fa-male fa-lg text-blue\" aria-hidden=\"true\"></i>';
     } else if (typ === 'type') {
-        switch (data.type) {
+        switch (data) {
             case "JD":
                 return '<h4><span class="label label-primary"><i class="fa fa-map-o"></i> Jednodenní</span></h4>';
             case "VA":
@@ -50,9 +50,15 @@ function ajaxPrepare(typ, data, type) {
                 return 'Neznámé';
         }
     } else if (typ === 'activeApplication') {
-        switch (data.activeApplication) {
+        switch (data) {
+            case "1":
+                return '<h4><span class=\"label label-success\"><i class=\"fa fa-check\"></i> Aktivní</span></h4>';
             case true:
                 return '<h4><span class=\"label label-success\"><i class=\"fa fa-check\"></i> Aktivní</span></h4>';
+            case "0":
+                return '<h4><span class=\"label label-danger\"><i class=\"fa fa-times\"></i> Neaktivní</span></h4>';
+            case "":
+                return '<h4><span class=\"label label-danger\"><i class=\"fa fa-times\"></i> Neaktivní</span></h4>';
             case false:
                 return '<h4><span class=\"label label-danger\"><i class=\"fa fa-times\"></i> Neaktivní</span></h4>';
             default:
@@ -90,19 +96,21 @@ function ajaxPrepare(typ, data, type) {
 
     } else if (typ === 'fullname') {
         return data.name + ' ' + data.surname;
+    }else if (typ === 'capacity') {
+        return data === -1 ? "Neomezená" : data;
     } else if (typ === 'fullEvent') {
         return data.shortName + ',<br>' + data.fullName;
     } else if (typ === 'priceOther') {
-        if (typeof data.priceOther === "undefined") {
+        if (typeof data === "undefined" || data == "-1") {
             return "-";
         } else {
-            return numberToThousandsSep(data.priceOther) + " Kč";
+            return numberToThousandsSep(data) + " Kč";
         }
     } else if (typ === 'priceMember') {
-        if (typeof data.priceMember === "undefined") {
+        if (typeof data === "undefined" || data == "-1") {
             return "-";
         } else {
-            return numberToThousandsSep(data.priceMember) + " Kč";
+            return numberToThousandsSep(data) + " Kč";
         }
     } else if (typ === 'role') {
         var retval = "";

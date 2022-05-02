@@ -6,6 +6,10 @@ function reloadPersonStats() {
         table.rows().data().filter(function(row) {
             return (row.roles.indexOf("ROLE_ADMIN") > -1);
         }).length;
+    document.getElementById("countOfInstructors").innerText =
+        table.rows().data().filter(function(row) {
+            return (row.roles.indexOf("ROLE_INSTRUCTOR") > -1);
+        }).length;
     document.getElementById("countOfLeaders").innerText =
         table.rows().data().filter(function(row) {
             return (row.roles.indexOf("ROLE_LEADER") > -1);

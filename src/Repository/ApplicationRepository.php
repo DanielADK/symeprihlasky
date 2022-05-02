@@ -36,9 +36,8 @@ class ApplicationRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Application
-    {
+
+    public function countChildren(): int {
         return $this->createQueryBuilder('a')
             ->andWhere('a.exampleField = :val')
             ->setParameter('val', $value)
@@ -46,5 +45,5 @@ class ApplicationRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-    */
+
 }

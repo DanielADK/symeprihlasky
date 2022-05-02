@@ -18,7 +18,9 @@
                     <th>Začátek</th>
                     <th>Konec</th>
                     <th>Typ</th>
+                    <th>Adresa</th>
                     <th>Aktivní přihláška</th>
+                    <th>Kapacita</th>
                     <th>Cena člen</th>
                     <th>Cena nečlen</th>
                     {% if is_granted("ROLE_EDIT_EVENT") or is_granted("ROLE_DELETE_EVENT") %}
@@ -58,25 +60,37 @@
         {
             "data": null,
             render: function (data) {
-                return ajaxPrepare("type", data);
+                return ajaxPrepare("type", data.type);
             }
         },
         {
             "data": null,
             render: function (data) {
-                return ajaxPrepare("activeApplication", data);
+                return ajaxPrepare("address", data.address);
             }
         },
         {
             "data": null,
             render: function (data) {
-                return ajaxPrepare("priceMember", data);
+                return ajaxPrepare("activeApplication", data.activeApplication);
             }
         },
         {
             "data": null,
             render: function (data) {
-                return ajaxPrepare("priceOther", data);
+                return ajaxPrepare("capacity", data.capacity);
+            }
+        },
+        {
+            "data": null,
+            render: function (data) {
+                return ajaxPrepare("priceMember", data.priceMember);
+            }
+        },
+        {
+            "data": null,
+            render: function (data) {
+                return ajaxPrepare("priceOther", data.priceOther);
             }
         },
         {% if is_granted("ROLE_EDIT_PERSON") or is_granted("ROLE_DELETE_PERSON") %}

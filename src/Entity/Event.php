@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
@@ -12,6 +13,7 @@ use App\Repository\EventRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
@@ -80,10 +82,21 @@ class Event {
     #[Groups(["read", "write"])]
     private int $priceOther;
 
+    #[ORM\Column(type: 'integer', options: ["default" => -1])]
+    #[Groups(["read", "write"])]
+    private int $capacity;
+
+    #[ORM\ManyToOne(targetEntity: Address::class, inversedBy: 'events')]
+    #[ORM\JoinColumn(referencedColumnName: "id", nullable: false, columnDefinition: "INT NOT NULL DEFAULT 1")]
+    #[MaxDepth(1)]
+    #[ApiSubresource( maxDepth: 1 )]
+    #[Groups(["read", "write"])]
+    private Address $address;
+
     /**
      * @return mixed
      */
-    public function getId()
+    public function getId(): mixed
     {
         return $this->id;
     }
@@ -99,7 +112,7 @@ class Event {
     /**
      * @return mixed
      */
-    public function getNameShort()
+    public function getNameShort(): mixed
     {
         return $this->nameShort;
     }
@@ -193,6 +206,22 @@ class Event {
     }
 
     /**
+     * @return int
+     */
+    public function getCapacity(): int
+    {
+        return $this->capacity;
+    }
+
+    /**
+     * @param int $capacity
+     */
+    public function setCapacity(int $capacity): void
+    {
+        $this->capacity = $capacity;
+    }
+
+    /**
      * @return bool
      */
     public function isDeleted(): bool
@@ -227,9 +256,8 @@ class Event {
     /**
      * @return int
      */
-    public function getPriceOther(): int
-    {
-        return $this->priceOther;
+    public function getPriceOther(): int {
+        return $this->priceOther ?? -1;
     }
 
     /**
@@ -238,6 +266,22 @@ class Event {
     public function setPriceOther(int $priceOther): void
     {
         $this->priceOther = $priceOther;
+    }
+
+    /**
+     * @return Address
+     */
+    public function getAddress(): Address
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param Address $address
+     */
+    public function setAddress(Address $address): void
+    {
+        $this->address = $address;
     }
 
 

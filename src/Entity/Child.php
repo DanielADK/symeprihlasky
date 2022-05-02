@@ -87,13 +87,12 @@ class Child extends EntityRepository {
     #[Groups(["read", "write"])]
     private bool $deleted;
 
-    #[ORM\OneToMany(mappedBy: 'person', targetEntity: Application::class)]
+    #[ORM\OneToMany(mappedBy: 'child', targetEntity: Application::class)]
+    #[ORM\JoinColumn(nullable: true)]
     #[MaxDepth(1)]
-    #[ApiSubresource(
-        maxDepth: 1
-    )]
+    #[ApiSubresource( maxDepth: 1 )]
     #[Groups(["read", "write"])]
-    private Collection $applications;
+    private ?Collection $applications;
 
     /**
      * @return int

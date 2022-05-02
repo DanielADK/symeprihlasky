@@ -55,9 +55,17 @@ class Address {
     private string $postcode;
 
     #[ORM\OneToMany(mappedBy: 'address', targetEntity: Person::class)]
+    #[ORM\JoinColumn(nullable: true)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
-    private Collection $people;
+    private ?Collection $people;
+
+    #[ORM\OneToMany(mappedBy: 'address', targetEntity: Event::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    #[MaxDepth(1)]
+    #[ApiSubresource( maxDepth: 1 )]
+//    #[Groups(["read"])]
+    private ?Collection $events;
 
     public function __construct(
         string $street,
@@ -154,6 +162,22 @@ class Address {
     public function setPeople(ArrayCollection|Collection $people): void
     {
         $this->people = $people;
+    }
+
+    /**
+     * @return Collection|null
+     */
+    public function getEvents(): ?Collection
+    {
+        return $this->events;
+    }
+
+    /**
+     * @param Collection|null $events
+     */
+    public function setEvents(?Collection $events): void
+    {
+        $this->events = $events;
     }
 
     public function __toString(): string {

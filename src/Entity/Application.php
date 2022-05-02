@@ -48,12 +48,18 @@ class Application {
     private Event $event;
 
     #[ORM\ManyToOne(targetEntity: Person::class, inversedBy: 'applications')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[NotBlank]
+    #[ORM\JoinColumn(nullable: true)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
     #[Groups(["read"])]
-    private Person $person;
+    private ?Person $person;
+
+    #[ORM\ManyToOne(targetEntity: Child::class, inversedBy: 'applications')]
+    #[ORM\JoinColumn(nullable: true)]
+    #[MaxDepth(1)]
+    #[ApiSubresource( maxDepth: 1 )]
+    #[Groups(["read"])]
+    private ?Child $child;
 
     #[ORM\Column(type: 'datetime')]
     #[Groups(["read"])]
@@ -78,6 +84,38 @@ class Application {
         $this->person = $person;
 
         return $this;
+    }
+
+    /**
+     * @return Child
+     */
+    public function getChild(): Child
+    {
+        return $this->child;
+    }
+
+    /**
+     * @param Child $child
+     */
+    public function setChild(Child $child): void
+    {
+        $this->child = $child;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeleted(): string
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param string $deleted
+     */
+    public function setDeleted(string $deleted): void
+    {
+        $this->deleted = $deleted;
     }
 
     public function getSignDate(): ?\DateTimeInterface
