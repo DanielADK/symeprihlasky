@@ -11,11 +11,11 @@
             </div>
         </div>
         <div class="box-body">
-            <div class="col-md-6 col-sm-12 col-xs-12">
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                 <div class="info-box">
                     <span class="info-box-icon bg-green-gradient"><i class="fa fa-child"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Přihlášených dětí</span>
+                        <span class="info-box-text">Děti</span>
                         <span class="info-box-number" id=countOfSignedChildren>
                             <i class="fa fa-spinner fa-spin fa-fw"></i>
                             Načítání...
@@ -23,11 +23,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-sm-12 col-xs-12">
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                 <div class="info-box">
                     <span class="info-box-icon bg-yellow-gradient"><i class="fa fa-id-card"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Přihlášených instruktorů</span>
+                        <span class="info-box-text">Instruktoři</span>
                         <span class="info-box-number">
                             <i class="fa fa-spinner fa-spin fa-fw"></i>
                             Načítání...
@@ -35,11 +35,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-sm-12 col-xs-12">
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                 <div class="info-box">
                     <span class="info-box-icon bg-red-gradient"><i class="fa fa-user-circle-o"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Přihlášených vedoucích</span>
+                        <span class="info-box-text">Vedoucí</span>
                         <span class="info-box-number">
                             <i class="fa fa-spinner fa-spin fa-fw"></i>
                             Načítání...
@@ -121,7 +121,6 @@ $(document).ready(function () {
     document.getElementById("capacity").innerHTML = ajaxPrepare("capacity", {{ event.capacity }});
     document.getElementById("priceMember").innerHTML = ajaxPrepare("priceMember", "{{ event.priceMember }}");
     document.getElementById("priceOther").innerHTML = ajaxPrepare("priceOther", "{{ event.priceOther }}");
-    document.getElementById("address").innerHTML = ajaxPrepare("address", "{{ event.address }}");
 });
 </script>
 

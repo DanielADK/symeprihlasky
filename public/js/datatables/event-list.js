@@ -28,7 +28,7 @@ $(document).ready(function () {
         "language": {
             "url": "https://cdn.datatables.net/plug-ins/1.11.0/i18n/cs.json"
         },
-        "order": [[6, 'asc'], [3, 'asc']],
+        "order": [[7, 'asc'], [3, 'asc']],
         "fnInitComplete": reloadEventsStats
     });
 
