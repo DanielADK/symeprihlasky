@@ -1,8 +1,7 @@
 
 function reloadEventsStats() {
-    var table = $('#events').DataTable();
-    document.getElementById("countOfEvents").innerText = table.rows().data().length;
-    document.getElementById("countOfActive").innerText =
+    var table = $('#signedChildren').DataTable();
+    document.getElementById("countOfSignedChildren").innerText = table.rows().data().length;
         table.rows().data().filter(function(row) {
             return row.activeApplication;
         }).length;
@@ -11,7 +10,7 @@ function reloadEventsStats() {
 $(document).ready(function () {
     var table = $('#signedChildren').DataTable({
         "ajax": {
-            "url": ajaxURL,
+            "url": ajaxURLSignedChildren,
             "dataSrc": ""
         },
         responsive: true,
