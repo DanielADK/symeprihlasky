@@ -64,7 +64,6 @@ class Address {
     #[ORM\JoinColumn(nullable: true)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
-//    #[Groups(["read"])]
     private ?Collection $events;
 
     public function __construct(

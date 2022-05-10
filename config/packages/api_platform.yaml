@@ -23,3 +23,5 @@ api_platform:
         json: ['application/vnd.datatables+json', 'application/json']
     swagger:
         versions: [3]
+    eager_loading:
+        enabled: false

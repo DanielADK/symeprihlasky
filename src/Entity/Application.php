@@ -89,7 +89,7 @@ class Application {
     /**
      * @return Child
      */
-    public function getChild(): Child
+    public function getChild(): Child | null
     {
         return $this->child;
     }

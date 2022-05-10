@@ -26,8 +26,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
         "get" => ["security" => "is_granted('ROLE_VIEW_CHILD')"],
         "put" => ["security" => "is_granted('ROLE_ADD_CHILD')"],
         "patch" => ["security" => "is_granted('ROLE_EDIT_CHILD')"]
-    ], # Deletion is missing because of archiving.
-    denormalizationContext: ["groups" => ["write"]],
+    ],
+    denormalizationContext: ["groups" => ["write"]], # Deletion is missing because of archiving.
+    forceEager: false,
     normalizationContext: ["groups" => ["read"]],
 )]
 #[ApiFilter(BooleanFilter::class, properties: ["active", "ctu_member"])]
@@ -91,7 +92,7 @@ class Child extends EntityRepository {
     #[ORM\JoinColumn(nullable: true)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
-    #[Groups(["read", "write"])]
+    #[Groups(["read"])]
     private ?Collection $applications;
 
     /**

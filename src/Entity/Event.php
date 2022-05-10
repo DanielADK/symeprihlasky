@@ -90,7 +90,7 @@ class Event {
     #[ORM\JoinColumn(referencedColumnName: "id", nullable: false, columnDefinition: "INT NOT NULL DEFAULT 1")]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
-    #[Groups(["read", "write"])]
+    #[Groups(["read"])]
     private Address $address;
 
     /**
