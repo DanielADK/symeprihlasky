@@ -15,6 +15,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: ChildRepository::class)]
@@ -27,9 +29,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
         "put" => ["security" => "is_granted('ROLE_ADD_CHILD')"],
         "patch" => ["security" => "is_granted('ROLE_EDIT_CHILD')"]
     ],
-    denormalizationContext: ["groups" => ["write"]], # Deletion is missing because of archiving.
+    denormalizationContext: ["groups" => ["write"]],
     forceEager: false,
-    normalizationContext: ["groups" => ["read"]],
+    normalizationContext: ["groups" => ["read"], "enable_max_depth" => true]
 )]
 #[ApiFilter(BooleanFilter::class, properties: ["active", "ctu_member"])]
 #[ApiFilter(SearchFilter::class, properties: ["name" => "partial", "surname" => "partial", "parent" => "exact", "address" => "exact"])]
@@ -39,11 +41,11 @@ class Child extends EntityRepository {
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     #[ApiProperty(identifier: true)]
-    #[Groups(["read"])]
+    #[Groups(["read", "infoonly"])]
     private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["read", "write"])]
+    #[Groups(["read", "write", "infoonly"])]
     #[NotBlank]
     private string $name;
 
@@ -92,7 +94,7 @@ class Child extends EntityRepository {
     #[ORM\JoinColumn(nullable: true)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
-    #[Groups(["read"])]
+    #[Groups(["applications"])]
     private ?Collection $applications;
 
     /**

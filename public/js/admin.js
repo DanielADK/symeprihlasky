@@ -68,10 +68,10 @@ function ajaxPrepare(typ, data, type) {
         var date = new Date(data);
         return date.getDate() + ". " + (date.getMonth()+1) + ". " + date.getFullYear();
     } else if (typ === 'birthDateWithAge') {
-        var dateSplitt = data.split(' ')[0].split('-');
-        return type === 'display' || type === 'filter' ?
-            dateSplitt[2] + '.' + dateSplitt[1] + '.' + dateSplitt[0] + ' (' + data.age + ' let)' :
-            data;
+        var date = new Date(data);
+        var age = new Date(Date.now() - date.getTime()).getUTCFullYear()-1970;
+        return date.getDate() + ". " + (date.getMonth()+1) + ". " + date.getFullYear()
+            + " (" + age + " let)";
 
     } else if (typ === 'signDateTime') {
         var DateTime = data.split(' ');
@@ -84,6 +84,11 @@ function ajaxPrepare(typ, data, type) {
     } else if (typ === 'email') {
         return '<a href="mailto:' + data.email + '">' +
             data.email +
+            '</a>';
+
+    } else if (typ === 'parent') {
+        return '<a href="/admin/rodic/zobrazit/' + data.id + '">' +
+            data.name + ' ' + data.surname +
             '</a>';
 
     } else if (typ === 'phone') {
