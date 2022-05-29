@@ -1,0 +1,99 @@
+<section class="col-xs-12">
+    <div class="box box-primary">
+        <div class="box-header">
+            <i class="fa fa-list"></i>
+            <h1 class="box-title"> Všichni rodiče </h1>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <table id="people" class="table table-hover table-striped table-bordered table-responsive">
+                <thead>
+                <tr class="text-center">
+                    <th>ID</th>
+                    <th>Jméno <br>a příjmení</th>
+                    <th>Email</th>
+                    <th>Telefon</th>
+                    <th>Adresa</th
+                    {% if is_granted("ROLE_EDIT_PERSON") or is_granted("ROLE_DELETE_PERSON") %}
+                        <th>Akce</th>
+                        <th>Smazán?</th>
+                    {% endif %}
+
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</section>
+<script>
+    var ajaxURL;
+    {% if is_granted("ROLE_DELETE_CHILDREN") %}
+    ajaxURL = "/api/children&groups[]=parent";
+    {% else %}
+    ajaxURL = "/api/children?deleted=false&groups[]=parent";
+    {% endif %}
+    var columns = [
+        {"data": "id"},
+        {
+            "data": null,
+            render: function (data) {
+                return data.name + " " + data.surname;
+            }
+        },
+        {
+            "data": null,
+            render: function (data) {
+                return ajaxPrepare("parent", data.parent);
+            }
+        },
+        {
+            "data": null,
+            render: function (data) {
+                return ajaxPrepare("address", data.address);
+            }
+        },
+        {
+            "data": null,
+            render: function (data) {
+                return ajaxPrepare("birthDateWithAge", data.birthDate);
+            }
+        },
+        {
+            "data": null,
+            render: function (data) {
+                return ajaxPrepare("sex", data.sex);
+            }
+        },
+        {"data": "shirtSize"},
+        {
+            "data": null,
+            render: function (data) {
+                return ajaxPrepare("yesno", data.member);
+            }
+        },
+        {% if is_granted("ROLE_EDIT_PERSON") or is_granted("ROLE_DELETE_PERSON") %}
+        {
+            "data": null,
+            render: function(data) {
+                return '<a href="/admin/uzivatele/upravit/'+data.id+'" class="btn btn-block btn-sm btn-success">Upravit<i class="fa fa-fw fa-wrench"></a>'
+            }
+        },
+        {
+            "data": null,
+            render: function(data) {
+                if (data.deleted) {
+                    return '<span class="label label-danger">SMAZÁN!</span>'
+                } else {
+                    return '<span class="label label-default">Nikoliv</span>';
+                }
+            }
+        },
+        {% endif %}
+
+
+    ];
+</script>
+<script src="{{ asset("js/datatables/children-list.js") }}"></script>

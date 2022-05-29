@@ -14,7 +14,7 @@
 
         <!-- Menu -->
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">NAVIGACE</li>
+            <li class="header">E-PŘIHLÁŠKY</li>
             <li class="treeview {% if route_name=='admin_home' %}active{% endif %}" >
                 <a href="{{ path("admin_home") }}" {% if route_name=='admin_home' %}class="active"{% endif %}>
                     <i class="fa fa-home"></i> <span>Úvodní obrazovka</span>
@@ -66,8 +66,8 @@
                         <span>Rodiče</span><span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i></span></a>
                     <ul class="treeview-menu">
-                        <li {% if route_name=='admin_parent_view' %}class="active"{% endif %}>
-                            <a href="#">
+                        <li {% if route_name=='admin_parent_list' %}class="active"{% endif %}>
+                            <a href="{{ path('admin_parent_list') }}">
                                 <i class="fa fa-list"></i><span>Seznam rodičů</span>
                             </a>
                         </li>
@@ -123,20 +123,6 @@
                     </ul>
                 </li>
             {% endif %}
-            {% if is_granted("ROLE_VIEW_PERSON") %}
-                <li {% if route_name=='admin_person_list' or route_name=='admin_person_edit' %}class="active"{% endif %}>
-                    <a href="{{ path('admin_person_list') }}">
-                        <i class="fa fa-user-circle"></i><span>Uživatelé</span>
-                    </a>
-                </li>
-            {% endif %}
-            {% if is_granted("ROLE_VIEW_NEWSLETTER") %}
-                <li>
-                    <a href="#" {% if route_name=='admin_newsletter' %}class="active"{% endif %}>
-                    <i class="nav-icon fa fa-envelope"></i><span>Newslettery</span>
-                    </a>
-                </li>
-            {% endif %}
             {% if is_granted("ROLE_VIEW_LOGS") %}
                 <li>
                     <a href="#" {% if route_name=='admin_logs' %}class="active"{% endif %}>
@@ -144,8 +130,17 @@
                     </a>
                 </li>
             {% endif %}
-            <li class="header">UŽIVATELSKÁ NASTAVENÍ</li>
-            <li class=""><a href="#"><i class="fa fa-link"></i> <span>Nastavení</span></a></li>
+            <li class="header">EMAIL (hudba budoucnosti)</li>
+            {% if is_granted("ROLE_VIEW_NEWSLETTER") %}
+                <li>
+                    <a href="#" {% if route_name=='admin_newsletter' %}class="active"{% endif %}>
+                    <i class="nav-icon fa fa-envelope"></i><span>Newslettery</span>
+                    </a>
+                </li>
+            {% endif %}
+            <li class="header">DISK (hudba budoucnosti)</li>
+            <li class="header">FOTKY (hudba budoucnosti)</li>
+            <li class="header">PŘÍSPĚVKY (hudba budoucnosti)</li>
         </ul>
         <!-- /.sidebar-menu -->
     </section>

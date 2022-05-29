@@ -7,6 +7,8 @@ use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Elasticsearch\DataProvider\Filter\MatchFilter;
+use ApiPlatform\Core\Bridge\Elasticsearch\DataProvider\Filter\TermFilter;
 use ApiPlatform\Core\Serializer\Filter\GroupFilter;
 use App\Repository\PersonRepository;
 use Doctrine\Common\Collections\Collection;

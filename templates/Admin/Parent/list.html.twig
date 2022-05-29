@@ -1,6 +1,6 @@
 {# /src/templates/Admin/Person/list.html.twig #}
 {% extends "Admin/base.html.twig" %}
-{% block title %}E-Přihlášky - Seznam dětí{% endblock %}
+{% block title %}E-Přihlášky - Seznam uživatelů{% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/bower_components/datatables/datatables.min.css') }}">
 {% endblock %}
@@ -12,9 +12,9 @@
         <section class="content container-fluid">
             {% include "Admin/Modules/flashes.html.twig" %}
             {% include "Admin/Modules/db_save_flashes.html.twig" %}
-            {% include "Admin/Children/header-stats.html.twig" %}
+            {% include "Admin/Parent/header-stats.html.twig" %}
 
-            {% include "Admin/Children/children-list.html.twig" %}
+            {% include "Admin/Parent/parent-list.html.twig" %}
 
         </section>
     </section>
