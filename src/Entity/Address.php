@@ -7,6 +7,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Serializer\Filter\GroupFilter;
 use App\Repository\AddressRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -31,6 +32,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
     normalizationContext: ["groups" => ["read"]],
 )]
 #[ApiFilter(SearchFilter::class, properties: ["street" => "partial", "city" => "partial", "postcode" => "exact", "people" => "partial"])]
+#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["people"]])]
+#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["events"]])]
 class Address {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -58,12 +61,14 @@ class Address {
     #[ORM\JoinColumn(nullable: true)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
+    #[Groups(["people"])]
     private ?Collection $people;
 
     #[ORM\OneToMany(mappedBy: 'address', targetEntity: Event::class)]
     #[ORM\JoinColumn(nullable: true)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
+    #[Groups(["events"])]
     private ?Collection $events;
 
     public function __construct(

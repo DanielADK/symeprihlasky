@@ -9,6 +9,7 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Serializer\Filter\GroupFilter;
 use App\Repository\EventRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -44,22 +45,22 @@ class Event {
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     #[Groups(["read", "write"])]
     #[NotBlank]
-    private $nameShort;
+    private string $nameShort;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["read", "write"])]
     #[NotBlank]
-    private $nameFull;
+    private string $nameFull;
 
     #[ORM\Column(type: 'date')]
     #[Groups(["read", "write"])]
     #[NotBlank]
-    private $dateStart;
+    private \DateTimeInterface $dateStart;
 
     #[ORM\Column(type: 'date')]
     #[Groups(["read", "write"])]
     #[NotBlank]
-    private $dateEnd;
+    private \DateTimeInterface $dateEnd;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["read", "write"])]
@@ -96,56 +97,49 @@ class Event {
     /**
      * @return mixed
      */
-    public function getId(): mixed
-    {
+    public function getId(): int {
         return $this->id;
     }
 
     /**
-     * @param mixed $id
+     * @param int $id
      */
-    public function setId($id): void
-    {
+    public function setId(int $id): void {
         $this->id = $id;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getNameShort(): mixed
-    {
+    public function getNameShort(): string {
         return $this->nameShort;
     }
 
     /**
      * @param mixed $nameShort
      */
-    public function setNameShort($nameShort): void
-    {
+    public function setNameShort(string $nameShort): void {
         $this->nameShort = $nameShort;
     }
 
     /**
      * @return mixed
      */
-    public function getNameFull()
-    {
+    public function getNameFull(): string {
         return $this->nameFull;
     }
 
     /**
      * @param mixed $nameFull
      */
-    public function setNameFull($nameFull): void
-    {
+    public function setNameFull(string $nameFull): void {
         $this->nameFull = $nameFull;
     }
 
     /**
      * @return mixed
      */
-    public function getDateStart()
-    {
+    public function getDateStart() {
         return $this->dateStart;
     }
 
