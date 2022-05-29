@@ -34,9 +34,9 @@
 <script>
     var ajaxURL;
     {% if is_granted("ROLE_DELETE_CHILDREN") %}
-    ajaxURL = "/api/children";
+    ajaxURL = "/api/children&groups[]=parent";
     {% else %}
-    ajaxURL = "/api/children?deleted=false";
+    ajaxURL = "/api/children?deleted=false&groups[]=parent";
     {% endif %}
     var columns = [
         {"data": "id"},
