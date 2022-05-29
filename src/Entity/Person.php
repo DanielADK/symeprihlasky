@@ -7,6 +7,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Serializer\Filter\GroupFilter;
 use App\Repository\PersonRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -39,6 +40,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 )]
 #[ApiFilter(BooleanFilter::class, properties: ["deleted", "ctu_member"])]
 #[ApiFilter(SearchFilter::class, properties: ["name" => "partial", "surname" => "partial", "address" => "exact"])]
+#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["children"]])]
+#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["applications"]])]
 class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -68,7 +71,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\JoinColumn(nullable: true)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
-    #[Groups(["read", "write"])]
+    #[Groups(["children"])]
     private ?Collection $children;
 
     #[ORM\Column(type: 'date', nullable: true)]
@@ -112,7 +115,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\JoinColumn(nullable: true)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
-    #[Groups(["read", "write"])]
+    #[Groups(["applications"])]
     private ?Collection $applications;
 
 
