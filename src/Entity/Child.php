@@ -9,6 +9,7 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Serializer\Filter\GroupFilter;
 use App\Repository\ChildRepository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Common\Collections\Collection;
@@ -36,16 +37,18 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ApiFilter(BooleanFilter::class, properties: ["active", "ctu_member"])]
 #[ApiFilter(SearchFilter::class, properties: ["name" => "partial", "surname" => "partial", "parent" => "exact", "address" => "exact"])]
 #[ApiFilter(DateFilter::class, properties: ["birth_date"])]
+#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["parent"]])]
+#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["applications"]])]
 class Child extends EntityRepository {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     #[ApiProperty(identifier: true)]
-    #[Groups(["read", "infoonly"])]
+    #[Groups(["read"])]
     private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["read", "write", "infoonly"])]
+    #[Groups(["read", "write"])]
     #[NotBlank]
     private string $name;
 
@@ -58,7 +61,7 @@ class Child extends EntityRepository {
     #[ORM\JoinColumn(nullable: false)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
-    #[Groups(["read", "write"])]
+    #[Groups(["parent"])]
     #[NotBlank]
     private Person $parent;
 
@@ -100,176 +103,154 @@ class Child extends EntityRepository {
     /**
      * @return int
      */
-    public function getId(): int
-    {
+    public function getId(): int {
         return $this->id;
     }
 
     /**
      * @param int $id
      */
-    public function setId(int $id): void
-    {
+    public function setId(int $id): void {
         $this->id = $id;
     }
 
     /**
      * @return string
      */
-    public function getName(): string
-    {
+    public function getName(): string {
         return $this->name;
     }
 
     /**
      * @param string $name
      */
-    public function setName(string $name): void
-    {
+    public function setName(string $name): void {
         $this->name = $name;
     }
 
     /**
      * @return string
      */
-    public function getSurname(): string
-    {
+    public function getSurname(): string {
         return $this->surname;
     }
 
     /**
      * @param string $surname
      */
-    public function setSurname(string $surname): void
-    {
+    public function setSurname(string $surname): void {
         $this->surname = $surname;
     }
 
     /**
      * @return Person
      */
-    public function getParent(): Person
-    {
+    public function getParent(): Person {
         return $this->parent;
     }
 
     /**
      * @param Person $parent
      */
-    public function setParent(Person $parent): void
-    {
+    public function setParent(Person $parent): void {
         $this->parent = $parent;
     }
 
     /**
      * @return Address
      */
-    public function getAddress(): Address
-    {
+    public function getAddress(): Address {
         return $this->address;
     }
 
     /**
      * @param Address $address
      */
-    public function setAddress(Address $address): void
-    {
+    public function setAddress(Address $address): void {
         $this->address = $address;
     }
 
     /**
      * @return \DateTimeInterface
      */
-    public function getBirthDate(): \DateTimeInterface
-    {
+    public function getBirthDate(): \DateTimeInterface {
         return $this->birthDate;
     }
 
     /**
      * @param \DateTimeInterface $birthDate
      */
-    public function setBirthDate(\DateTimeInterface $birthDate): void
-    {
+    public function setBirthDate(\DateTimeInterface $birthDate): void {
         $this->birthDate = $birthDate;
     }
 
     /**
      * @return string
      */
-    public function getSex(): string
-    {
+    public function getSex(): string {
         return $this->sex;
     }
 
     /**
      * @param string $sex
      */
-    public function setSex(string $sex): void
-    {
+    public function setSex(string $sex): void {
         $this->sex = $sex;
     }
 
     /**
      * @return string
      */
-    public function getShirtSize(): string
-    {
+    public function getShirtSize(): string {
         return $this->shirtSize;
     }
 
     /**
      * @param string $shirtSize
      */
-    public function setShirtSize(string $shirtSize): void
-    {
+    public function setShirtSize(string $shirtSize): void {
         $this->shirtSize = $shirtSize;
     }
 
     /**
      * @return bool
      */
-    public function isCtuMember(): bool
-    {
+    public function isCtuMember(): bool {
         return $this->ctuMember;
     }
 
     /**
      * @param bool $ctuMember
      */
-    public function setCtuMember(bool $ctuMember): void
-    {
+    public function setCtuMember(bool $ctuMember): void {
         $this->ctuMember = $ctuMember;
     }
 
     /**
      * @return bool
      */
-    public function isDeleted(): bool
-    {
+    public function isDeleted(): bool {
         return $this->deleted;
     }
 
     /**
      * @param bool $deleted
      */
-    public function setDeleted(bool $deleted): void
-    {
+    public function setDeleted(bool $deleted): void {
         $this->deleted = $deleted;
     }
 
     /**
      * @return Collection
      */
-    public function getApplications(): Collection
-    {
+    public function getApplications(): Collection {
         return $this->applications;
     }
 
     /**
      * @param Collection $applications
      */
-    public function setApplications(Collection $applications): void
-    {
+    public function setApplications(Collection $applications): void {
         $this->applications = $applications;
     }
 

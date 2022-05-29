@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
 
 class AuthenticationEntryPoint implements AuthenticationEntryPointInterface {
-    private $urlGenerator;
+    private UrlGeneratorInterface $urlGenerator;
 
     public function __construct(UrlGeneratorInterface $urlGenerator) {
         $this->urlGenerator = $urlGenerator;
@@ -18,7 +18,7 @@ class AuthenticationEntryPoint implements AuthenticationEntryPointInterface {
     /**
      * @inheritDoc
      */
-    public function start(Request $request, AuthenticationException $authException = null) {
+    public function start(Request $request, AuthenticationException $authException = null): RedirectResponse|Response {
         $request->getSession()->getFlashBag()->add("info", "Pro tuto sekci se musíte příhlásit.");
         return new RedirectResponse($this->urlGenerator->generate("login"));
     }
