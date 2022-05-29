@@ -1,22 +1,18 @@
 
 function reloadPersonStats() {
     var table = $('#people').DataTable();
-    document.getElementById("countOfUsers").innerText = table.rows().data().length;
-    document.getElementById("countOfAdmins").innerText =
+    document.getElementById("countOfChildren").innerText = table.rows().data().length;
+    document.getElementById("countOfGirls").innerText =
         table.rows().data().filter(function(row) {
-            return (row.roles.indexOf("ROLE_ADMIN") > -1);
+            return row.sex === "F";
         }).length;
-    document.getElementById("countOfInstructors").innerText =
+    document.getElementById("countOfBoys").innerText =
         table.rows().data().filter(function(row) {
-            return (row.roles.indexOf("ROLE_INSTRUCTOR") > -1);
+            return row.sex === "M";
         }).length;
-    document.getElementById("countOfLeaders").innerText =
+    document.getElementById("countOfMembers").innerText =
         table.rows().data().filter(function(row) {
-            return (row.roles.indexOf("ROLE_LEADER") > -1);
-        }).length;
-    document.getElementById("countOfParents").innerText =
-        table.rows().data().filter(function(row) {
-            return (row.roles.indexOf("ROLE_PARENT") > -1);
+            return row.member === true;
         }).length;
 }
 
