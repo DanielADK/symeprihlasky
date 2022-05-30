@@ -41,7 +41,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
     normalizationContext: ["groups" => ["read"]]
 )]
 #[ApiFilter(BooleanFilter::class, properties: ["deleted", "ctu_member"])]
-#[ApiFilter(SearchFilter::class, properties: ["name" => "partial", "surname" => "partial", "address" => "exact"])]
+#[ApiFilter(SearchFilter::class, properties: [
+    "name" => "partial",
+    "surname" => "partial",
+    "address" => "exact"])]
 #[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["children"]])]
 #[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["applications"]])]
 class Person implements UserInterface, PasswordAuthenticatedUserInterface {

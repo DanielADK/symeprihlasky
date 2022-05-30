@@ -32,7 +32,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
     normalizationContext: ["groups" => ["read"]],
 )]
 #[ApiFilter(BooleanFilter::class, properties: ["deleted"])]
-#[ApiFilter(SearchFilter::class, properties: ["name_short" => "partial", "type" => "exact"])]
+#[ApiFilter(SearchFilter::class, properties: [
+    "name_short" => "partial",
+    "type" => "exact"])]
 #[ApiFilter(DateFilter::class, properties: ["date_start", "date_end"])]
 class Event {
     #[ORM\Id]
