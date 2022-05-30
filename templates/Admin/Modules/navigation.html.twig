@@ -15,9 +15,9 @@
         <!-- Menu -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">E-PŘIHLÁŠKY</li>
-            <li class="treeview {% if route_name=='admin_home' %}active{% endif %}" >
+            <li class=" {% if route_name=='admin_home' %}active{% endif %}" >
                 <a href="{{ path("admin_home") }}" {% if route_name=='admin_home' %}class="active"{% endif %}>
-                    <i class="fa fa-home"></i> <span>Úvodní obrazovka</span>
+                    <i class="fa fa-home"></i> <span>Úvodní stránka</span>
                 </a>
             </li>
             <li class="treeview {% if section=="event" %}active{% endif %}">
@@ -60,63 +60,21 @@
                 </ul>
             </li>
             {% endif %}
-            {% if is_granted("ROLE_VIEW_PARENT") %}
-                <li class="treeview {% if section=="parent" %}active{% endif %}">
+            {% if is_granted("ROLE_VIEW_PERSON") %}
+                <li class="treeview {% if section=="person" %}active{% endif %}">
                     <a href="#"><i class="nav-icon fa fa-users"></i>
-                        <span>Rodiče</span><span class="pull-right-container">
+                        <span>Lidé</span><span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i></span></a>
                     <ul class="treeview-menu">
-                        <li {% if route_name=='admin_parent_list' %}class="active"{% endif %}>
-                            <a href="{{ path('admin_parent_list') }}">
-                                <i class="fa fa-list"></i><span>Seznam rodičů</span>
+                        <li {% if route_name=='admin_person_list' %}class="active"{% endif %}>
+                            <a href="{{ path('admin_person_list') }}">
+                                <i class="fa fa-list"></i><span>Seznam lidí</span>
                             </a>
                         </li>
-                        {% if is_granted("ROLE_EDIT_PARENT") %}
-                            <li {% if route_name=='admin_parent_edit' %}class="active"{% endif %}>
+                        {% if is_granted("ROLE_EDIT_PERSON") %}
+                            <li {% if route_name=='admin_person_edit' %}class="active"{% endif %}>
                                 <a href="#">
-                                    <i class="fa fa-edit"></i><span>Správa rodičů</span>
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </li>
-            {% endif %}
-            {% if is_granted("ROLE_VIEW_INSTRUCTOR") %}
-                <li class="treeview {% if section=="instructor" %}active{% endif %}">
-                    <a href="#"><i class="nav-icon fa fa-id-card"></i>
-                        <span>Instruktoři</span><span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i></span></a>
-                    <ul class="treeview-menu">
-                        <li {% if route_name=='admin_instructor_view' %}class="active"{% endif %}>
-                            <a href="#">
-                                <i class="fa fa-list"></i><span>Seznam instruktorů</span>
-                            </a>
-                        </li>
-                        {% if is_granted("ROLE_EDIT_INSTRUCTOR") %}
-                            <li {% if route_name=='admin_instructor_edit' %}class="active"{% endif %}>
-                                <a href="#">
-                                    <i class="fa fa-edit"></i><span>Správa instruktorů</span>
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </li>
-            {% endif %}
-            {% if is_granted("ROLE_VIEW_LEADER") %}
-                <li class="treeview {% if section=="leader" %}active{% endif %}">
-                    <a href="#"><i class="nav-icon fa fa-user-circle-o"></i>
-                        <span>Vedoucí</span><span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i></span></a>
-                    <ul class="treeview-menu">
-                        <li {% if route_name=='admin_leader_view' %}class="active"{% endif %}>
-                            <a href="#">
-                                <i class="fa fa-list"></i><span>Seznam vedoucích</span>
-                            </a>
-                        </li>
-                        {% if is_granted("ROLE_EDIT_LEADER") %}
-                            <li {% if route_name=='admin_leader_edit' %}class="active"{% endif %}>
-                                <a href="#">
-                                    <i class="fa fa-edit"></i><span>Správa vedoucích</span>
+                                    <i class="fa fa-edit"></i><span>Správa lidí</span>
                                 </a>
                             </li>
                         {% endif %}
@@ -124,21 +82,26 @@
                 </li>
             {% endif %}
             {% if is_granted("ROLE_VIEW_LOGS") %}
-                <li>
-                    <a href="#" {% if route_name=='admin_logs' %}class="active"{% endif %}>
+                <li class=" {% if route_name=='admin_logs' %}active{% endif %}" >
+                    <a href="{{ path('admin_logs') }}" {% if route_name=='admin_logs' %}class="active"{% endif %}>
                         <i class="nav-icon fa fa-archive"></i><span>Bezpečnostní záznamy</span>
                     </a>
                 </li>
             {% endif %}
             <li class="header">EMAIL (hudba budoucnosti)</li>
             {% if is_granted("ROLE_VIEW_NEWSLETTER") %}
-                <li>
+                <li class=" {% if route_name=='admin_newsletter' %}active{% endif %}" >
                     <a href="#" {% if route_name=='admin_newsletter' %}class="active"{% endif %}>
                     <i class="nav-icon fa fa-envelope"></i><span>Newslettery</span>
                     </a>
                 </li>
             {% endif %}
-            <li class="header">DISK (hudba budoucnosti)</li>
+            <li class="header">DISK</li>
+            <li>
+                <a href="https://drive.google.com/drive/folders/1dunqe4M6I2IXQojFzzgYbvFFHM9M5QVa">
+                    <span> Disk <small><i class="fa fa-external-link" aria-hidden="true"></i></small></span>
+                </a>
+            </li>
             <li class="header">FOTKY (hudba budoucnosti)</li>
             <li class="header">PŘÍSPĚVKY (hudba budoucnosti)</li>
         </ul>

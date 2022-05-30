@@ -29,7 +29,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
     denormalizationContext: ["groups" => ["write"]],
     normalizationContext: ["groups" => ["read"]],
 )]
-#[ApiFilter(SearchFilter::class, properties: ["hash" => "exact", "event" => "exact", "person" => "exact"])]
+#[ApiFilter(SearchFilter::class, properties: [
+    "hash" => "exact",
+    "event" => "exact",
+    "person" => "exact"])]
 #[ApiFilter(DateFilter::class, properties: ["sign_date"])]
 class Application {
     #[ORM\Column(type: 'string', length: 255)]

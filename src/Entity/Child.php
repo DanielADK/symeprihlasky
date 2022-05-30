@@ -35,7 +35,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
     normalizationContext: ["groups" => ["read"], "enable_max_depth" => true]
 )]
 #[ApiFilter(BooleanFilter::class, properties: ["active", "ctu_member"])]
-#[ApiFilter(SearchFilter::class, properties: ["name" => "partial", "surname" => "partial", "parent" => "exact", "address" => "exact"])]
+#[ApiFilter(SearchFilter::class, properties: [
+    "name" => "partial",
+    "surname" => "partial",
+    "parent" => "exact",
+    "address" => "exact"])]
 #[ApiFilter(DateFilter::class, properties: ["birth_date"])]
 #[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["parent"]])]
 #[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["applications"]])]

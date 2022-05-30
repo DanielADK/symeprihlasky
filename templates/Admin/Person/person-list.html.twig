@@ -16,6 +16,7 @@
                     <th>Jméno <br>a příjmení</th>
                     <th>Email</th>
                     <th>Telefon</th>
+                    <th>Adresa</th>
                     <th>Role</th>
                     {% if is_granted("ROLE_EDIT_PERSON") or is_granted("ROLE_DELETE_PERSON") %}
                         <th>Akce</th>
@@ -58,16 +59,27 @@
         {
             "data": null,
             render: function (data) {
+                return ajaxPrepare("address", data.address);
+            }
+        },
+        {
+            "data": null,
+            render: function (data) {
                 return ajaxPrepare("role", data.roles);
             }
         },
-        {% if is_granted("ROLE_EDIT_PERSON") or is_granted("ROLE_DELETE_PERSON") %}
         {
             "data": null,
             render: function(data) {
-                return '<a href="/admin/uzivatele/upravit/'+data.id+'" class="btn btn-block btn-sm btn-success">Upravit<i class="fa fa-fw fa-wrench"></a>'
+                return '<div class="btn-group-vertical">' +
+                    '<a href="/admin/uzivatele/zobrazit/' + data.id + '" class="btn btn-block btn-sm btn-primary">Detaily<i class="fa fa-fw fa-info"></i></a>' +
+        {% if is_granted("ROLE_EDIT_PERSON") %}
+                    '<a href="/admin/uzivatele/upravit/' + data.id + '" class="btn btn-block btn-sm btn-success">Upravit<i class="fa fa-fw fa-wrench"></i></a>' +
+        {% endif %}
+                    '</div>'
             }
         },
+        {% if is_granted("ROLE_EDIT_PERSON") or is_granted("ROLE_DELETE_PERSON") %}
         {
             "data": null,
             render: function(data) {

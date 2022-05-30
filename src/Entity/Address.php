@@ -31,7 +31,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
     denormalizationContext: ["groups" => ["write"]],
     normalizationContext: ["groups" => ["read"]],
 )]
-#[ApiFilter(SearchFilter::class, properties: ["street" => "partial", "city" => "partial", "postcode" => "exact", "people" => "partial"])]
+#[ApiFilter(SearchFilter::class, properties: [
+    "street" => "partial",
+    "city" => "partial",
+    "postcode" => "exact",
+    "people" => "partial"])]
 #[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["people"]])]
 #[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["events"]])]
 class Address {
