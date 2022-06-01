@@ -35,7 +35,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ApiFilter(SearchFilter::class, properties: [
     "name_short" => "partial",
     "type" => "exact"])]
-#[ApiFilter(DateFilter::class, properties: ["date_start", "date_end"])]
+#[ApiFilter(DateFilter::class, properties: ["dateStart", "dateEnd"])]
 class Event {
     #[ORM\Id]
     #[ORM\GeneratedValue]
