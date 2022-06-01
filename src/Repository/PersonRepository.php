@@ -55,7 +55,6 @@ class PersonRepository extends ServiceEntityRepository
             ->andWhere('p.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
 }

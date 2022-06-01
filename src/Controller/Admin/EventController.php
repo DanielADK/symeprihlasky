@@ -2,7 +2,8 @@
 
 namespace App\Controller\Admin;
 
-use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Event;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,10 +25,9 @@ class EventController extends AbstractController {
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     #[Route('/admin/akce/zobrazit/{id}', name: 'admin_event_view')]
-    public function view(int $id, EntityManagerInterface $em, Request $request): Response {
-        $event = $em->getRepository("App:Event")->findOneBy(
-            array("id" => $id)
-        );
+    public function view(int $id, ManagerRegistry $doctrine, Request $request): Response {
+        $event = $doctrine->getRepository(Event::class)->findOneByID($id);
+
         if ($event == null) {
             $this->addFlash("warning", "Tato akce nebyla nalezena!");
             return new RedirectResponse($this->generateUrl("admin_event_list"));
