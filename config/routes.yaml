@@ -1,5 +1,11 @@
+<<<<<<< ours
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
 login_check:
   path: /prihlaseni
+=======
+controllers:
+    resource: ../src/Controller/
+    type: attribute
+>>>>>>> theirs
