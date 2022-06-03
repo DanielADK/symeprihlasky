@@ -19,7 +19,7 @@ function reloadPersonStats() {
 $(document).ready(function () {
     var table = $('#people').DataTable({
         "ajax": {
-            "url": ajaxURL,
+            "url": ajaxChildrenList,
             "dataSrc": ""
         },
         responsive: true,

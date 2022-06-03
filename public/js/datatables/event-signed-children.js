@@ -6,11 +6,11 @@ function reloadEventsStats() {
             return row.activeApplication;
         }).length;
 }
-
 $(document).ready(function () {
+    const ajaxSignedChildrenURL = "/api/event";
     var table = $('#signedChildren').DataTable({
         "ajax": {
-            "url": ajaxURLSignedChildren,
+            "url": ajaxSignedChildrenList,
             "dataSrc": ""
         },
         responsive: true,

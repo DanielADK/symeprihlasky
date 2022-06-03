@@ -135,6 +135,9 @@
     "m2mtech/api-platform-datatables-format": {
         "version": "v1.1.1"
     },
+    "masterminds/html5": {
+        "version": "2.7.5"
+    },
     "monolog/monolog": {
         "version": "2.3.5"
     },

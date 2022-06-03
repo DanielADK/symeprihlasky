@@ -45,8 +45,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
     "name" => "partial",
     "surname" => "partial",
     "address" => "exact"])]
-#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["children"]])]
-#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["applications"]])]
+#[ApiFilter(GroupFilter::class, arguments: ["whitelist" => ["children", "applications", "address"]])]
 class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -69,7 +68,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     #[ORM\JoinColumn(nullable: true)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
-    #[Groups(["read", "write"])]
+    #[Groups(["address"])]
     private Address $address;
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Child::class)]
@@ -113,7 +112,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     private bool $deleted = false;
 
     #[ORM\Column(type: 'json', nullable: true)]
-    #[Groups(["read", "write"])]
+    #[Groups(["roles"])]
     private ?array $roles = [];
 
     #[ORM\OneToMany(mappedBy: 'person', targetEntity: Application::class)]

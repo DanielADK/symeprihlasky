@@ -8,6 +8,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Serializer\Filter\GroupFilter;
 use App\Repository\ApplicationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -34,6 +35,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
     "event" => "exact",
     "person" => "exact"])]
 #[ApiFilter(DateFilter::class, properties: ["sign_date"])]
+#[ApiFilter(GroupFilter::class, arguments: ["whitelist" => ["person", "child", "event"]])]
 class Application {
     #[ORM\Column(type: 'string', length: 255)]
     #[ORM\Id]
@@ -47,21 +49,21 @@ class Application {
     #[NotBlank]
     #[MaxDepth(2)]
     #[ApiSubresource( maxDepth: 2 )]
-    #[Groups(["read"])]
-    private Event $event;
+    #[Groups(["event"])]
+    private ?Event $event;
 
     #[ORM\ManyToOne(targetEntity: Person::class, inversedBy: 'applications')]
     #[ORM\JoinColumn(nullable: true)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
-    #[Groups(["read"])]
+    #[Groups(["person"])]
     private ?Person $person;
 
     #[ORM\ManyToOne(targetEntity: Child::class, inversedBy: 'applications')]
     #[ORM\JoinColumn(nullable: true)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
-    #[Groups(["read"])]
+    #[Groups(["child"])]
     private ?Child $child;
 
     #[ORM\Column(type: 'datetime')]

@@ -32,11 +32,11 @@
     </div>
 </section>
 <script>
-    var ajaxURL;
+    var ajaxChildrenList;
     {% if is_granted("ROLE_DELETE_CHILDREN") %}
-    ajaxURL = "/api/children&groups[]=parent";
+        ajaxChildrenList = "/api/children&groups[]=parent";
     {% else %}
-    ajaxURL = "/api/children?deleted=false&groups[]=parent";
+        ajaxChildrenList = "/api/children?deleted=false&groups[]=parent";
     {% endif %}
     var columns = [
         {"data": "id"},

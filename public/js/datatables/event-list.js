@@ -11,7 +11,7 @@ function reloadEventsStats() {
 $(document).ready(function () {
     var table = $('#events').DataTable({
         "ajax": {
-            "url": ajaxURL,
+            "url": ajaxEventList,
             "dataSrc": ""
         },
         responsive: true,

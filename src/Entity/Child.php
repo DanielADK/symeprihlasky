@@ -41,8 +41,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
     "parent" => "exact",
     "address" => "exact"])]
 #[ApiFilter(DateFilter::class, properties: ["birth_date"])]
-#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["parent"]])]
-#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["applications"]])]
+#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["parent", "applications"]])]
 class Child extends EntityRepository {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -73,7 +72,7 @@ class Child extends EntityRepository {
     #[ORM\JoinColumn(nullable: false)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
-    #[Groups(["read", "write"])]
+    #[Groups(["address"])]
     private Address $address;
 
     #[ORM\Column(type: 'date', nullable: true)]
