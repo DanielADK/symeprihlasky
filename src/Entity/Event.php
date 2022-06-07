@@ -36,6 +36,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
     "name_short" => "partial",
     "type" => "exact"])]
 #[ApiFilter(DateFilter::class, properties: ["dateStart", "dateEnd"])]
+#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["address"]])]
 class Event {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -93,7 +94,7 @@ class Event {
     #[ORM\JoinColumn(referencedColumnName: "id", nullable: false, columnDefinition: "INT NOT NULL DEFAULT 1")]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
-    #[Groups(["read"])]
+    #[Groups(["address"])]
     private Address $address;
 
     /**
