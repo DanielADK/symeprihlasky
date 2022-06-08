@@ -112,7 +112,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     private bool $deleted = false;
 
     #[ORM\Column(type: 'json', nullable: true)]
-    #[Groups(["roles"])]
+    #[Groups(["roles", "person.roles"])]
     private ?array $roles = [];
 
     #[ORM\OneToMany(mappedBy: 'person', targetEntity: Application::class)]

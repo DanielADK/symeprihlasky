@@ -37,9 +37,9 @@
 <script>
     var ajaxURL;
     {% if is_granted("ROLE_DELETE_EVENT") %}
-    ajaxURL = "/api/events";
+    ajaxURL = "/api/events?groups[]=address";
     {% else %}
-    ajaxURL = "/api/events?deleted=false";
+    ajaxURL = "/api/events?deleted=false&groups[]=address";
     {% endif %}
     var columns = [
         {"data": "id"},

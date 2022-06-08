@@ -7,6 +7,7 @@ function customPopUpMin(object) {
 function numberToThousandsSep(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
+function twoDigitDate(date) { return ("0" + date).slice(-2); }
 
 const months = ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'];
 const days = ["Po", "Út", "St", "Čt", "Pá", "So", "Ne"];
@@ -66,21 +67,17 @@ function ajaxPrepare(typ, data, type) {
         }
     } else if (typ === 'simpleDate') {
         var date = new Date(data);
-        return date.getDate() + ". " + (date.getMonth()+1) + ". " + date.getFullYear();
+        return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1) + "." + date.getFullYear();
     } else if (typ === 'birthDateWithAge') {
         var date = new Date(data);
         var age = new Date(Date.now() - date.getTime()).getUTCFullYear()-1970;
-        return date.getDate() + ". " + (date.getMonth()+1) + ". " + date.getFullYear()
+        return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1)  + "." + date.getFullYear()
             + " (" + age + " let)";
 
     } else if (typ === 'signDateTime') {
-        var DateTime = data.split(' ');
-        var dateSplit2 = DateTime[0].split('-');
-        var timeSplit = DateTime[1].split('.')[0].split(':');
-        return type === 'display' || type === 'filter' ?
-            dateSplit2[2] + '.' + dateSplit2[1] + '.' + dateSplit2[0] + ' ' + timeSplit[0] + ':' + timeSplit[1] + ':' + timeSplit[2]:
-            data;
-
+        var date = new Date(data);
+        return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1)  + "." + date.getFullYear()
+            + " " + twoDigitDate(date.getHours()) + "." + twoDigitDate(date.getMinutes())  + "." + twoDigitDate(date.getSeconds());
     } else if (typ === 'email') {
         return '<a href="mailto:' + data.email + '">' +
             data.email +

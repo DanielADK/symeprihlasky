@@ -1,55 +1,55 @@
 {# /src/templates/Admin/Person/single-person-edit.html.twig #}
 
-<section class="col-xs-12 col-md-12 col-lg-6">
-    <div class="box box-success">
-        <div class="box-header">
-            <i class="fa fa-list"></i>
-            <h1 class="box-title"> Statistiky o akci : <b>{{ event.nameFull }}</b> ({{ event.nameShort }}, ID:  {{ event.id }})</h1>
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-            </div>
-        </div>
-        <div class="box-body">
-            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-green-gradient"><i class="fa fa-child"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Děti</span>
-                        <span class="info-box-number" id=countOfSignedChildren>
-                            <i class="fa fa-spinner fa-spin fa-fw"></i>
-                            Načítání...
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-yellow-gradient"><i class="fa fa-id-card"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Instruktoři</span>
-                        <span class="info-box-number">
-                            <i class="fa fa-spinner fa-spin fa-fw"></i>
-                            Načítání...
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-red-gradient"><i class="fa fa-user-circle-o"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">Vedoucí</span>
-                        <span class="info-box-number">
-                            <i class="fa fa-spinner fa-spin fa-fw"></i>
-                            Načítání...
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+{#<section class="col-xs-12 col-md-12 col-lg-6">#}
+{#    <div class="box box-success">#}
+{#        <div class="box-header">#}
+{#            <i class="fa fa-list"></i>#}
+{#            <h1 class="box-title"> Statistiky o akci : <b>{{ event.nameFull }}</b> ({{ event.nameShort }}, ID:  {{ event.id }})</h1>#}
+{#            <div class="box-tools pull-right">#}
+{#                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>#}
+{#                </button>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="box-body">#}
+{#            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">#}
+{#                <div class="info-box">#}
+{#                    <span class="info-box-icon bg-green-gradient"><i class="fa fa-child"></i></span>#}
+{#                    <div class="info-box-content">#}
+{#                        <span class="info-box-text">Děti</span>#}
+{#                        <span class="info-box-number" id=countOfSignedChildren>#}
+{#                            <i class="fa fa-spinner fa-spin fa-fw"></i>#}
+{#                            Načítání...#}
+{#                        </span>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">#}
+{#                <div class="info-box">#}
+{#                    <span class="info-box-icon bg-yellow-gradient"><i class="fa fa-id-card"></i></span>#}
+{#                    <div class="info-box-content">#}
+{#                        <span class="info-box-text">Instruktoři</span>#}
+{#                        <span class="info-box-number" id=countOfSignedHelpers>#}
+{#                            <i class="fa fa-spinner fa-spin fa-fw"></i>#}
+{#                            Načítání...#}
+{#                        </span>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">#}
+{#                <div class="info-box">#}
+{#                    <span class="info-box-icon bg-red-gradient"><i class="fa fa-user-circle-o"></i></span>#}
+{#                    <div class="info-box-content">#}
+{#                        <span class="info-box-text">Vedoucí</span>#}
+{#                        <span class="info-box-number" id=countOfSignedLeaders>#}
+{#                            <i class="fa fa-spinner fa-spin fa-fw"></i>#}
+{#                            Načítání...#}
+{#                        </span>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
 <section class="col-xs-12 col-md-12 col-lg-6">
     <div class="box box-success">
         <div class="box-header">
@@ -83,15 +83,23 @@
                     <tr>
                         <td><b>Typ:</b></td>
                         <td id=typeOfEvent>
+                            <i class="fa fa-spinner fa-spin fa-fw"></i>
+                            Načítání...
                         </td>
                     </tr>
                     <tr>
                         <td><b>Aktivní přihláška:</b></td>
-                        <td id=activeApplication></td>
+                        <td id=activeApplication>
+                            <i class="fa fa-spinner fa-spin fa-fw"></i>
+                            Načítání...
+                        </td>
                     </tr>
                     <tr>
                         <td><b>Kapacita:</b></td>
-                        <td id=capacity></td>
+                        <td id=capacity>
+                            <i class="fa fa-spinner fa-spin fa-fw"></i>
+                            Načítání...
+                        </td>
                     </tr>
                     <tr>
                         <td><b>Cena člen/nečlen:</b></td>
@@ -124,5 +132,3 @@ $(document).ready(function () {
     document.getElementById("priceOther").innerHTML = ajaxPrepare("priceOther", "{{ event.priceOther }}");
 });
 </script>
-
-<script src="{{ asset("js/datatables/event-signed-children.js") }}"></script>
