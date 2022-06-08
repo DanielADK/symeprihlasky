@@ -1,16 +1,7 @@
-
-function reloadEventsStats() {
-    var table = $('#signedChildren').DataTable();
-    document.getElementById("countOfSignedChildren").innerText = table.rows().data().length;
-        table.rows().data().filter(function(row) {
-            return row.activeApplication;
-        }).length;
-}
-
 $(document).ready(function () {
-    var table = $('#signedChildren').DataTable({
+    var table = $('#signedPeople').DataTable({
         "ajax": {
-            "url": ajaxURLSignedChildren,
+            "url": ajaxSignedChildrenList,
             "dataSrc": ""
         },
         responsive: true,
@@ -20,15 +11,13 @@ $(document).ready(function () {
                 text: '<i class=\"fa fa-refresh\" id="tableRefresh"></i>',
                 action: function (e, dt) {
                     dt.ajax.reload();
-                    reloadEventsStats();
                 }
             }, 'excel', 'csv'],
-        "columns": columns,
+        "columns": signedChildrenColumns,
         "language": {
             "url": "https://cdn.datatables.net/plug-ins/1.11.0/i18n/cs.json"
         },
-        "order": [[6, 'asc'], [3, 'asc']],
-        "fnInitComplete": reloadEventsStats
+        "order": [[2, 'desc'], [6, 'asc']],
     });
 
 });
