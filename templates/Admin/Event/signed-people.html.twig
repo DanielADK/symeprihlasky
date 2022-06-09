@@ -33,9 +33,9 @@
 <script>
     var ajaxSignedChildrenList;
     {% if is_granted("ROLE_DELETE_APPLICATION") %}
-        ajaxSignedChildrenList = "/api/applications?groups[]=person.roles&groups[]=child&event={{ event.id }}";
+        ajaxSignedChildrenList = "/api/applications?groups[]=child&groups[]=person&event={{ event.id }}";
     {% else %}
-        ajaxSignedChildrenList = "/api/applications?deleted=false&groups[]=person.roles&groups[]=child&event={{ event.id }}";
+        ajaxSignedChildrenList = "/api/applications?deleted=false&groups[]=child&groups[]=person&event={{ event.id }}";
     {% endif %}
     var signedChildrenColumns = [
         {"data": "hash"},
@@ -49,8 +49,7 @@
         {
             "data": null,
             render: function (data) {
-                if (data.person != null) { return ajaxPrepare("role", data.person.roles); }
-                return "<span class=\"label label-success\">Dítě</span>";
+                return ajaxPrepare("role", data.role);
             }
         },
         {

@@ -73,10 +73,27 @@ class Application {
     #[Groups(["read"])]
     private \DateTimeInterface $signDate;
 
-
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["read", "write"])]
     private string $shirtSize;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: false)]
+    #[Groups(["read", "write"])]
+    private string $role;
+
+    /**
+     * @return string
+     */
+    public function getRole(): string {
+        return $this->role;
+    }
+
+    /**
+     * @param string $role
+     */
+    public function setRole(string $role): void {
+        $this->role = $role;
+    }
 
     public function getPerson(): ?Person {
         return $this->person;

@@ -10,7 +10,20 @@ function numberToThousandsSep(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 function twoDigitDate(date) { return ("0" + date).slice(-2); }
-
+function getRole(role) {
+    switch (role) {
+        case "ROLE_ADMIN":
+            return' <span class="label label-danger">Admin</span>';
+        case "ROLE_LEADER":
+            return ' <span class="label label-warning">Vedoucí</span>';
+        case "ROLE_INSTRUCTOR":
+            return ' <span class="label label-success">Instruktor</span>';
+        case "ROLE_PARENT":
+            return ' <span class="label label-primary">Rodič</span>';
+        case "ROLE_CHILD":
+            return ' <span class="label label-info">Dítě</span>';
+    }
+}
 const months = ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'];
 const days = ["Po", "Út", "St", "Čt", "Pá", "So", "Ne"];
 
@@ -68,18 +81,18 @@ function ajaxPrepare(typ, data, type) {
                 return "Neznámé";
         }
     } else if (typ === 'simpleDate') {
-        var date = new Date(data);
-        return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1) + "." + date.getFullYear();
+        var date2 = new Date(data);
+        return twoDigitDate(date2.getDate()) + "." + twoDigitDate(date2.getMonth()+1) + "." + date2.getFullYear();
     } else if (typ === 'birthDateWithAge') {
-        var date = new Date(data);
-        var age = new Date(Date.now() - date.getTime()).getUTCFullYear()-1970;
-        return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1)  + "." + date.getFullYear()
+        var date3 = new Date(data);
+        var age = new Date(Date.now() - date3.getTime()).getUTCFullYear()-1970;
+        return twoDigitDate(date3.getDate()) + "." + twoDigitDate(date3.getMonth()+1)  + "." + date3.getFullYear()
             + " (" + age + " let)";
 
     } else if (typ === 'signDateTime') {
-        var date = new Date(data);
-        return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1)  + "." + date.getFullYear()
-            + " " + twoDigitDate(date.getHours()) + "." + twoDigitDate(date.getMinutes())  + "." + twoDigitDate(date.getSeconds());
+        var date1 = new Date(data);
+        return twoDigitDate(date1.getDate()) + "." + twoDigitDate(date1.getMonth()+1)  + "." + date1.getFullYear()
+            + " " + twoDigitDate(date1.getHours()) + "." + twoDigitDate(date1.getMinutes())  + "." + twoDigitDate(date1.getSeconds());
     } else if (typ === 'email') {
         return '<a href="mailto:' + data.email + '">' +
             data.email +
@@ -117,23 +130,14 @@ function ajaxPrepare(typ, data, type) {
             return numberToThousandsSep(data) + " Kč";
         }
     } else if (typ === 'role') {
-        var retval = "";
-        data.forEach(function(role) {
-            switch (role) {
-                case "ROLE_ADMIN":
-                    retval = retval + ' <span class="label label-danger">Admin</span>';
-                    break;
-                case "ROLE_LEADER":
-                    retval = retval + ' <span class="label label-warning">Vedoucí</span>';
-                    break;
-                case "ROLE_INSTRUCTOR":
-                    retval = retval + ' <span class="label label-success">Instruktor</span>';
-                    break;
-                case "ROLE_PARENT":
-                    retval = retval + ' <span class="label label-primary">Rodič</span>';
-                    break;
-            }
-        });
-        return retval;
+        if (Array.isArray(data)) {
+            var retval = "";
+            data.forEach(function(role) {
+                retval = retval + getRole(role);
+            });
+            return retval;
+        } else {
+            return getRole(data);
+        }
     }
 }
