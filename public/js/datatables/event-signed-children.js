@@ -1,3 +1,17 @@
+"use strict";
+function unsignPerson(hash) {
+    $.ajax({
+        type: "DELETE",
+        headers: {"Content-Type": "application/json"},
+        url: "/api/applications/"+hash,
+    }).done(function() {
+        customPopUpMin($("#successSubmit"));
+        $("#signedPeople").DataTable().ajax.reload();
+    }).fail(function () {
+        customPopUpMin($("#failSubmit"));
+    });
+}
+
 $(document).ready(function () {
     var table = $('#signedPeople').DataTable({
         "ajax": {
