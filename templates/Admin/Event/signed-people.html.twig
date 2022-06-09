@@ -27,6 +27,7 @@
                 </tr>
                 </thead>
             </table>
+            <p><i><b>Poznámka: </b>Věk je počítán od počátku akce</i></p>
         </div>
     </div>
 </section>
@@ -55,8 +56,8 @@
         {
             "data": null,
             render: function (data) {
-                if (data.person != null) { return ajaxPrepare("birthDateWithAge", data.person.birthDate); }
-                return ajaxPrepare("birthDateWithAge", data.child.birthDate);
+                if (data.person != null) { return ajaxPrepare("birthDateWithAgeAtDate", data.person.birthDate+";{{ event.dateStart|date('d.m.Y') }}"); }
+                return ajaxPrepare("birthDateWithAgeAtDate", data.child.birthDate+";{{ event.dateStart|date('d.m.Y') }}");
             }
         },
         {"data": "shirtSize"},

@@ -81,18 +81,26 @@ function ajaxPrepare(typ, data, type) {
                 return "Neznámé";
         }
     } else if (typ === 'simpleDate') {
-        var date2 = new Date(data);
-        return twoDigitDate(date2.getDate()) + "." + twoDigitDate(date2.getMonth()+1) + "." + date2.getFullYear();
+        var date = new Date(data);
+        return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1) + "." + date.getFullYear();
     } else if (typ === 'birthDateWithAge') {
-        var date3 = new Date(data);
-        var age = new Date(Date.now() - date3.getTime()).getUTCFullYear()-1970;
-        return twoDigitDate(date3.getDate()) + "." + twoDigitDate(date3.getMonth()+1)  + "." + date3.getFullYear()
+        var date = new Date(data);
+        var age = new Date(Date.now() - date.getTime()).getUTCFullYear()-1970;
+        return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1)  + "." + date.getFullYear()
+            + " (" + age + " let)";
+
+    } else if (typ === 'birthDateWithAgeAtDate') {
+        // data = date-of-birth;date-to-count (semicolon separator)
+        var sep = data.split(";");
+        var date = new Date(sep[0]);
+        var age = new Date(new Date(sep[1]) - date.getTime()).getUTCFullYear()-1970;
+        return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1)  + "." + date.getFullYear()
             + " (" + age + " let)";
 
     } else if (typ === 'signDateTime') {
-        var date1 = new Date(data);
-        return twoDigitDate(date1.getDate()) + "." + twoDigitDate(date1.getMonth()+1)  + "." + date1.getFullYear()
-            + " " + twoDigitDate(date1.getHours()) + "." + twoDigitDate(date1.getMinutes())  + "." + twoDigitDate(date1.getSeconds());
+        var date = new Date(data);
+        return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1)  + "." + date.getFullYear()
+            + " " + twoDigitDate(date.getHours()) + "." + twoDigitDate(date.getMinutes())  + "." + twoDigitDate(date.getSeconds());
     } else if (typ === 'email') {
         return '<a href="mailto:' + data.email + '">' +
             data.email +
