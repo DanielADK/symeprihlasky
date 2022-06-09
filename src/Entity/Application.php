@@ -15,6 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Unique;
 
 #[ORM\Entity(repositoryClass: ApplicationRepository::class)]
 #[UniqueEntity("hash")]
@@ -37,10 +38,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ApiFilter(DateFilter::class, properties: ["sign_date"])]
 #[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["event", "person", "child","person.roles"]])]
 class Application {
-    #[ORM\Column(type: 'string', length: 255)]
     #[ORM\Id]
+    #[ORM\Column(type: 'string', length: 6)]
     #[Groups(["read"])]
-    #[ApiProperty(identifier: true)]
+    #[Unique]
     #[NotBlank]
     private string $hash;
 
@@ -75,7 +76,7 @@ class Application {
     #[Groups(["read", "write"])]
     private string $shirtSize;
 
-    #[ORM\Column(type: 'boolean', options: ["default" => ""])]
+    #[ORM\Column(type: 'boolean', options: ["default" => false])]
     #[Groups(["read", "write"])]
     private string $deleted;
 
@@ -99,7 +100,7 @@ class Application {
     /**
      * @param Child $child
      */
-    public function setChild(Child $child): self {
+    public function setChild(Child $child): void {
         $this->child = $child;
     }
 
