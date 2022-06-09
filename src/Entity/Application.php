@@ -23,10 +23,11 @@ use Symfony\Component\Validator\Constraints\Unique;
         "get" => ["security" => "is_granted('ROLE_VIEW_APPLICATION')"],
     ],
     itemOperations: [
-        "get" => ["security" => "is_granted('ROLE_VIEW_APPLICATION')"],
+//        "get" => ["security" => "is_granted('ROLE_VIEW_APPLICATION')"],
         "put" => ["security" => "is_granted('ROLE_ADD_APPLICATION')"],
-        "patch" => ["security" => "is_granted('ROLE_EDIT_APPLICATION')"]
-    ], # Deletion is missing because of archiving.
+        "patch" => ["security" => "is_granted('ROLE_EDIT_APPLICATION')"],
+        "delete" => ["security" => "is_granted('ROLE_DELETE_APPLICATION')"]
+    ],
     denormalizationContext: ["groups" => ["write"]],
     normalizationContext: ["groups" => ["read"]],
 )]
@@ -74,10 +75,6 @@ class Application {
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["read", "write"])]
     private string $shirtSize;
-
-    #[ORM\Column(type: 'boolean', options: ["default" => false])]
-    #[Groups(["read", "write"])]
-    private string $deleted;
 
     public function getPerson(): ?Person {
         return $this->person;
