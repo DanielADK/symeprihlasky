@@ -1,4 +1,6 @@
+"use strict";
 function customPopUpMin(object) {
+    window.scrollTo(0,0);
     object.fadeTo(5000,500).slideUp(1000, function() {
         object.slideUp(1000);
     });
