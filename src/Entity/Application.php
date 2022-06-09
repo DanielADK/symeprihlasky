@@ -24,6 +24,7 @@ use Symfony\Component\Validator\Constraints\Unique;
     ],
     itemOperations: [
 //        "get" => ["security" => "is_granted('ROLE_VIEW_APPLICATION')"],
+        "get",
         "put" => ["security" => "is_granted('ROLE_ADD_APPLICATION')"],
         "patch" => ["security" => "is_granted('ROLE_EDIT_APPLICATION')"],
         "delete" => ["security" => "is_granted('ROLE_DELETE_APPLICATION')"]
