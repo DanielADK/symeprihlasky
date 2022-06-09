@@ -80,7 +80,6 @@ function ajaxPrepare(typ, data, type) {
         var date = new Date(data);
         return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1)  + "." + date.getFullYear()
             + " " + twoDigitDate(date.getHours()) + "." + twoDigitDate(date.getMinutes())  + "." + twoDigitDate(date.getSeconds());
->>>>>>> Symfony6
     } else if (typ === 'email') {
         return '<a href="mailto:' + data.email + '">' +
             data.email +
