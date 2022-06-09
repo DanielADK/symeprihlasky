@@ -1,4 +1,5 @@
 security:
+    enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
@@ -44,7 +45,7 @@ security:
             ROLE_ADD_PARENT, ROLE_EDIT_PARENT, ROLE_DELETE_PARENT,
             ROLE_ADD_CHILD, ROLE_EDIT_CHILD, ROLE_DELETE_CHILD,
             ROLE_ADD_EVENT, ROLE_EDIT_EVENT, ROLE_DELETE_EVENT,
-            ROLE_ADD_APPLICATION, ROLE_EDIT_APPLICATION, ROLE_DELETE_APPLICATION
+            ROLE_ADD_APPLICATION, ROLE_EDIT_APPLICATION, ROLE_DELETE_APPLICATION,
             ROLE_ADD_LEADER, ROLE_EDIT_LEADER, ROLE_DELETE_LEADER,
             ROLE_ADD_INSTRUCTOR, ROLE_EDIT_INSTRUCTOR, ROLE_DELETE_INSTRUCTOR,
             ROLE_SEND_NEWSLETTER,

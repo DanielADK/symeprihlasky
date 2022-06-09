@@ -15,6 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Unique;
 
 #[ORM\Entity(repositoryClass: ApplicationRepository::class)]
 #[UniqueEntity("hash")]
@@ -23,10 +24,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
         "get" => ["security" => "is_granted('ROLE_VIEW_APPLICATION')"],
     ],
     itemOperations: [
-        "get" => ["security" => "is_granted('ROLE_VIEW_APPLICATION')"],
+//        "get" => ["security" => "is_granted('ROLE_VIEW_APPLICATION')"],
+        "get",
         "put" => ["security" => "is_granted('ROLE_ADD_APPLICATION')"],
-        "patch" => ["security" => "is_granted('ROLE_EDIT_APPLICATION')"]
-    ], # Deletion is missing because of archiving.
+        "patch" => ["security" => "is_granted('ROLE_EDIT_APPLICATION')"],
+        "delete" => ["security" => "is_granted('ROLE_DELETE_APPLICATION')"]
+    ],
     denormalizationContext: ["groups" => ["write"]],
     normalizationContext: ["groups" => ["read"]],
 )]
@@ -35,12 +38,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
     "event" => "exact",
     "person" => "exact"])]
 #[ApiFilter(DateFilter::class, properties: ["sign_date"])]
-#[ApiFilter(GroupFilter::class, arguments: ["whitelist" => ["person", "child", "event"]])]
+#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["event", "person", "child","person.roles"]])]
 class Application {
-    #[ORM\Column(type: 'string', length: 255)]
     #[ORM\Id]
+    #[ORM\Column(type: 'string', length: 6)]
     #[Groups(["read"])]
-    #[ApiProperty(identifier: true)]
+    #[Unique]
     #[NotBlank]
     private string $hash;
 
@@ -50,13 +53,13 @@ class Application {
     #[MaxDepth(2)]
     #[ApiSubresource( maxDepth: 2 )]
     #[Groups(["event"])]
-    private ?Event $event;
+    private Event $event;
 
     #[ORM\ManyToOne(targetEntity: Person::class, inversedBy: 'applications')]
     #[ORM\JoinColumn(nullable: true)]
-    #[MaxDepth(1)]
-    #[ApiSubresource( maxDepth: 1 )]
-    #[Groups(["person"])]
+    #[MaxDepth(2)]
+    #[ApiSubresource( maxDepth: 2 )]
+    #[Groups(["person", "person.roles"])]
     private ?Person $person;
 
     #[ORM\ManyToOne(targetEntity: Child::class, inversedBy: 'applications')]
@@ -68,42 +71,33 @@ class Application {
 
     #[ORM\Column(type: 'datetime')]
     #[Groups(["read"])]
-    private \DateTimeInterface $sign_date;
+    private \DateTimeInterface $signDate;
 
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["read", "write"])]
     private string $shirtSize;
 
-    #[ORM\Column(type: 'boolean', options: ["default" => false])]
-    #[Groups(["read", "write"])]
-    private string $deleted;
-
-    public function getPerson(): ?Person
-    {
+    public function getPerson(): ?Person {
         return $this->person;
     }
 
-    public function setPerson(?Person $person): self
-    {
+    public function setPerson(?Person $person): self {
         $this->person = $person;
-
         return $this;
     }
 
     /**
      * @return Child
      */
-    public function getChild(): Child | null
-    {
+    public function getChild(): ?Child {
         return $this->child;
     }
 
     /**
      * @param Child $child
      */
-    public function setChild(Child $child): void
-    {
+    public function setChild(Child $child): void {
         $this->child = $child;
     }
 
@@ -123,20 +117,16 @@ class Application {
         $this->deleted = $deleted;
     }
 
-    public function getSignDate(): ?\DateTimeInterface
-    {
-        return $this->sign_date;
+    public function getSignDate(): ?\DateTimeInterface {
+        return $this->signDate;
     }
 
-    public function setSignDate(\DateTimeInterface $sign_date): self
-    {
-        $this->sign_date = $sign_date;
-
+    public function setSignDate(\DateTimeInterface $sign_date): self  {
+        $this->signDate = $sign_date;
         return $this;
     }
 
-    public function getHash(): ?string
-    {
+    public function getHash(): ?string {
         return $this->hash;
     }
 

@@ -3,13 +3,9 @@
         "@hotwired/stimulus": "^3.0.0",
         "@popperjs/core": "^2.11.2",
         "@symfony/stimulus-bridge": "^3.0.0",
-<<<<<<< ours
-        "@symfony/webpack-encore": "^1.8.2",
+        "@symfony/webpack-encore": "^2.0.0",
         "admin-lte": "^2.4.18",
         "bootstrap": "^3.4.1",
-=======
-        "@symfony/webpack-encore": "^2.0.0",
->>>>>>> theirs
         "core-js": "^3.0.0",
         "font-awesome": "^4.7.0",
         "jquery": "^3.6.0",

@@ -36,8 +36,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
     "city" => "partial",
     "postcode" => "exact",
     "people" => "partial"])]
-#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["people"]])]
-#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["events"]])]
+#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["people", "events"]])]
 class Address {
     #[ORM\Id]
     #[ORM\GeneratedValue]

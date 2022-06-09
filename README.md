@@ -2,14 +2,14 @@
 ## Akce
 - [x] Zobrazení seznamu
 - [x] Zobrazení informace o jednotlivé akci
-- [ ] Zobrazení přihlášených dětí
-- [ ] Zobrazení přihlášených instruktorů
-- [ ] Zobrazení přihlášených vedoucích
+- [x] Zobrazení přihlášených dětí
+- [x] Zobrazení přihlášených instruktorů
+- [x] Zobrazení přihlášených vedoucích
 - [ ] Výjimka -> zákaz děti na dospěláckých akcích
 - [ ] Upravení akce
 - [ ] Smazání akce
 ## Děti
-- [ ] Zobrazení seznamu
+- [x] Zobrazení seznamu
 - [ ] Zobrazení informace o jednotlivém dítěti
 - [ ] Zobrazení jeho akcí
 - [ ] Přihlášení jeho na akci

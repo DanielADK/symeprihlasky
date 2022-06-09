@@ -41,7 +41,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
     "parent" => "exact",
     "address" => "exact"])]
 #[ApiFilter(DateFilter::class, properties: ["birth_date"])]
-#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["parent", "applications"]])]
+#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["parent", "applications", "address"]])]
 class Child extends EntityRepository {
     #[ORM\Id]
     #[ORM\GeneratedValue]

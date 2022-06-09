@@ -103,7 +103,8 @@
                             single.id = event.id;
                             single.title = event.nameFull;
                             single.start = event.dateStart;
-                            single.end = event.dateEnd;
+                            single.end = new Date(event.dateEnd);
+                            single.end.setDate(single.end.getDate()+1);
                             single.url = "/admin/akce/zobrazit/" + event.id;
                             single.display = "block"
 

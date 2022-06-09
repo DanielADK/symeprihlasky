@@ -1,4 +1,3 @@
-
 function reloadPersonStats() {
     var table = $('#people').DataTable();
     document.getElementById("countOfChildren").innerText = table.rows().data().length;
@@ -19,7 +18,7 @@ function reloadPersonStats() {
 $(document).ready(function () {
     var table = $('#people').DataTable({
         "ajax": {
-            "url": ajaxChildrenList,
+            "url": ajaxURL,
             "dataSrc": ""
         },
         responsive: true,
