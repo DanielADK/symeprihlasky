@@ -81,7 +81,10 @@
         {
             "data": null,
             render: function(data) {
-                return '<a href="/admin/uzivatele/upravit/'+data.id+'" class="btn btn-block btn-sm btn-success">Upravit<i class="fa fa-fw fa-wrench"></i></a>'
+                return '<div class="btn-group-vertical">' +
+                       '<a href="/admin/dite/zobrazit/'+data.id+'" class="btn btn-block btn-sm btn-info"><i class="fa fa-fw fa-info"></i>Informace<i class="fa fa-fw fa-wrench"></i></a>' +
+                       '<a href="/admin/dite/upravit/'+data.id+'" class="btn btn-block btn-sm btn-success"><i class="fa fa-fw fa-wrench"></i>Upravit</a>' +
+                       '</div>';
             }
         },
         {
