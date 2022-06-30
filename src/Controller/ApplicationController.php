@@ -6,6 +6,7 @@ use App\Entity\Application;
 use App\Entity\Person;
 use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,27 +54,30 @@ class ApplicationController extends AbstractController {
     }
     private function emptyApplication(TCPDF $pdf) {
         $pdf->SetTitle("PRÁZDNÁ PŘÍHLÁŠKA");
+        $pdf->SetXY(75, 45);
+        $pdf->TextField('event-name', 60, 10, array('alignment'=>'center'));
+
         $pdf->SetXY(50, 68);
         $pdf->TextField('fullname', 60, 5);
         $pdf->SetXY(50, 73);
-        $pdf->TextField('date-of-birth', 30, 5);
+        $pdf->TextField('date-of-birth', 30, 5, array("charLimit" => 10));
         $pdf->SetXY(50, 78);
-        $pdf->TextField('age', 9, 5);
+        $pdf->TextField('age', 9, 5, array("charLimit" => 2));
         $pdf->SetXY(50, 83);
-        $pdf->TextField('shirt-size', 8, 5);
+        $pdf->TextField('shirt-size', 12, 5, array("charLimit" => 4));
         $pdf->SetXY(135, 67);
         $pdf->TextField('residence-street', 60, 5);
         $pdf->SetXY(135, 73);
         $pdf->TextField('residence-city', 60, 5);
         $pdf->SetXY(135, 77);
-        $pdf->TextField('residence-postcode', 20, 5);
+        $pdf->TextField('residence-postcode', 20, 5, array("charLimit" => 5));
 
         $pdf->SetXY(50, 103);
         $pdf->TextField('parent-fullname', 60, 5);
         $pdf->SetXY(50, 108);
         $pdf->TextField('parent-email', 60, 5);
         $pdf->SetXY(50, 113);
-        $pdf->TextField('parent-phone', 34, 5);
+        $pdf->TextField('parent-phone', 34, 5, array("charLimit" => 13));
         $pdf->SetXY(135, 103);
         $pdf->TextField('parent-residence-street', 60, 5);
         $pdf->SetXY(135, 108);
@@ -84,11 +88,11 @@ class ApplicationController extends AbstractController {
         $pdf->SetXY(120, 258);
         $pdf->TextField('sign-city', 38, 5);
         $pdf->SetXY(168, 258);
-        $pdf->TextField('sign-date', 31, 5);
+        $pdf->TextField('sign-date', 31, 5, array("charLimit" => 10));
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     private function fillApplication(TCPDF $pdf, object $app) {
         $pdf->SetTitle($app->getChild()->getFullname()." (".$app->getHash().")");
@@ -112,18 +116,24 @@ class ApplicationController extends AbstractController {
         $pdf->SetXY(135, 75);
         $pdf->Cell(0,10,$app->getChild()->getAddress()->getPostcode(),0,0,'L');
     }
+
+    /**
+     * @throws Exception
+     */
     #[Route('/prihlaska/{hash}', name: 'application_pdf')]
     public function application(Request $request, ManagerRegistry $doctrine, string $hash): Response {
         $hash = strtoupper($hash);
         $app = $doctrine->getRepository(Application::class)
             ->findBy(array("hash" => $hash));
 
-        if ($app == null && $hash != "PRAZDNY") {
-            $this->addFlash("warning", "Tato přihláška neexistuje");
-            return new RedirectResponse($this->generateUrl("admin_person_list"));
-            // TODO
-        } else
-            $app = $app[0];
+        if ($hash != "PRAZDNA") {
+            if ($app == null) {
+                $this->addFlash("warning", "Tato přihláška neexistuje");
+                return new RedirectResponse($this->generateUrl("admin_person_list"));
+                // TODO
+            } else
+                $app = $app[0];
+        }
 
         $pdf = new TCPDF("P", "mm", "A4", true, "UTF-8");
         $pdf->SetAuthor("T.O.Severka - systém E-Přihlášky");
@@ -137,7 +147,7 @@ class ApplicationController extends AbstractController {
         $this->getHeader($pdf);
         $this->getFooter($pdf);
         $this->addInfecticity($pdf);
-        if ($hash == "PRAZDNY")
+        if ($hash == "PRAZDNA")
             $this->emptyApplication($pdf);
         else
             $this->fillApplication($pdf, $app);
