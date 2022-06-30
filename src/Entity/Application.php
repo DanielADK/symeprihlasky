@@ -126,7 +126,7 @@ class Application {
         return $this;
     }
 
-    public function getHash(): ?string {
+    public function getHash(): string {
         return $this->hash;
     }
 

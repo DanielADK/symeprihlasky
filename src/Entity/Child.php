@@ -11,6 +11,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Serializer\Filter\GroupFilter;
 use App\Repository\ChildRepository;
+use DateTime;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -146,6 +147,13 @@ class Child extends EntityRepository {
     }
 
     /**
+     * @return string
+     */
+    public function getFullname(): string {
+        return $this->name." " . $this->surname;
+    }
+
+    /**
      * @return Person
      */
     public function getParent(): Person {
@@ -255,6 +263,10 @@ class Child extends EntityRepository {
      */
     public function setApplications(Collection $applications): void {
         $this->applications = $applications;
+    }
+
+    public function getAgeAtDate(DateTime $date): int {
+        return $this->birthDate->diff($date)->y;
     }
 
 

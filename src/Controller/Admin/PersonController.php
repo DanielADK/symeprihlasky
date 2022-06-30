@@ -3,13 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Person;
-use App\Repository\PersonRepository;
-use Doctrine\DBAL\Types\DateType;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,6 +34,7 @@ class PersonController extends AbstractController {
         }
         return $this->render('Admin/Person/view.html.twig', [
             "section" => "person",
+            "person" => $usr,
             "page_name" => "Seznam uživatelů",
             "page_path" => array("Domov", "Uživatelé", "Seznam")
         ]);

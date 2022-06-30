@@ -11,6 +11,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Serializer\Filter\GroupFilter;
 use App\Repository\EventRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -98,7 +99,7 @@ class Event {
     private Address $address;
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getId(): int {
         return $this->id;
@@ -119,54 +120,52 @@ class Event {
     }
 
     /**
-     * @param mixed $nameShort
+     * @param string $nameShort
      */
     public function setNameShort(string $nameShort): void {
         $this->nameShort = $nameShort;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getNameFull(): string {
         return $this->nameFull;
     }
 
     /**
-     * @param mixed $nameFull
+     * @param string $nameFull
      */
     public function setNameFull(string $nameFull): void {
         $this->nameFull = $nameFull;
     }
 
     /**
-     * @return mixed
+     * @return DateTimeInterface
      */
-    public function getDateStart() {
+    public function getDateStart(): \DateTimeInterface {
         return $this->dateStart;
     }
 
     /**
-     * @param mixed $dateStart
+     * @param DateTimeInterface $dateStart
      */
-    public function setDateStart($dateStart): void
+    public function setDateStart(DateTimeInterface $dateStart): void
     {
         $this->dateStart = $dateStart;
     }
 
     /**
-     * @return mixed
+     * @return DateTimeInterface
      */
-    public function getDateEnd()
-    {
+    public function getDateEnd(): DateTimeInterface {
         return $this->dateEnd;
     }
 
     /**
-     * @param mixed $dateEnd
+     * @param DateTimeInterface $dateEnd
      */
-    public function setDateEnd($dateEnd): void
-    {
+    public function setDateEnd(DateTimeInterface $dateEnd): void {
         $this->dateEnd = $dateEnd;
     }
 
