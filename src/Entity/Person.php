@@ -136,9 +136,11 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
         // $this->plainPassword = null;
     }
 
-    public function getUsername(): string
-    {
+    public function getUsername(): string {
         return $this->name . '-' . $this->surname;
+    }
+    public function getFullname(): string {
+        return $this->name . ' ' . $this->surname;
     }
 
     /**
@@ -256,32 +258,28 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @return string|null
      */
-    public function getShirtSize(): ?string
-    {
+    public function getShirtSize(): ?string {
         return $this->shirtSize;
     }
 
     /**
      * @param string $shirtSize
      */
-    public function setShirtSize(string $shirtSize): void
-    {
+    public function setShirtSize(string $shirtSize): void {
         $this->shirtSize = $shirtSize;
     }
 
     /**
      * @return string
      */
-    public function getEmail(): string
-    {
+    public function getEmail(): string {
         return $this->email;
     }
 
     /**
      * @param string $email
      */
-    public function setEmail(string $email): void
-    {
+    public function setEmail(string $email): void  {
         $this->email = $email;
     }
 
