@@ -94,7 +94,8 @@ class ApplicationController extends AbstractController {
     /**
      * @throws Exception
      */
-    private function fillApplication(TCPDF $pdf, object $app) {
+    private function fillChild(TCPDF $pdf, object $app) {
+        /* Children */
         $pdf->SetTitle($app->getChild()->getFullname()." (".$app->getHash().")");
         $pdf->SetFont('dejavuserifcondensed','B',15);
         $pdf->SetXY(10, 40);
@@ -117,6 +118,25 @@ class ApplicationController extends AbstractController {
         $pdf->Cell(0,10,$app->getChild()->getAddress()->getPostcode(),0,0,'L');
     }
 
+    /**
+     * @throws Exception
+     */
+    private function fillParent(TCPDF $pdf, object $app) {
+        /* Parent */
+        $pdf->SetFont('dejavuserifcondensed','B',11);
+        $pdf->SetXY(50, 100);
+        $pdf->Cell(0,10,$app->getChild()->getParent()->getFullname(),0,0,'L');
+        $pdf->SetXY(50, 105);
+        $pdf->Cell(0,10, $app->getChild()->getParent()->getEmail(), 0,0,'L');
+        $pdf->SetXY(50, 110);
+        $pdf->Cell(0,10, $app->getChild()->getParent()->getPhone(),0,0,'L');
+        $pdf->SetXY(135, 100);
+        $pdf->Cell(0,10,$app->getChild()->getParent()->getAddress()->getStreet(),0,0,'L');
+        $pdf->SetXY(135, 105);
+        $pdf->Cell(0,10,$app->getChild()->getParent()->getAddress()->getCity(),0,0,'L');
+        $pdf->SetXY(135, 110);
+        $pdf->Cell(0,10,$app->getChild()->getParent()->getAddress()->getPostcode(),0,0,'L');
+    }
     /**
      * @throws Exception
      */
@@ -149,8 +169,11 @@ class ApplicationController extends AbstractController {
         $this->addInfecticity($pdf);
         if ($hash == "PRAZDNA")
             $this->emptyApplication($pdf);
-        else
-            $this->fillApplication($pdf, $app);
+        else {
+            $this->fillChild($pdf, $app);
+            $this->fillParent($pdf, $app);
+
+        }
 
         $pdf->SetFont('dejavuserifcondensed', '', 14);
         $pdf->SetXY(10, 35);
