@@ -8,6 +8,7 @@ use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -141,8 +142,14 @@ class ApplicationController extends AbstractController {
      * @throws Exception
      */
     #[Route('/prihlaska/{hash}', name: 'application_pdf')]
-    public function application(Request $request, ManagerRegistry $doctrine, string $hash): Response {
+    public function application(Request $request, ManagerRegistry $doctrine, string $hash, bool $regen = false): Response {
         $hash = strtoupper($hash);
+
+        /* If application was already generated */
+        if (file_exists(__DIR__."/../../pdf/".$hash.".pdf") && !$regen) {
+            return new BinaryFileResponse(__DIR__."/../../pdf/".$hash.".pdf");
+        }
+
         $app = $doctrine->getRepository(Application::class)
             ->findBy(array("hash" => $hash));
 
@@ -244,7 +251,18 @@ class ApplicationController extends AbstractController {
         $pdf->Cell(0, 10, 'V: ______________________ dne: __________________', 0, 0, 'R');
         $pdf->SetXY(20, 270);
         $pdf->Cell(0,10,'Podpis zákonného zástupce: ______________________',0,0,'R');
+
+        $pdf->Output(__DIR__."/../../pdf/".$hash.".pdf", "F");
+
         return new Response($pdf->Output(), 200, array(
             'Content-Type' => 'application/pdf; charset=UTF-8'));
+    }
+
+    /**
+     * @throws Exception
+     */
+    #[Route('/prihlaska/{hash}/regen', name: 'application_pdf_regen')]
+    public function regenApplication(Request $request, ManagerRegistry $doctrine, string $hash): Response {
+        return $this->application($request, $doctrine, $hash, true);
     }
 }
