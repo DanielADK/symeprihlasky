@@ -38,7 +38,7 @@ class EventController extends AbstractController {
             "section" => "event",
             "event" => $event,
             "page_name" => "Náhled akce ID: ".$id,
-            "page_path" => array("Domov", "Akce", "Náhled akce", $event->getNameShort())
+            "page_path" => array("Domov", "Akce", "Náhled akce", $event->getshortName())
         ]);
     }
 
@@ -47,7 +47,7 @@ class EventController extends AbstractController {
      */
     #[Route('/admin/akce/upravit/{id}', name: 'admin_event_edit')]
     public function edit(int $id, ManagerRegistry $doctrine, Request $request): Response {
-        $event = $doctrine->getRepository(Event::class)->findOneByID($id);
+        $event = $doctrine->getRepository(Event::class)->findOneBy(array("id" => $id));
 
         if ($event == null) {
             $this->addFlash("warning", "Tato akce nebyla nalezena!");
@@ -58,7 +58,7 @@ class EventController extends AbstractController {
             "section" => "event",
             "event" => $event,
             "page_name" => "Úprava akce ID: ".$id,
-            "page_path" => array("Domov", "Akce", "Úprava akce", $event->getNameShort())
+            "page_path" => array("Domov", "Akce", "Úprava akce", $event->getshortName())
         ]);
     }
 }

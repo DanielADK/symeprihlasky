@@ -49,12 +49,12 @@ class Event {
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     #[Groups(["read", "write"])]
     #[NotBlank]
-    private string $nameShort;
+    private string $shortName;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["read", "write"])]
     #[NotBlank]
-    private string $nameFull;
+    private string $fullName;
 
     #[ORM\Column(type: 'date')]
     #[Groups(["read", "write"])]
@@ -115,29 +115,29 @@ class Event {
     /**
      * @return string
      */
-    public function getNameShort(): string {
-        return $this->nameShort;
+    public function getshortName(): string {
+        return $this->shortName;
     }
 
     /**
-     * @param string $nameShort
+     * @param string $shortName
      */
-    public function setNameShort(string $nameShort): void {
-        $this->nameShort = $nameShort;
+    public function setshortName(string $shortName): void {
+        $this->shortName = $shortName;
     }
 
     /**
      * @return string
      */
-    public function getNameFull(): string {
-        return $this->nameFull;
+    public function getfullName(): string {
+        return $this->fullName;
     }
 
     /**
-     * @param string $nameFull
+     * @param string $fullName
      */
-    public function setNameFull(string $nameFull): void {
-        $this->nameFull = $nameFull;
+    public function setfullName(string $fullName): void {
+        $this->fullName = $fullName;
     }
 
     /**
