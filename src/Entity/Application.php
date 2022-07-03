@@ -82,7 +82,7 @@ class Application {
         return $this->person;
     }
 
-    public function setPerson(?Person $person): self {
+    public function setPerson(Person $person): self {
         $this->person = $person;
         return $this;
     }
@@ -97,24 +97,9 @@ class Application {
     /**
      * @param Child $child
      */
-    public function setChild(Child $child): void {
+    public function setChild(Child $child): self {
         $this->child = $child;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDeleted(): string
-    {
-        return $this->deleted;
-    }
-
-    /**
-     * @param string $deleted
-     */
-    public function setDeleted(string $deleted): void
-    {
-        $this->deleted = $deleted;
+        return $this;
     }
 
     public function getSignDate(): ?\DateTimeInterface {
@@ -130,39 +115,33 @@ class Application {
         return $this->hash;
     }
 
-    public function setHash(string $hash): self
-    {
+    public function setHash(string $hash): self {
         $this->hash = $hash;
-
         return $this;
     }
 
-    public function getShirtSize(): ?string
-    {
+    public function getShirtSize(): ?string {
         return $this->shirtSize;
     }
 
-    public function setShirtSize(string $shirt_size): self
-    {
+    public function setShirtSize(string $shirt_size): self {
         $this->shirtSize = $shirt_size;
-
         return $this;
     }
 
     /**
      * @return Event
      */
-    public function getEvent(): Event
-    {
+    public function getEvent(): Event {
         return $this->event;
     }
 
     /**
      * @param Event $event
      */
-    public function setEvent(Event $event): void
-    {
+    public function setEvent(Event $event): self {
         $this->event = $event;
+        return $this;
     }
 
 }
