@@ -10,6 +10,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Serializer\Filter\GroupFilter;
+use App\Config\EventType;
 use App\Repository\EventRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -69,7 +70,7 @@ class Event {
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["read", "write"])]
     #[NotBlank]
-    private string $type;
+    private EventType $type;
 
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
     #[Groups(["read", "write"])]
@@ -150,8 +151,7 @@ class Event {
     /**
      * @param DateTimeInterface $dateStart
      */
-    public function setDateStart(DateTimeInterface $dateStart): void
-    {
+    public function setDateStart(DateTimeInterface $dateStart): void  {
         $this->dateStart = $dateStart;
     }
 
@@ -170,18 +170,16 @@ class Event {
     }
 
     /**
-     * @return string
+     * @return EventType
      */
-    public function getType(): string
-    {
+    public function getType(): EventType {
         return $this->type;
     }
 
     /**
-     * @param string $type
+     * @param EventType $type
      */
-    public function setType(string $type): void
-    {
+    public function setType(EventType $type): void {
         $this->type = $type;
     }
 
