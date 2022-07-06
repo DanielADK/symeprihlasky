@@ -169,16 +169,16 @@ class Event {
     }
 
     /**
-     * @return EventType
+     * @return string
      */
-    public function getType(): EventType {
+    public function getType(): string {
         return $this->type;
     }
 
     /**
-     * @param EventType $type
+     * @param string $type
      */
-    public function setType(EventType $type): void {
+    public function setType(string $type): void {
         $this->type = $type;
     }
 
