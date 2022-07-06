@@ -38,7 +38,7 @@ class EventController extends AbstractController {
         return $this->render('Admin/Event/view.html.twig', [
             "section" => "event",
             "event" => $event,
-            "page_name" => "Náhled akce:: ".$event->getshortName(),
+            "page_name" => "Náhled akce: ".$event->getshortName(),
             "page_path" => array("Domov", "Akce", "Náhled akce", $event->getshortName())
         ]);
     }
