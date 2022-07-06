@@ -1,0 +1,88 @@
+{# /src/templates/Admin/Event/single-event-edit.html.twig #}
+
+<section class="col-xs-12 col-md-12 col-lg-6">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-list"></i>
+            <h1 class="box-title"> Úprava akce: <b>{{ event.fullName }} ({{ event.shortName }})</b></h1>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <form id=editEvent autocomplete=off>
+                <h3>Základní informace</h3>
+                <input type="hidden" name="id" value="{{ event.id }}">
+                {# Zkratka, celé jméno, typ akce, cena #}
+                <div class=row></div>
+                <h3>Datum</h3>
+                {# Datum #}
+
+                <h3>Místo konání</h3>
+                {# Adresa #}
+                <div class="row">
+                    <input type="hidden" name="address.id"
+                           value="{{ event.address.id is empty ? "": event.address.id }}">
+                    <div class="form-group col-lg-6">
+                        <label for="address.street">Ulice:</label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-home"></i>
+                            </div>
+                            <input type="text" class="form-control pull-right smartform-street-and-number" data-mask name="address.street" id="address.street"
+                                   data-default="{{ event.address.street }}" required
+                                   value="{{ event.address.street }}">
+                        </div>
+
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="address.city">Město:</label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-map-o"></i>
+                            </div>
+                            <input type="text"  class="form-control pull-right smartform-city" name="address.city" id="address.city"
+                                   data-default="{{ event.address.city }}" required
+                                   value="{{ event.address.city }}">
+                        </div>
+
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="address.postcode">PSČ:</label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-map-pin"></i>
+                            </div>
+                            <input type="text" class="form-control pull-right smartform-zip" name="address.postcode" id="address.postcode"
+                                   data-default="{{ event.address.postcode }}" required
+                                   value="{{ event.address.postcode }}">
+                        </div>
+
+                    </div>
+                </div>
+                <h3>Ostatní</h3>
+                {# Kapacita, aktivní přihláška, smazáno #}
+                <div class="row">
+                    <div class="form-group col-lg-4 col-md-4 pull-right">
+                        <label></label>
+                        <input type="submit" onclick="editEvent(event)" class="btn btn-block btn-success" style="margin-top: 60px">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" src="https://secure.smartform.cz/api/v1/smartform.js" async>
+</script>
+<script type="text/javascript">
+    var smartform = smartform || {};
+
+    smartform.beforeInit = function initialize() {
+        smartform.setClientId('XF9XMJ5oqQ');
+    }
+</script>
+<script src="{{ asset("js/form-ajax/event-patch.js") }}"></script>

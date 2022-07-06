@@ -25,9 +25,10 @@ class EventController extends AbstractController {
     /**
      * @throws NonUniqueResultException
      */
-    #[Route('/admin/akce/zobrazit/{id}', name: 'admin_event_view')]
-    public function view(int $id, ManagerRegistry $doctrine, Request $request): Response {
-        $event = $doctrine->getRepository(Event::class)->findOneByID($id);
+    #[Route('/admin/akce/zobrazit/{shortName}', name: 'admin_event_view')]
+    public function view(string $shortName, ManagerRegistry $doctrine, Request $request): Response {
+        $shortName = strtoupper($shortName);
+        $event = $doctrine->getRepository(Event::class)->findOneBy(array("shortName" => $shortName));
 
         if ($event == null) {
             $this->addFlash("warning", "Tato akce nebyla nalezena!");
@@ -37,7 +38,7 @@ class EventController extends AbstractController {
         return $this->render('Admin/Event/view.html.twig', [
             "section" => "event",
             "event" => $event,
-            "page_name" => "Náhled akce ID: ".$id,
+            "page_name" => "Náhled akce:: ".$event->getshortName(),
             "page_path" => array("Domov", "Akce", "Náhled akce", $event->getshortName())
         ]);
     }
@@ -45,9 +46,10 @@ class EventController extends AbstractController {
     /**
      * @throws NonUniqueResultException
      */
-    #[Route('/admin/akce/upravit/{id}', name: 'admin_event_edit')]
-    public function edit(int $id, ManagerRegistry $doctrine, Request $request): Response {
-        $event = $doctrine->getRepository(Event::class)->findOneBy(array("id" => $id));
+    #[Route('/admin/akce/upravit/{shortName}', name: 'admin_event_edit')]
+    public function edit(string $shortName, ManagerRegistry $doctrine, Request $request): Response {
+        $shortName = strtoupper($shortName);
+        $event = $doctrine->getRepository(Event::class)->findOneBy(array("shortName" => $shortName));
 
         if ($event == null) {
             $this->addFlash("warning", "Tato akce nebyla nalezena!");
@@ -57,7 +59,7 @@ class EventController extends AbstractController {
         return $this->render('Admin/Event/edit.html.twig', [
             "section" => "event",
             "event" => $event,
-            "page_name" => "Úprava akce ID: ".$id,
+            "page_name" => "Úprava akce: ".$event->getshortName(),
             "page_path" => array("Domov", "Akce", "Úprava akce", $event->getshortName())
         ]);
     }
