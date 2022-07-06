@@ -10,7 +10,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Serializer\Filter\GroupFilter;
-use App\Config\EventType;
 use App\Repository\EventRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,7 +19,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
-#[UniqueEntity("name_short")]
+#[UniqueEntity("shortName")]
 #[ApiResource(
     collectionOperations: [
         "get" => ["security" => "is_granted('ROLE_VIEW_EVENT')"],
@@ -70,7 +69,7 @@ class Event {
     #[ORM\Column(type: 'string', length: 2)]
     #[Groups(["read", "write"])]
     #[NotBlank]
-    private EventType $type;
+    private string $type;
 
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
     #[Groups(["read", "write"])]

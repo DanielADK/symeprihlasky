@@ -100,7 +100,7 @@ class ApplicationController extends AbstractController {
         $pdf->SetTitle($app->getChild()->getFullname()." (".$app->getHash().")");
         $pdf->SetFont('dejavuserifcondensed','B',15);
         $pdf->SetXY(10, 40);
-        $pdf->Cell(0,4,$app->getEvent()->getNameFull(),0,0,'C');
+        $pdf->Cell(0,4,$app->getEvent()->getfullName(),0,0,'C');
         $pdf->SetFont('dejavuserifcondensed','B',11);
         $pdf->SetXY(50, 65);
         $pdf->Cell(0,10,$app->getChild()->getFullname(),0,0,'L');
