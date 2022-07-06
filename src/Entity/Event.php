@@ -67,7 +67,7 @@ class Event {
     #[NotBlank]
     private \DateTimeInterface $dateEnd;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 3, enumType: EventType::class)]
     #[Groups(["read", "write"])]
     #[NotBlank]
     private EventType $type;
