@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import 'jszip';
-import 'pdfmake';
 import 'datatables.net-bs';
 import 'datatables.net-autofill-bs';
 import 'datatables.net-buttons-bs';

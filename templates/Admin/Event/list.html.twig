@@ -2,7 +2,7 @@
 {% extends "Admin/base.html.twig" %}
 {% block title %}E-Přihlášky - Seznam akcí{% endblock %}
 {% block stylesheets %}
-{#    {{ encore_entry_link_tags('datatables') }}#}
+    {{ encore_entry_link_tags('datatables') }}
     <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/bower_components/datatables/datatables.min.css') }}">
 {% endblock %}
 {% block content %}
@@ -21,6 +21,5 @@
     </section>
 {% endblock %}
 {% block javascripts %}
-    <script src="{{ asset("adminlte/bower_components/datatables/datatables.min.js") }}"></script>
-{#    {{ encore_entry_script_tags('datatables') }}#}
+    {{ encore_entry_script_tags('datatables') }}
 {% endblock %}

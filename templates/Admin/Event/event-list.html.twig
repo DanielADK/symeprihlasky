@@ -12,7 +12,6 @@
             <table id="events" class="table table-hover table-striped table-bordered table-responsive">
                 <thead>
                 <tr class="text-center">
-                    <th>ID</th>
                     <th>Zkratka</th>
                     <th>Celý název</th>
                     <th>Začátek</th>
@@ -34,89 +33,17 @@
         </div>
     </div>
 </section>
-<script>
-    var ajaxURL;
+{% block javascripts %}
+<script defer>
+    let ajaxURL;
+    let admin;
     {% if is_granted("ROLE_DELETE_EVENT") %}
     ajaxURL = "/api/events?groups[]=address";
+    admin = true;
     {% else %}
     ajaxURL = "/api/events?deleted=false&groups[]=address";
+    admin = false;
     {% endif %}
-    var columns = [
-        {"data": "id"},
-        {"data": "shortName"},
-        {"data": "fullName"},
-        {
-            "data": null,
-            render: function (data) {
-                return ajaxPrepare("simpleDate", data.dateStart);
-            }
-        },
-        {
-            "data": null,
-            render: function (data) {
-                return ajaxPrepare("simpleDate", data.dateEnd);
-            }
-        },
-        {
-            "data": null,
-            render: function (data) {
-                return ajaxPrepare("type", data.type);
-            }
-        },
-        {
-            "data": null,
-            render: function (data) {
-                return ajaxPrepare("address", data.address);
-            }
-        },
-        {
-            "data": null,
-            render: function (data) {
-                return ajaxPrepare("activeApplication", data.activeApplication);
-            }
-        },
-        {
-            "data": null,
-            render: function (data) {
-                return ajaxPrepare("capacity", data.capacity);
-            }
-        },
-        {
-            "data": null,
-            render: function (data) {
-                return ajaxPrepare("priceMember", data.priceMember);
-            }
-        },
-        {
-            "data": null,
-            render: function (data) {
-                return ajaxPrepare("priceOther", data.priceOther);
-            }
-        },
-        {% if is_granted("ROLE_EDIT_PERSON") or is_granted("ROLE_DELETE_PERSON") %}
-        {
-            "data": null,
-            render: function(data) {
-                return  '<div class="btn-group">' +
-                        '<a href="/admin/akce/zobrazit/'+data.id+'" class="btn btn-info" data-toggle="tooltip" title="Zobrazit informace o akci" ><i class="fa fa-fw fa-info"></i></a>' +
-                        '<a href="/admin/akce/upravit/'+data.id+'" class="btn btn-success" data-toggle="tooltip" title="Upravit akci" ><i class="fa fa-fw fa-wrench"></i></a>' +
-                        '</div>'
-            }
-        },
-        {
-            "data": null,
-            render: function(data) {
-                if (data.deleted) {
-                    return '<span class="label label-danger">SMAZÁN!</span>'
-                } else {
-                    return '<span class="label label-default">Nikoliv</span>';
-                }
-            }
-        },
-        {% endif %}
-
-
-    ];
 </script>
-<script src="{{ asset("js/datatables/event-list.js") }}"></script>
-{#{{ encore_entry_script_tags('event') }}#}
+{{ encore_entry_script_tags('event-list') }}
+{% endblock %}
