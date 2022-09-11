@@ -1,11 +1,6 @@
 import {Calendar} from "fullcalendar";
 
 $(function () {
-    var date = new Date();
-    var d    = date.getDate(),
-        m    = date.getMonth(),
-        y    = date.getFullYear()
-
     var calendar = new Calendar($("#calendar"), {
         plugins: ['bootstrap', 'dayGrid'],
         themeSystem: 'bootstrap3',
@@ -33,7 +28,7 @@ $(function () {
                         "&dateEnd[before]=" +
                         end.format("YYYY-MM-DD 00:00:01"),
                     type: "GET",
-                    error: function(jqXHR, textStatus, errorThrown) {
+                    error: function() {
                         customPopUpMin($("#failSubmit"));
                     },
                     success: function(jsondata){
@@ -47,7 +42,7 @@ $(function () {
                             single.start = event.dateStart;
                             single.end = new Date(event.dateEnd);
                             single.end.setDate(single.end.getDate()+1);
-                            single.url = "/admin/akce/zobrazit/" + event.id;
+                            single.url = "/admin/akce/zobrazit/" + event.shortName;
                             single.display = "block"
 
                             switch (event.type) {
