@@ -9,7 +9,7 @@ import "/public/adminlte/bower_components/moment/locale/cs";
 import "/public/adminlte/bower_components/jquery-slimscroll/jquery.slimscroll.min";
 import "/public/adminlte/bower_components/ckeditor/ckeditor";
 import "/public/adminlte/dist/js/adminlte.min";
-import "/public/adminlte/dist/js/pages/dashboard";
+// import "/public/adminlte/dist/js/pages/dashboard";
 import "/public/adminlte/plugins/jvectormap/jquery-jvectormap-1.2.2.min";
 import "/public/adminlte/plugins/jvectormap/jquery-jvectormap-world-mill-en";
 import "/public/adminlte/bower_components/jquery-knob/dist/jquery.knob.min";
