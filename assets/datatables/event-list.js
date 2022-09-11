@@ -71,7 +71,7 @@ var adminCols = [
     {
         "data": null,
         render: function(data) {
-            return  '<div class="btn-group">' +
+            return  '<div class="btn-group-vertical">' +
                 '<a href="/admin/akce/zobrazit/'+data.shortName+'" class="btn btn-info" data-toggle="tooltip" title="Zobrazit informace o akci" ><i class="fa fa-fw fa-info"></i></a>' +
                 '<a href="/admin/akce/upravit/'+data.shortName+'" class="btn btn-success" data-toggle="tooltip" title="Upravit akci" ><i class="fa fa-fw fa-wrench"></i></a>' +
                 '</div>'
