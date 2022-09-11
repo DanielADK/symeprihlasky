@@ -1,6 +1,5 @@
 import $ from 'jquery';
-// import "/public/adminlte/bower_components/jquery/dist/jquery.min";
-// import "/public/adminlte/bower_components/jquery-ui/jquery-ui.min";
+import "/assets/admin";
 import "/public/adminlte/bower_components/jquery-sparkline/dist/jquery.sparkline.min";
 import "/public/adminlte/bower_components/bootstrap/dist/js/bootstrap.min";
 import "/public/adminlte/bower_components/raphael/raphael.min";
@@ -14,5 +13,4 @@ import "/public/adminlte/dist/js/pages/dashboard";
 import "/public/adminlte/plugins/jvectormap/jquery-jvectormap-1.2.2.min";
 import "/public/adminlte/plugins/jvectormap/jquery-jvectormap-world-mill-en";
 import "/public/adminlte/bower_components/jquery-knob/dist/jquery.knob.min";
-import "/public/js/admin";
-import "./styles/admin-lte.css";
+import "./styles/admin-lte.scss";
