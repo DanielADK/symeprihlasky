@@ -102,7 +102,7 @@ $(document).ready(function () {
                     dt.ajax.reload();
                     reloadEventsStats();
                 }
-            }, 'excel', 'csv'],
+            }, "print", 'csv'],
         "columns": (admin) ? columns.concat(adminCols) : columns,
         "language": {
             "url": "https://cdn.datatables.net/plug-ins/1.11.0/i18n/cs.json"
