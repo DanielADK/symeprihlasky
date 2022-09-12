@@ -93,8 +93,6 @@ $(document).ready(function () {
             "url": ajaxURL,
             "dataSrc": ""
         },
-        responsive: true,
-        dom: 'Bfrtipl',
         buttons: [
             {
                 text: '<i class=\"fa fa-refresh\" id="tableRefresh"></i>',
@@ -104,9 +102,6 @@ $(document).ready(function () {
                 }
             }, "print", 'csv'],
         "columns": (admin) ? columns.concat(adminCols) : columns,
-        "language": {
-            "url": "https://cdn.datatables.net/plug-ins/1.11.0/i18n/cs.json"
-        },
         "order": [[7, 'asc'], [3, 'asc']],
         "fnInitComplete": reloadEventsStats
     });
