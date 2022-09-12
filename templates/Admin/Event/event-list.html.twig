@@ -26,7 +26,6 @@
                         <th>Akce</th>
                         <th>Smazáno?</th>
                     {% endif %}
-
                 </tr>
                 </thead>
             </table>
@@ -36,7 +35,7 @@
 {% block javascripts %}
 <script defer>
     let ajaxURL;
-    let admin;
+    var admin;
     {% if is_granted("ROLE_DELETE_EVENT") %}
     ajaxURL = "/api/events?groups[]=address";
     admin = true;
