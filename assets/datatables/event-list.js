@@ -11,7 +11,7 @@ function reloadEventsStats() {
         }).length;
 }
 
-var columns = [
+let columns = [
     {"data": "shortName"},
     {"data": "fullName"},
     {
@@ -64,8 +64,7 @@ var columns = [
     },
 ];
 
-var adminCols = [
-    // {% if is_granted("ROLE_EDIT_PERSON") or is_granted("ROLE_DELETE_PERSON") %}
+let adminCols = [
     {
         "data": null,
         render: function(data) {
