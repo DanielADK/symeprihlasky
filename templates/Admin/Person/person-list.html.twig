@@ -12,7 +12,6 @@
             <table id="people" class="table table-hover table-striped table-bordered table-responsive">
                 <thead>
                 <tr class="text-center">
-                    <th>ID</th>
                     <th>Jméno <br>a příjmení</th>
                     <th>Email</th>
                     <th>Telefon</th>
@@ -22,77 +21,23 @@
                         <th>Akce</th>
                         <th>Smazán?</th>
                     {% endif %}
-
                 </tr>
                 </thead>
             </table>
         </div>
     </div>
 </section>
+{% block javascripts %}
 <script>
-    var ajaxURL;
+    let ajaxURL;
+    var admin;
     {% if is_granted("ROLE_DELETE_PERSON") %}
-    ajaxURL = "/api/people";
+    ajaxURL = "/api/people?groups[]=address&groups[]=roles";
+    admin = true;
     {% else %}
-    ajaxURL = "/api/people?deleted=false";
+    ajaxURL = "/api/people?deleted=false&groups[]=address&groups[]=roles";
+    admin = false;
     {% endif %}
-    var columns = [
-        {"data": "id"},
-        {
-            "data": null,
-            render: function (data) {
-                return data.name + " " + data.surname;
-            }
-        },
-        {
-            "data": null,
-            render: function (data) {
-                return ajaxPrepare("email", data);
-            }
-        },
-        {
-            "data": null,
-            render: function (data) {
-                return ajaxPrepare("phone", data);
-            }
-        },
-        {
-            "data": null,
-            render: function (data) {
-                return ajaxPrepare("address", data.address);
-            }
-        },
-        {
-            "data": null,
-            render: function (data) {
-                return ajaxPrepare("role", data.roles);
-            }
-        },
-        {
-            "data": null,
-            render: function(data) {
-                return '<div class="btn-group-vertical">' +
-                    '<a href="/admin/uzivatele/zobrazit/' + data.id + '" class="btn btn-block btn-sm btn-primary">Detaily<i class="fa fa-fw fa-info"></i></a>' +
-        {% if is_granted("ROLE_EDIT_PERSON") %}
-                    '<a href="/admin/uzivatele/upravit/' + data.id + '" class="btn btn-block btn-sm btn-success">Upravit<i class="fa fa-fw fa-wrench"></i></a>' +
-        {% endif %}
-                    '</div>'
-            }
-        },
-        {% if is_granted("ROLE_EDIT_PERSON") or is_granted("ROLE_DELETE_PERSON") %}
-        {
-            "data": null,
-            render: function(data) {
-                if (data.deleted) {
-                    return '<span class="label label-danger">SMAZÁN!</span>'
-                } else {
-                    return '<span class="label label-default">Nikoliv</span>';
-                }
-            }
-        },
-        {% endif %}
-
-
-    ];
 </script>
-<script src="{{ asset("js/datatables/person-list.js") }}"></script>
+{{ encore_entry_script_tags("person-list") }}
+{% endblock %}
