@@ -21,7 +21,6 @@ function reloadPersonStats() {
 
 
 let columns = [
-    {"data": "id"},
     {
         "data": null,
         render: function (data) {
@@ -60,13 +59,12 @@ let columns = [
         }
     }
 ];
-
 let adminCols = [
     {
         "data": null,
         render: function(data) {
         return '<div class="btn-group-vertical">' +
-            '<a href="/admin/dite/zobrazit/'+data.id+'" class="btn btn-block btn-sm btn-info"><i class="fa fa-fw fa-info"></i>Informace<i class="fa fa-fw fa-wrench"></i></a>' +
+            '<a href="/admin/dite/zobrazit/'+data.id+'" class="btn btn-block btn-sm btn-info"><i class="fa fa-fw fa-info"></i>Informace</a>' +
             '<a href="/admin/dite/upravit/'+data.id+'" class="btn btn-block btn-sm btn-success"><i class="fa fa-fw fa-wrench"></i>Upravit</a>' +
             '</div>';
         }
@@ -80,9 +78,7 @@ let adminCols = [
                 return '<span class="label label-default">Nikoliv</span>';
             }
         }
-}
-
-
+    }
 ];
 
 $(document).ready(function () {

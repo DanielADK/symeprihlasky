@@ -12,7 +12,6 @@
             <table id="people" class="table table-hover table-striped table-bordered table-responsive">
                 <thead>
                 <tr class="text-center">
-                    <th>ID</th>
                     <th>Jméno <br>a příjmení</th>
                     <th>Rodič</th>
                     <th>Adresa</th>
@@ -20,11 +19,10 @@
                     <th>Pohlaví</th>
                     <th>Velikost trička</th>
                     <th>Člen</th>
-                    {% if is_granted("ROLE_EDIT_PERSON") or is_granted("ROLE_DELETE_PERSON") %}
+                    {% if is_granted("ROLE_EDIT_CHILDREN") or is_granted("ROLE_DELETE_CHILDREN") %}
                         <th>Akce</th>
                         <th>Smazán?</th>
                     {% endif %}
-
                 </tr>
                 </thead>
             </table>
@@ -32,11 +30,11 @@
     </div>
 </section>
 {% block javascripts %}
-<script>
+<script defer>
     let ajaxURL;
-    let admin;
+    var admin;
     {% if is_granted("ROLE_DELETE_CHILDREN") %}
-    ajaxURL = "/api/children&groups[]=parent&groups[]=address";
+    ajaxURL = "/api/children?groups[]=parent&groups[]=address";
     admin = true;
     {% else %}
     ajaxURL = "/api/children?deleted=false&groups[]=parent&groups[]=address";

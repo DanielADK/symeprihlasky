@@ -24,18 +24,18 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ORM\Entity(repositoryClass: ChildRepository::class)]
 #[ApiResource(
     collectionOperations: [
-        "get" => ["security" => "is_granted('ROLE_VIEW_CHILD')"],
+        "get" => ["security" => "is_granted('ROLE_VIEW_CHILDREN')"],
     ],
     itemOperations: [
-        "get" => ["security" => "is_granted('ROLE_VIEW_CHILD')"],
-        "put" => ["security" => "is_granted('ROLE_ADD_CHILD')"],
-        "patch" => ["security" => "is_granted('ROLE_EDIT_CHILD')"]
+        "get" => ["security" => "is_granted('ROLE_VIEW_CHILDREN')"],
+        "put" => ["security" => "is_granted('ROLE_ADD_CHILDREN')"],
+        "patch" => ["security" => "is_granted('ROLE_EDIT_CHILDREN')"]
     ],
     denormalizationContext: ["groups" => ["write"]],
     forceEager: false,
     normalizationContext: ["groups" => ["read"], "enable_max_depth" => true]
 )]
-#[ApiFilter(BooleanFilter::class, properties: ["active", "ctu_member"])]
+#[ApiFilter(BooleanFilter::class, properties: ["active", "ctu_member", "deleted"])]
 #[ApiFilter(SearchFilter::class, properties: [
     "name" => "partial",
     "surname" => "partial",

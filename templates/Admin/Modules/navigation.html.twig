@@ -39,7 +39,7 @@
                 {% endif %}
                 </ul>
             </li>
-            {% if is_granted("ROLE_VIEW_CHILD") %}
+            {% if is_granted("ROLE_VIEW_CHILDREN") %}
             <li class="treeview {% if section=="child" %}active{% endif %}">
                 <a href="#"><i class="nav-icon fa fa-child"></i>
                     <span>Děti</span><span class="pull-right-container">
@@ -50,7 +50,7 @@
                             <i class="fa fa-list"></i><span>Seznam dětí</span>
                         </a>
                     </li>
-                    {% if is_granted("ROLE_EDIT_CHILD") %}
+                    {% if is_granted("ROLE_EDIT_CHILDREN") %}
                         <li {% if route_name=='admin_child_edit' %}class="active"{% endif %}>
                             <a href="#">
                                 <i class="fa fa-edit"></i><span>Správa dětí</span>
