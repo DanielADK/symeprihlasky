@@ -20,15 +20,14 @@
 {#    <link rel="stylesheet" href="{{ asset("../assets/styles/admin.scss") }}">#}
     {% block stylesheets %}
     {% endblock %}
-    <script src="{{ asset("adminlte/bower_components/jquery/dist/jquery.min.js") }}"></script>
-    <script src="{{ asset("adminlte/bower_components/jquery-ui/jquery-ui.min.js") }}"></script>
+{#    <script src="{{ asset("adminlte/bower_components/jquery/dist/jquery.min.js") }}"></script>#}
+{#    <script src="{{ asset("adminlte/bower_components/jquery-ui/jquery-ui.min.js") }}"></script>#}
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-{#    {{ encore_entry_script_tags('admin') }}#}
 </head>
 <body class="hold-transition skin-green fixed">
     <section class="wrapper">
@@ -39,9 +38,6 @@
     </section>
     <scripts>
         {{ encore_entry_script_tags('admin-lte') }}
-        <script>
-            $.widget.bridge('uibutton', $.ui.button);
-        </script>
 {#        <script src="{{ asset("adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js") }}"></script>#}
 {#        <script src="{{ asset("adminlte/bower_components/raphael/raphael.min.js") }}"></script>#}
 {#        <script src="{{ asset("adminlte/bower_components/morris.js/morris.min.js") }}"></script>#}

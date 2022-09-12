@@ -1,6 +1,4 @@
 import $ from 'jquery';
-// import 'datatables.net-bs'
-// let ajs = require("../admin");
 import '../datatables';
 import {ajaxPrepare} from "../admin";
 

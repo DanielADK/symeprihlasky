@@ -32,28 +32,19 @@
                     </tr>
                     <tr>
                         <td><b>Typ:</b></td>
-                        <td id=typeOfEvent>
-                            <i class="fa fa-spinner fa-spin fa-fw"></i>
-                            Načítání...
-                        </td>
+                        <td id=typeOfEvent>{{ event.type }}</td>
                     </tr>
                     <tr>
                         <td><b>Aktivní přihláška:</b></td>
-                        <td id=activeApplication>
-                            <i class="fa fa-spinner fa-spin fa-fw"></i>
-                            Načítání...
-                        </td>
+                        <td id=activeApplication>{{ event.activeApplication }}</td>
                     </tr>
                     <tr>
                         <td><b>Kapacita:</b></td>
-                        <td id=capacity>
-                            <i class="fa fa-spinner fa-spin fa-fw"></i>
-                            Načítání...
-                        </td>
+                        <td id=capacity>{{ event.capacity }}</td>
                     </tr>
                     <tr>
                         <td><b>Cena člen/nečlen:</b></td>
-                        <td><span id=priceMember></span>/<span id=priceOther></span></td>
+                        <td><span id=priceMember>{{ event.priceMember }}</span>/<span id=priceOther>{{ event.priceOther }}</span></td>
                     </tr>
                     <tr>
                         <td><b>Místo konání:</b></td>
@@ -72,13 +63,5 @@
         </div>
     </div>
 </section>
-
-<script type="text/javascript">
-$(document).ready(function () {
-    document.getElementById("activeApplication").innerHTML = ajaxPrepare("activeApplication", "{{ event.activeApplication }}");
-    document.getElementById("typeOfEvent").innerHTML = ajaxPrepare("type", "{{ event.type }}");
-    document.getElementById("capacity").innerHTML = ajaxPrepare("capacity", {{ event.capacity }});
-    document.getElementById("priceMember").innerHTML = ajaxPrepare("priceMember", "{{ event.priceMember }}");
-    document.getElementById("priceOther").innerHTML = ajaxPrepare("priceOther", "{{ event.priceOther }}");
-});
-</script>
+{{ encore_entry_script_tags('admin') }}
+{{ encore_entry_script_tags('event') }}

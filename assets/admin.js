@@ -1,4 +1,4 @@
-async function customPopUpMin(object) {
+export function customPopUpMin(object) {
     window.scrollTo(0,0);
     object.fadeTo(5000,500).slideUp(1000, function() {
         object.slideUp(1000);
@@ -10,10 +10,11 @@ function numberToThousandsSep(x) {
 }
 function twoDigitDate(date) { return ("0" + date).slice(-2); }
 
-const months = ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'];
-const days = ["Po", "Út", "St", "Čt", "Pá", "So", "Ne"];
+// const months = ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'];
+// const days = ["Po", "Út", "St", "Čt", "Pá", "So", "Ne"];
 
-export function ajaxPrepare(typ, data, type) {
+export function ajaxPrepare(typ, data) {
+    let date;
     if (typ === 'address') {
         return '<a target="_blank" href="https://www.google.com/maps?q=' +
             data.street.replace(' ', '+') + '+' +
@@ -38,7 +39,7 @@ export function ajaxPrepare(typ, data, type) {
         return data.sex === "Z" ?
             'Dívka <i class=\"fa fa-female fa-lg text-red\" aria-hidden=\"true\"></i>' :
             'Chlapec <i class=\"fa fa-male fa-lg text-blue\" aria-hidden=\"true\"></i>';
-    } else if (typ === 'type') {
+    } else if (typ === "type" || typ === "typeOfEvent") {
         switch (data) {
             case "JA":
                 return '<h4><span class="label label-primary"><i class="fa fa-map-o"></i> Jednodenní</span></h4>';
@@ -67,16 +68,16 @@ export function ajaxPrepare(typ, data, type) {
                 return "Neznámé";
         }
     } else if (typ === 'simpleDate') {
-        var date = new Date(data);
+        date = new Date(data);
         return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1) + "." + date.getFullYear();
     } else if (typ === 'birthDateWithAge') {
-        var date = new Date(data);
-        var age = new Date(Date.now() - date.getTime()).getUTCFullYear()-1970;
+        date = new Date(data);
+        let age = new Date(Date.now() - date.getTime()).getUTCFullYear()-1970;
         return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1)  + "." + date.getFullYear()
             + " (" + age + " let)";
 
     } else if (typ === 'signDateTime') {
-        var date = new Date(data);
+        date = new Date(data);
         return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1)  + "." + date.getFullYear()
             + " " + twoDigitDate(date.getHours()) + "." + twoDigitDate(date.getMinutes())  + "." + twoDigitDate(date.getSeconds());
     } else if (typ === 'email') {
@@ -100,11 +101,11 @@ export function ajaxPrepare(typ, data, type) {
     } else if (typ === 'fullname') {
         return data.name + ' ' + data.surname;
     }else if (typ === 'capacity') {
-        return data === -1 ? "Neomezená" : data;
+        return data == -1 ? "Neomezená" : data;
     } else if (typ === 'fullEvent') {
         return data.shortName + ',<br>' + data.fullName;
     } else if (typ === 'priceOther') {
-        if (typeof data === "undefined" || data == "-1") {
+        if (typeof data === "undefined" || data == -1) {
             return "-";
         } else {
             return numberToThousandsSep(data) + " Kč";
