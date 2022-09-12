@@ -16,7 +16,7 @@ function twoDigitDate(date) { return ("0" + date).slice(-2); }
 export function ajaxPrepare(typ, data) {
     let date;
     if (typ === 'address') {
-        return '<a target="_blank" href="https://www.google.com/maps?q=' +
+        return '<a target="_blank" href="https://mapy.cz/zakladni?q=' +
             data.street.replace(' ', '+') + '+' +
             data.city.replace(' ', '+') + '+' +
             data.postcode +
