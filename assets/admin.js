@@ -132,6 +132,8 @@ export function ajaxPrepare(typ, data) {
                 case "ROLE_PARENT":
                     retval = retval + ' <span class="label label-primary">Rodič</span>';
                     break;
+                default:
+                    retval = retval + ' <span class="label label-default">' + role + '</span>'
             }
         });
         return retval;
