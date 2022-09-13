@@ -13,6 +13,12 @@ function twoDigitDate(date) { return ("0" + date).slice(-2); }
 // const months = ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'];
 // const days = ["Po", "Út", "St", "Čt", "Pá", "So", "Ne"];
 
+/**
+ * It takes a type of data and the data itself and returns a string with the data formatted according to the type
+ * @param typ - type of data
+ * @param data - the data to be displayed in the cell
+ * @returns It is a function that returns a string.
+ */
 export function ajaxPrepare(typ, data) {
     let date;
     if (typ === 'address') {
