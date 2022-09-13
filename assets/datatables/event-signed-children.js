@@ -13,7 +13,7 @@ function unsignPerson(hash) {
 }
 
 $(document).ready(function () {
-    var table = $('#signedPeople').DataTable({
+    $('#signedPeople').DataTable({
         "ajax": {
             "url": ajaxSignedChildrenList,
             "dataSrc": ""
