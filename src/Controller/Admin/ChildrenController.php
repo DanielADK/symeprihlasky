@@ -2,6 +2,9 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Address;
+use App\Entity\Child;
+use App\Entity\Person;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -18,28 +21,25 @@ class ChildrenController extends AbstractController {
             "page_path" => array("Domov", "Děti", "Seznam")
         ]);
     }
-    /**
- * @throws \Doctrine\ORM\NonUniqueResultException
- */
     #[Route('/admin/dite/zobrazit/{id}', name: 'admin_child_view')]
     public function view(int $id, EntityManagerInterface $em, Request $request): Response {
-        $event = $em->getRepository("App:Event")->findOneBy(
-            array("id" => $id)
-        );
-        if ($event == null) {
-            $this->addFlash("warning", "Tato akce nebyla nalezena!");
-            return new RedirectResponse($this->generateUrl("admin_event_list"));
-        }
+        $child = $em->getRepository(Child::class)->findOneBy(array("id" => $id));
 
-        return $this->render('Admin/Event/view.html.twig', [
-            "section" => "event",
-            "event" => $event,
+        if ($child == null) {
+            $this->addFlash("warning", "Toto dítě nebylo nalezena!");
+            return new RedirectResponse($this->generateUrl("admin_child_list"));
+        }
+//        $child->getParent()->getAddress();
+//        $child->getAddress()->getCity();
+
+        return $this->render('Admin/Children/view.html.twig', [
+            "section" => "children",
+            "child" => $child,
             "page_name" => "Náhled akce ID: ".$id,
             "page_path" => array("Domov", "Akce", "Náhled akce")
         ]);
     }
     /**
-     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     #[Route('/admin/dite/upravit/{id}', name: 'admin_child_edit')]
     public function edit(int $id, EntityManagerInterface $em, Request $request): Response {

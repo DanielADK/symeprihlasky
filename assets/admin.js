@@ -33,12 +33,12 @@ export function ajaxPrepare(typ, data) {
             ', <br>' +
             data.postcode +
             '</a>';
-    } else if (typ === 'yesno') {
-        return data ?
+    } else if (typ === "yesno" || typ === "member") {
+        return (data || data === '1') ?
             '<i class=\"fa fa-check-circle fa-lg text-success\" aria-hidden=\"true\"></i> Ano' :
             '<i class=\"fa fa-times-circle fa-lg text-danger\" aria-hidden=\"true\"></i> Ne';
     } else if (typ === 'check') {
-        return data ?
+        return (data || data === '1') ?
             '<i class=\"fa fa-check-circle fa-lg text-success\" aria-hidden=\"true\"></i>' :
             '<i class=\"fa fa-times-circle fa-lg text-danger\" aria-hidden=\"true\"></i>';
     } else if (typ === 'sex') {

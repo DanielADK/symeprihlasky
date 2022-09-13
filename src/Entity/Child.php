@@ -32,7 +32,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
         "patch" => ["security" => "is_granted('ROLE_EDIT_CHILDREN')"]
     ],
     denormalizationContext: ["groups" => ["write"]],
-    forceEager: false,
     normalizationContext: ["groups" => ["read"], "enable_max_depth" => true]
 )]
 #[ApiFilter(BooleanFilter::class, properties: ["active", "ctu_member", "deleted"])]
@@ -61,7 +60,7 @@ class Child extends EntityRepository {
     #[NotBlank]
     private string $surname;
 
-    #[ORM\ManyToOne(targetEntity: Person::class, inversedBy: 'children')]
+    #[ORM\ManyToOne(targetEntity: Person::class, fetch: "EAGER", inversedBy: 'children')]
     #[ORM\JoinColumn(nullable: false)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]
@@ -69,7 +68,7 @@ class Child extends EntityRepository {
     #[NotBlank]
     private Person $parent;
 
-    #[ORM\ManyToOne(targetEntity: Address::class)]
+    #[ORM\ManyToOne(targetEntity: Address::class, fetch: "EAGER")]
     #[ORM\JoinColumn(nullable: false)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]

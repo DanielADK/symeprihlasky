@@ -37,7 +37,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
         "patch" => ["security" => "is_granted('ROLE_EDIT_PERSON')"]
     ], # Deletion is missing because of archiving.
     denormalizationContext: ["groups" => ["write"]],
-    forceEager: false,
     normalizationContext: ["groups" => ["read"]]
 )]
 #[ApiFilter(BooleanFilter::class, properties: ["deleted", "ctu_member"])]
@@ -146,112 +145,98 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @return int
      */
-    public function getId(): int
-    {
+    public function getId(): int{
         return $this->id;
     }
 
     /**
      * @param int $id
      */
-    public function setId(int $id): void
-    {
+    public function setId(int $id): void {
         $this->id = $id;
     }
 
     /**
      * @return string
      */
-    public function getName(): string
-    {
+    public function getName(): string{
         return $this->name;
     }
 
     /**
      * @param string $name
      */
-    public function setName(string $name): void
-    {
+    public function setName(string $name): void {
         $this->name = $name;
     }
 
     /**
      * @return string|null
      */
-    public function getSurname(): ?string
-    {
+    public function getSurname(): ?string{
         return $this->surname;
     }
 
     /**
      * @param string $surname
      */
-    public function setSurname(string $surname): void
-    {
+    public function setSurname(string $surname): void {
         $this->surname = $surname;
     }
 
     /**
      * @return Address|null
      */
-    public function getAddress(): ?Address
-    {
+    public function getAddress(): ?Address{
         return $this->address;
     }
 
     /**
      * @param Address $address
      */
-    public function setAddress(Address $address): void
-    {
+    public function setAddress(Address $address): void {
         $this->address = $address;
     }
 
     /**
      * @return Collection|null
      */
-    public function getChildren(): ?Collection
-    {
+    public function getChildren(): ?Collection{
         return $this->children;
     }
 
     /**
      * @param Collection $children
      */
-    public function setChildren(Collection $children): void
-    {
+    public function setChildren(Collection $children): void {
         $this->children = $children;
     }
 
     /**
      * @return \DateTimeInterface|null
      */
-    public function getBirthDate(): ?\DateTimeInterface
-    {
+    public function getBirthDate(): ?\DateTimeInterface{
         return $this->birthDate;
     }
 
     /**
      * @param \DateTimeInterface $birthDate
      */
-    public function setBirthDate(\DateTimeInterface $birthDate): void
-    {
+    public function setBirthDate(\DateTimeInterface $birthDate): void {
         $this->birthDate = $birthDate;
     }
 
     /**
      * @return string
      */
-    public function getSex(): ?string
-    {
+    public function getSex(): ?string{
         return $this->sex;
     }
 
     /**
      * @param string $sex
      */
-    public function setSex(string $sex): void
-    {
+    public function setSex(string $sex): void {
         $this->sex = $sex;
     }
 
@@ -284,7 +269,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getPhone(): ?string {
         return $this->phone;
@@ -293,56 +278,49 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @param string $phone
      */
-    public function setPhone(string $phone): void
-    {
+    public function setPhone(string $phone): void {
         $this->phone = $phone;
     }
 
     /**
      * @return string
      */
-    public function getPassword(): string
-    {
+    public function getPassword(): string{
         return $this->password;
     }
 
     /**
      * @param string $password
      */
-    public function setPassword(string $password): void
-    {
+    public function setPassword(string $password): void {
         $this->password = $password;
     }
 
     /**
      * @return bool
      */
-    public function isCtuMember(): bool
-    {
+    public function isCtuMember(): bool{
         return $this->ctuMember;
     }
 
     /**
      * @param bool $ctuMember
      */
-    public function setCtuMember(bool $ctuMember): void
-    {
+    public function setCtuMember(bool $ctuMember): void {
         $this->ctuMember = $ctuMember;
     }
 
     /**
      * @return bool
      */
-    public function isDeleted(): bool
-    {
+    public function isDeleted(): bool{
         return $this->deleted;
     }
 
     /**
      * @param bool $deleted
      */
-    public function setDeleted(bool $deleted): void
-    {
+    public function setDeleted(bool $deleted): void {
         $this->deleted = $deleted;
     }
 
@@ -356,41 +334,21 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @param array $roles
      */
-    public function setRoles(array $roles): void
-    {
+    public function setRoles(array $roles): void {
         $this->roles = $roles;
     }
 
     /**
-     * @return Collection
+     * @return Collection|null
      */
-    public function getApplications(): ?Collection
-    {
+    public function getApplications(): ?Collection {
         return $this->applications;
     }
 
     /**
      * @param Collection $applications
      */
-    public function setApplications(Collection $applications): void
-    {
+    public function setApplications(Collection $applications): void {
         $this->applications = $applications;
     }
-
-
-
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function loadUserByUsername(string $email): ?Person {
-        $entityManager =  $this->getEntityManager();
-        return $entityManager->createQuery(
-                'SELECT u
-                FROM App\Entity\Person u
-                WHERE u.email = :email'
-            )
-            ->setParameter('email', $email)
-            ->getOneOrNullResult();
-    }
-
 }

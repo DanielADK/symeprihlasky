@@ -29,6 +29,7 @@ Encore
     .addEntry('app', './assets/app')
     .addEntry('datatables', './assets/datatables')
     .addEntry('event', './assets/event')
+    .addEntry('children', './assets/children')
     // .addEntry('jquery', './assets/jquery.js')
 
     // Pages

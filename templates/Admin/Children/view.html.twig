@@ -1,0 +1,26 @@
+{# /src/templates/Admin/Children/view.html.twig #}
+{% extends "Admin/base.html.twig" %}
+{% block title %}E-Přihlášky - Zobrazení dítěte{% endblock %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('datatables') }}
+{% endblock %}
+{% block content %}
+    <section class="content-wrapper">
+        {% include "Admin/Modules/page_path_list.html.twig" %}
+
+        <!-- Main content -->
+        <section class="content container-fluid">
+            {% include "Admin/Modules/flashes.html.twig" %}
+            {% include "Admin/Modules/db_save_flashes.html.twig" %}
+            {% include "Admin/Children/header-stats.html.twig" %}
+
+            {% include "Admin/Children/single-children-view.html.twig" %}
+
+            {% include "Admin/Children/children-list.html.twig" %}
+
+        </section>
+    </section>
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('datatables') }}
+{% endblock %}

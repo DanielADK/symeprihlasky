@@ -1,0 +1,55 @@
+{# /src/templates/Admin/Children/single-children-edit.html.twig #}
+
+<section class="col-xs-12 col-md-12 col-lg-6">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-list"></i>
+            <h1 class="box-title"> Informace o dítěti: <b>{{ child.name }} {{ child.surname }}</b> (ID: {{ child.id }})</h1>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="col-12">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td><b>Jméno a příjmení:</b></td>
+                        <td>{{ child.fullname }}</td>
+                        <td><b>Rodič</b></td>
+                        <td>
+                            <a href="/admin/rodic/zobrazit/{{ child.parent.id }}">
+                                {{ child.parent.fullname }}
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Datum narození:</b></td>
+                        <td id=birthDateWithAge>{{ child.birthDate|date('Y-m-d') }}</td>
+                        <td><b>Člen:</b></td>
+                        <td id=member>{{ child.ctuMember }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Pohlaví:</b></td>
+                        <td id=sex>{{ child.sex }}</td>
+                        <td><b>Velikost trička:</b></td>
+                        <td>{{ child.shirtSize }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Bydliště:</b></td>
+                        <td><a target="_blank" href="https://mapy.cz/zakladni?q={{ child.address.street|replace({' ': '+'}) }}+{{ child.address.city|replace({' ': '+'}) }}+{{ child.address.postcode }}">
+                                {{ child.address.street }}, <br>
+                                {{ child.address.city }}, <br>
+                                {{ child.address.postcode }}
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{{ encore_entry_script_tags('admin') }}
+{{ encore_entry_script_tags('children') }}
