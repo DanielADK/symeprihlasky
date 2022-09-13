@@ -33,7 +33,7 @@ class ChildrenController extends AbstractController {
 //        $child->getAddress()->getCity();
 
         return $this->render('Admin/Children/view.html.twig', [
-            "section" => "children",
+            "section" => "child",
             "child" => $child,
             "page_name" => "Náhled akce ID: ".$id,
             "page_path" => array("Domov", "Akce", "Náhled akce")
