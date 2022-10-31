@@ -33,13 +33,13 @@ let columns = [
     {
         "data": null,
         render: function (data) {
-            return ajaxPrepare("email", data);
+            return ajaxPrepare("email", data.email);
         }
     },
     {
         "data": null,
         render: function (data) {
-            return ajaxPrepare("phone", data);
+            return ajaxPrepare("phone", data.phone);
         }
     },
     {
@@ -59,8 +59,8 @@ let adminCols = [
         "data": null,
         render: function(data) {
             return '<div class="btn-group-vertical">' +
-                '<a href="/admin/uzivatele/zobrazit/' + data.id + '" class="btn btn-block btn-sm btn-info"><i class="fa fa-fw fa-info"></i>Informace</a>' +
-                '<a href="/admin/uzivatele/upravit/' + data.id + '" class="btn btn-block btn-sm btn-success"><i class="fa fa-fw fa-wrench"></i>Upravit</a>' +
+                '<a href="/admin/dospeli/zobrazit/' + data.id + '" class="btn btn-block btn-sm btn-info"><i class="fa fa-fw fa-info"></i>Informace</a>' +
+                '<a href="/admin/dospeli/upravit/' + data.id + '" class="btn btn-block btn-sm btn-success"><i class="fa fa-fw fa-wrench"></i>Upravit</a>' +
                 '</div>'
         }
     },

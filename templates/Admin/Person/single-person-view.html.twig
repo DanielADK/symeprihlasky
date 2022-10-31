@@ -1,0 +1,57 @@
+{# /src/templates/Admin/Children/single-children-edit.html.twig #}
+
+<section class="col-xs-12 col-md-12 col-lg-6">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-list"></i>
+            <h1 class="box-title"> Informace o: <b>{{ person.name }} {{ person.surname }}</b> (ID: {{ person.id }})</h1>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="col-12">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <td><b>Jméno a příjmení:</b></td>
+                        <td>{{ person.fullname }}</td>
+                        <td><b>Email:</b></td>
+                        <td id=email>{{ person.email }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Datum narození:</b></td>
+                        <td id=birthDateWithAge>{{ person.birthDate|date('Y-m-d') }}</td>
+                        <td><b>Telefonní číslo:</b></td>
+                        <td id=phone>{{ person.phone }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Pohlaví:</b></td>
+                        <td id=sex>{{ person.sex }}</td>
+                        <td><b>Bydliště:</b></td>
+                        <td><a target="_blank" href="https://mapy.cz/zakladni?q={{ person.address.street|replace({' ': '+'}) }}+{{ person.address.city|replace({' ': '+'}) }}+{{ person.address.postcode }}">
+                                {{ person.address.street }}, <br>
+                                {{ person.address.city }}, <br>
+                                {{ person.address.postcode }}
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Člen:</b></td>
+                        <td id=member>{{ person.ctuMember }}</td>
+                        <td><b>Role:</b></td>
+                        <td id=role>{{ person.roles|json_encode }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Velikost trička:</b></td>
+                        <td id=filled>{{ person.shirtSize }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{{ encore_entry_script_tags('admin') }}
+{{ encore_entry_script_tags('person') }}

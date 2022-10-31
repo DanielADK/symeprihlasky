@@ -30,6 +30,7 @@ Encore
     .addEntry('datatables', './assets/datatables')
     .addEntry('event', './assets/event')
     .addEntry('children', './assets/children')
+    .addEntry('person', './assets/person')
     // .addEntry('jquery', './assets/jquery.js')
 
     // Pages

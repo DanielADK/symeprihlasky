@@ -87,8 +87,8 @@ export function ajaxPrepare(typ, data) {
         return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1)  + "." + date.getFullYear()
             + " " + twoDigitDate(date.getHours()) + "." + twoDigitDate(date.getMinutes())  + "." + twoDigitDate(date.getSeconds());
     } else if (typ === 'email') {
-        return '<a href="mailto:' + data.email + '">' +
-            data.email +
+        return '<a href="mailto:' + data + '">' +
+            data +
             '</a>';
 
     } else if (typ === 'parent') {
@@ -97,11 +97,11 @@ export function ajaxPrepare(typ, data) {
             '</a>';
 
     } else if (typ === 'phone') {
-        if (data.phone === null)
+        if (data === null)
             return '<span class=\"label label-danger\">NEVYPLNĚNO!</span>';
         else
-            return '<a href="tel:' + data.phone + '">' +
-                    data.phone +
+            return '<a href="tel:' + data + '">' +
+                    data.match(/.{3}/g).join(' ') +
                     '</a>';
 
     } else if (typ === 'fullname') {
@@ -123,7 +123,8 @@ export function ajaxPrepare(typ, data) {
             return numberToThousandsSep(data) + " Kč";
         }
     } else if (typ === 'role') {
-        var retval = "";
+        let retval = "";
+        if (typeof data !== 'object') { data = JSON.parse(data); }
         data.forEach(function(role) {
             switch (role) {
                 case "ROLE_ADMIN":
@@ -143,5 +144,7 @@ export function ajaxPrepare(typ, data) {
             }
         });
         return retval;
+    } else if (typ === 'filled') {
+        return (data !== "") ? data : "Neznámé";
     }
 }
