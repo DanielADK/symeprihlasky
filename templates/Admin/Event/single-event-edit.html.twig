@@ -15,9 +15,79 @@
                 <h3>Základní informace</h3>
                 <input type="hidden" name="id" value="{{ event.id }}">
                 {# Zkratka, celé jméno, typ akce, cena #}
-                <div class=row></div>
-                <h3>Datum</h3>
-                {# Datum #}
+                <div class="row">
+                    <div class="form-group col-lg-4">
+                        <label for="name">Zkratka akce:</label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-edit"></i>
+                            </div>
+                            <input type="text" class="form-control pull-right" name="shortName" id="shortName"
+                                   data-default="{{ event.shortName }}" required
+                                   value="{{ event.shortName }}">
+                        </div>
+
+                    </div>
+                    <div class="form-group col-lg-8">
+                        <label for="surname">Celý název akce:</label>
+
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-edit"></i>
+                            </div>
+                            <input type="text" class="form-control pull-right" name="fullName" id="fullName"
+                                   data-default="{{ event.fullName }}" required
+                                   value="{{ event.fullName }}">
+                        </div>
+
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="type">Typ akce</label>
+                        <select class="form-control" id="type" name="type" data-default="{{ event.type }}">
+                            <option value="JA" {% if event.type == "JA" %}selected{% endif %}>
+                                Jednodenní akce
+                            </option>
+                            <option value="VA" {% if event.type == "VA" %}selected{% endif %}>
+                                Vícedenní akce
+                            </option>
+                            <option value="LT" {% if event.type == "LT" %}selected{% endif %}>
+                                Letní tábor
+                            </option>
+                            <option value="PV" {% if event.type == "PV" %}selected{% endif %}>
+                                Pro vedoucí
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="email">Cena pro členy</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                            <input type="email" class="form-control pull-right" name="priceMember" id="priceMember"
+                                   data-default="{{ event.priceMember }}" required
+                                   value="{{ event.priceMember }}">
+                        </div>
+                        <label for="email">Cena pro nečleny <i>(neplatí-li, nastavte hodnotu: -1)</i></label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                            <input type="email" class="form-control pull-right" name="priceOther" id="priceOther"
+                                   data-default="{{ event.priceOther }}" required
+                                   value="{{ event.priceOther }}">
+                        </div>
+                    </div>
+                <div class="form-group col-lg-5">
+                    <label for="birthDate">Datum konání:</label>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="date" class="form-control pull-right" id="birthDate" name="birthDate"
+                               data-default="{{ event. is empty ? "": person.birthDate|date('Y-m-d') }}"
+                               value="{{ person.birthDate is empty ? "": person.birthDate|date('Y-m-d') }}" data-inputmask="'alias': 'dd.mm.yyyy'" data-mask="">
+                    </div>
+                </div>
+                </div>
 
                 <h3>Místo konání</h3>
                 {# Adresa #}

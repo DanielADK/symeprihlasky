@@ -1,0 +1,39 @@
+<section class="col-xs-6">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-list"></i>
+            <h1 class="box-title"> Děti uživatele </h1>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <table id="own-children" class="table table-hover table-striped table-bordered table-responsive">
+                <thead>
+                <tr class="text-center">
+                    <th>Jméno <br>a příjmení</th>
+                    <th>Adresa</th>
+                    <th>Datum narození</th>
+                    <th>Člen</th>
+                    <th>Akce</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</section>
+{% block javascripts %}
+    <script defer>
+        let ajaxURL2;
+        var admin2;
+        {% if is_granted("ROLE_DELETE_CHILDREN") %}
+        ajaxURL2 = "/api/children?&groups[]=address&parent={{ person.id }}";
+        admin2 = true;
+        {% else %}
+        ajaxURL2 = "/api/children?deleted=false&groups[]=address&parent={{ person.id }}";
+        admin2 = false;
+        {% endif %}
+    </script>
+    {{ encore_entry_script_tags("own-children-list") }}
+{% endblock %}

@@ -41,6 +41,8 @@ Encore
     .addEntry('event-list', './assets/datatables/event-list')
         // Person - list
     .addEntry('person-list', './assets/datatables/person-list')
+        // Own children - list
+    .addEntry('own-children-list', './assets/datatables/own-children-list')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

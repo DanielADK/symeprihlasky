@@ -16,9 +16,14 @@
 
             <div class="row">
                 {% include "Admin/Person/single-person-view.html.twig" %}
+                {% if "ROLE_PARENT" in person.roles %}
+                    {% include "Admin/Person/person-children-list.html.twig" %}
+                {% endif %}
             </div>
 
-            {% include "Admin/Person/person-list.html.twig" %}
+            <div class="row">
+                {% include "Admin/Person/person-list.html.twig" %}
+            </div>
 
         </section>
     </section>
