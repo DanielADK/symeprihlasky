@@ -63,18 +63,18 @@
             {% if is_granted("ROLE_VIEW_PERSON") %}
                 <li class="treeview {% if section=="person" %}active{% endif %}">
                     <a href="#"><i class="nav-icon fa fa-users"></i>
-                        <span>Lidé</span><span class="pull-right-container">
+                        <span>Dospělí</span><span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i></span></a>
                     <ul class="treeview-menu">
                         <li {% if route_name=='admin_person_list' %}class="active"{% endif %}>
                             <a href="{{ path('admin_person_list') }}">
-                                <i class="fa fa-list"></i><span>Seznam lidí</span>
+                                <i class="fa fa-list"></i><span>Seznam dospělých</span>
                             </a>
                         </li>
                         {% if is_granted("ROLE_EDIT_PERSON") %}
                             <li {% if route_name=='admin_person_edit' %}class="active"{% endif %}>
                                 <a href="#">
-                                    <i class="fa fa-edit"></i><span>Správa lidí</span>
+                                    <i class="fa fa-edit"></i><span>Správa dospělých</span>
                                 </a>
                             </li>
                         {% endif %}
