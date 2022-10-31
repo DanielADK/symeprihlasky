@@ -5,6 +5,11 @@ export function customPopUpMin(object) {
     });
 }
 
+/**
+ * It takes a number and returns a string with a thousands separator
+ * @param x - The number to be formatted.
+ * @returns the number with a thousand separator.
+ */
 function numberToThousandsSep(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
