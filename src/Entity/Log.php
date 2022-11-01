@@ -2,8 +2,12 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Serializer\Filter\GroupFilter;
 use App\Repository\LogRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -12,6 +16,18 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: LogRepository::class)]
+#[ApiResource(
+    collectionOperations: [
+        "get" => ["security" => "is_granted('ROLE_VIEW_LOG')"],
+    ],
+    itemOperations: [
+        "get" => ["security" => "is_granted('ROLE_VIEW_LOG')"],
+        "put" => ["security" => "is_granted('ROLE_ADD_LOG')"],
+    ],
+    normalizationContext: ["groups" => ["read"], "enable_max_depth" => true]
+)]
+#[ApiFilter(DateFilter::class, properties: ["dateTime"])]
+#[ApiFilter(GroupFilter::class, arguments: ["parameterName" => "groups", "whitelist" => ["user"]])]
 class Log {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -24,7 +40,7 @@ class Log {
     #[NotBlank]
     private \DateTimeInterface $dateTime;
 
-    #[ORM\ManyToOne(targetEntity: Person::class, fetch: 'EAGER', inversedBy: 'people')]
+    #[ORM\ManyToOne(targetEntity: Person::class, fetch: 'EAGER', inversedBy: 'logs')]
     #[ORM\JoinColumn(nullable: false)]
     #[MaxDepth(1)]
     #[ApiSubresource( maxDepth: 1 )]

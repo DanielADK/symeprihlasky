@@ -121,6 +121,12 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     #[Groups(["applications"])]
     private ?Collection $applications;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Log::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    #[MaxDepth(1)]
+    #[ApiSubresource( maxDepth: 1 )]
+    private ?Collection $logs;
+
 
     public function getUserIdentifier(): string {
         return $this->email;
