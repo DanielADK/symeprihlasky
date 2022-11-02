@@ -1,6 +1,8 @@
+import {customPopUpMin} from "../admin";
+
 $('#editPerson').submit(function(event) {
     event.preventDefault();
-    var sendData = $('#editPerson').serializeArray();
+        var sendData = $('#editPerson').serializeArray();
     if ((sendData.indexOf('=&') > -1)) {
         customPopUpMin($('#emptySubmit'));
         return;
