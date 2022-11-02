@@ -28,7 +28,7 @@
                     </tr>
                     <tr>
                         <td><b>Pohlaví:</b></td>
-                        <td id=sex>{{ person.sex }}</td>
+                        <td id=sexAdult>{{ person.sex }}</td>
                         <td><b>Bydliště:</b></td>
                         <td><a target="_blank" href="https://mapy.cz/zakladni?q={{ person.address.street|replace({' ': '+'}) }}+{{ person.address.city|replace({' ': '+'}) }}+{{ person.address.postcode }}">
                                 {{ person.address.street }}, <br>

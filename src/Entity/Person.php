@@ -100,7 +100,7 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
 
     #[ORM\Column(type: 'string', nullable: true)]
     #[Groups(["write"])]
-    private string $password;
+    private ?string $password = NULL;
 
     #[ORM\Column(type: 'boolean', nullable: true, options: ["default" => false])]
     #[Groups(["read", "write"])]
@@ -291,8 +291,15 @@ class Person implements UserInterface, PasswordAuthenticatedUserInterface {
     /**
      * @return string
      */
-    public function getPassword(): string{
+    public function getPassword(): string|null {
         return $this->password;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasPassword(): bool {
+        return is_null($this->password);
     }
 
     /**

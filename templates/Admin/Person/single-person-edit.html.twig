@@ -3,7 +3,7 @@
 <section class="col-xs-12 col-md-12 col-lg-6">
     <div class="box box-success">
         <div class="box-header">
-            <i class="fa fa-list"></i>
+            <i class="fa fa-wrench"></i>
             <h1 class="box-title"> Úprava uživatele: {{ person.name }} {{ person.surname }}</h1>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="box-body">
-            <form id=editPerson autocomplete=off>
+            <form id=editPerson autocomplete=off >
                 <h3>Základní informace</h3>
                 <input type="hidden" name="id" value="{{ person.id }}">
                 <div class="row">
@@ -53,7 +53,7 @@
                         <label for="phone">Telefon</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                            <input type="email" class="form-control pull-right" name="phone" id="phone"
+                            <input type="text" class="form-control pull-right" name="phone" id="phone"
                                    data-default="{{ person.phone }}"
                                    value="{{ person.phone }}">
                         </div>
@@ -214,4 +214,4 @@
         smartform.setClientId('XF9XMJ5oqQ');
     }
 </script>
-<script src="{{ asset("js/form-ajax/person-patch.js") }}"></script>
+{{ encore_entry_script_tags("person") }}

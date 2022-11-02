@@ -50,6 +50,10 @@ export function ajaxPrepare(typ, data) {
         return data.sex === "Z" ?
             'Dívka <i class=\"fa fa-female fa-lg text-red\" aria-hidden=\"true\"></i>' :
             'Chlapec <i class=\"fa fa-male fa-lg text-blue\" aria-hidden=\"true\"></i>';
+    } else if (typ === 'sexAdult') {
+        return data.sex === "Z" ?
+            'Žena <i class=\"fa fa-female fa-lg text-red\" aria-hidden=\"true\"></i>' :
+            'Muž <i class=\"fa fa-male fa-lg text-blue\" aria-hidden=\"true\"></i>';
     } else if (typ === "type" || typ === "typeOfEvent") {
         switch (data) {
             case "JA":

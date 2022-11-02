@@ -1,4 +1,4 @@
-function editChildren(event) {
+$('#editPerson').submit(function(event) {
     event.preventDefault();
     var sendData = $('#editPerson').serializeArray();
     if ((sendData.indexOf('=&') > -1)) {
@@ -39,4 +39,4 @@ function editChildren(event) {
         customPopUpMin($("#failSubmit"));
         reloadPersonStats();
     });
-}
+});
