@@ -2,7 +2,7 @@ import $ from "jquery";
 import "../datatables"
 import {ajaxPrepare} from "../admin";
 
-function reloadPersonStats() {
+export function reloadPersonStats() {
     var table = $('#people').DataTable();
     document.getElementById("countOfUsers").innerText = table.rows().data().length;
     document.getElementById("countOfAdmins").innerText =

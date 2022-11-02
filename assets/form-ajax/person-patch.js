@@ -1,4 +1,5 @@
 import {customPopUpMin} from "../admin";
+import {reloadPersonStats} from "../datatables/person-list";
 
 $('#editPerson').submit(function(event) {
     event.preventDefault();
