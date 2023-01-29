@@ -4,19 +4,24 @@ namespace App\DataPersister;
 
 use ApiPlatform\Core\DataPersister\DataPersisterInterface;
 use App\Entity\Address;
+use App\Entity\Log;
 use App\Entity\Person;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Security;
 
 class PersonDataPersister implements DataPersisterInterface {
     private EntityManagerInterface $entityManager;
     private UserPasswordHasherInterface $userPasswordHasher;
+    private Security $security;
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        UserPasswordHasherInterface $userPasswordHasher) {
+        UserPasswordHasherInterface $userPasswordHasher,
+        Security $security) {
         $this->entityManager = $entityManager;
         $this->userPasswordHasher = $userPasswordHasher;
+        $this->security = $security;
     }
 
     public function supports($data): bool {
@@ -30,11 +35,6 @@ class PersonDataPersister implements DataPersisterInterface {
             $newAddress = $repository->findOneBy(
                     array('id' => $address->getId())
             );
-
-//            error_log(print_r($address->getId(), TRUE));
-//            error_log(print_r($address->getStreet(), TRUE));
-//            error_log(print_r($newAddress->getId(), TRUE));
-//            error_log(print_r($newAddress->getStreet(), TRUE));
 
             /** Changed address? */
             if (!Address::cmp($newAddress, $address)) {
@@ -65,8 +65,8 @@ class PersonDataPersister implements DataPersisterInterface {
             }
 
         }
-
-        if ($data->getPassword() != $this->entityManager->getRepository(Person::class)->findOneBy(array("id" => $data->getId()))->getPassword()) {
+        $person = $this->entityManager->getRepository(Person::class)->findOneBy(array("id" => $data->getId()));
+        if ($data->getPassword() != $person->getPassword()) {
 //            error_log("PASSWORD CHANGED:");
 //            error_log(print_r($data->getPassword()));
             $data->setPassword(
@@ -78,6 +78,13 @@ class PersonDataPersister implements DataPersisterInterface {
             $data->eraseCredentials();
 
         }
+        $this->entityManager->persist(
+            new Log(
+                new \DateTime,
+                $this->entityManager->getRepository(Person::class)->findOneBy(array("email" => $this->security->getUser()->getUserIdentifier())),
+                "Byl upraven dospělý uživatel " . $data->getFullName() . "(" . $data->getId() . ")."
+            )
+        );
         $this->entityManager->persist($data->getAddress());
         $this->entityManager->persist($data);
         $this->entityManager->flush();

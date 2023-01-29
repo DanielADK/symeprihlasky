@@ -1,0 +1,92 @@
+{# /src/templates/Admin/Event/signed-children.html.twig #}
+<section class="col-xs-12">
+    <div class="box box-success">
+        <div class="box-header">
+            <i class="fa fa-list"></i>
+            <h1 class="box-title"> Přihlášené děti na akci {{ event.fullName }} </h1>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <table id="signedPeople" class="table table-hover table-striped table-bordered table-responsive">
+                <thead>
+                <tr class="text-center">
+                    <th>ID</th>
+                    <th>Jméno a příjmení</th>
+                    <th>Role</th>
+                    <th>Datum narození</th>
+                    <th>Velikost trička</th>
+                    <th>Člen</th>
+                    <th>Čas přihlášení</th>
+                    {% if is_granted("ROLE_EDIT_APPLICATION") or is_granted("ROLE_DELETE_APPLICATION") %}
+                        <th>Akce</th>
+                    {% endif %}
+
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</section>
+<script>
+    var ajaxSignedChildrenList;
+    {% if is_granted("ROLE_DELETE_APPLICATION") %}
+    ajaxSignedChildrenList = "/api/applications?groups[]=person.roles&groups[]=child&event={{ event.id }}";
+    {% else %}
+    ajaxSignedChildrenList = "/api/applications?deleted=false&groups[]=person.roles&groups[]=child&event={{ event.id }}";
+    {% endif %}
+    var signedChildrenColumns = [
+        {"data": "hash"},
+        {
+            "data": null,
+            render: function (data) {
+                if (data.person != null) { return ajaxPrepare("fullname", data.person); }
+                return ajaxPrepare("fullname", data.child);
+            }
+        },
+        {
+            "data": null,
+            render: function (data) {
+                if (data.person != null) { return ajaxPrepare("role", data.person.roles); }
+                return "<span class=\"label label-success\">Dítě</span>";
+            }
+        },
+        {
+            "data": null,
+            render: function (data) {
+                if (data.person != null) { return ajaxPrepare("birthDateWithAge", data.person.birthDate); }
+                return ajaxPrepare("birthDateWithAge", data.child.birthDate);
+            }
+        },
+        {"data": "shirtSize"},
+        {
+            "data": null,
+            render: function (data) {
+                if (data.person != null) { return ajaxPrepare("yesno", data.person.ctuMember); }
+                return ajaxPrepare("yesno", data.child.ctuMember);
+            }
+        },
+        {
+            "data": null,
+            render: function (data) {
+                return ajaxPrepare("signDateTime", data.signDate);
+            }
+        },
+        {% if is_granted("ROLE_EDIT_APPLICATION") or is_granted("ROLE_DELETE_APPLICATION") %}
+        {
+            "data": null,
+            render: function(data) {
+                return  '<div class="btn-group">' +
+                    '<a href="/prihlaska/'+data.hash+'" class="btn btn-primary" title="Zobrazit přihlášku" ><i class="fa fa-print fa-1x"></i></a>' +
+                    '<button onclick="unsignPerson(\''+data.hash+'\')" class="btn btn-warning" title="Odhlásit dítě" ><i class="fa fa-sign-out fa-1x"></i></button>' +
+                    '</div>'
+            }
+        }
+        {% endif %}
+
+
+    ];
+</script>
+<script src="{{ asset("js/datatables/event-signed-children.js") }}"></script>

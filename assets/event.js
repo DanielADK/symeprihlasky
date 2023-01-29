@@ -1,2 +1,2 @@
-import $ from 'jquery';
-import '/public/js/datatables/event-list';
+import '/assets/datatables/event-list';
+import "/assets/getter-ajax/event-view";

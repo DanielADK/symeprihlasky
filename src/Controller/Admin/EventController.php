@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Event;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,11 +23,12 @@ class EventController extends AbstractController {
     }
 
     /**
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
-    #[Route('/admin/akce/zobrazit/{id}', name: 'admin_event_view')]
-    public function view(int $id, ManagerRegistry $doctrine, Request $request): Response {
-        $event = $doctrine->getRepository(Event::class)->findOneByID($id);
+    #[Route('/admin/akce/zobrazit/{shortName}', name: 'admin_event_view')]
+    public function view(string $shortName, ManagerRegistry $doctrine, Request $request): Response {
+        $shortName = strtoupper($shortName);
+        $event = $doctrine->getRepository(Event::class)->findOneBy(array("shortName" => $shortName));
 
         if ($event == null) {
             $this->addFlash("warning", "Tato akce nebyla nalezena!");
@@ -36,8 +38,29 @@ class EventController extends AbstractController {
         return $this->render('Admin/Event/view.html.twig', [
             "section" => "event",
             "event" => $event,
-            "page_name" => "Náhled akce ID: ".$id,
-            "page_path" => array("Domov", "Akce", "Náhled akce")
+            "page_name" => "Náhled akce: ".$event->getshortName(),
+            "page_path" => array("Domov", "Akce", "Náhled akce", $event->getshortName())
+        ]);
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    #[Route('/admin/akce/upravit/{shortName}', name: 'admin_event_edit')]
+    public function edit(string $shortName, ManagerRegistry $doctrine, Request $request): Response {
+        $shortName = strtoupper($shortName);
+        $event = $doctrine->getRepository(Event::class)->findOneBy(array("shortName" => $shortName));
+
+        if ($event == null) {
+            $this->addFlash("warning", "Tato akce nebyla nalezena!");
+            return new RedirectResponse($this->generateUrl("admin_event_list"));
+        }
+
+        return $this->render('Admin/Event/edit.html.twig', [
+            "section" => "event",
+            "event" => $event,
+            "page_name" => "Úprava akce: ".$event->getshortName(),
+            "page_path" => array("Domov", "Akce", "Úprava akce", $event->getshortName())
         ]);
     }
 }

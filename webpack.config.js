@@ -1,9 +1,13 @@
 const Encore = require('@symfony/webpack-encore');
 
+const TerserPlugin = require('terser-webpack-plugin');
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
 if (!Encore.isRuntimeEnvironmentConfigured()) {
     Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
+}
+if (process.env.NODE_ENV === 'production') {
+    webpackConfig.optimization.minimizer = [new TerserPlugin()];
 }
 
 Encore
@@ -18,14 +22,27 @@ Encore
      * ENTRY CONFIG
      *
      * Each entry will result in one JavaScript file (e.g. app.js)
-     * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
+     * and one CSS file (e.g. app.scss) if your JavaScript imports CSS.
      */
     .addEntry('admin', './assets/admin')
-    .addEntry('admin-lte', './assets/admin-lte.js')
-    .addEntry('app', './assets/app.js')
-    .addEntry('datatables', './assets/datatables.js')
-    .addEntry('event', './assets/event.js')
+    .addEntry('admin-lte', './assets/admin-lte')
+    .addEntry('app', './assets/app')
+    .addEntry('datatables', './assets/datatables')
+    .addEntry('event', './assets/event')
+    .addEntry('children', './assets/children')
+    .addEntry('person', './assets/person')
     // .addEntry('jquery', './assets/jquery.js')
+
+    // Pages
+    .addEntry('main-calendar', './assets/fullcalendar/main-calendar')
+        // Children - list
+    .addEntry('children-list', './assets/datatables/children-list')
+        // Event - list
+    .addEntry('event-list', './assets/datatables/event-list')
+        // Person - list
+    .addEntry('person-list', './assets/datatables/person-list')
+        // Own children - list
+    .addEntry('own-children-list', './assets/datatables/own-children-list')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
@@ -61,7 +78,7 @@ Encore
     })
 
     // enables Sass/SCSS support
-    // .enableSassLoader()
+    .enableSassLoader()
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()

@@ -1,8 +1,8 @@
-{# /src/templates/Admin/Person/list.html.twig #}
+{# /src/templates/Admin/Children/list.html.twig #}
 {% extends "Admin/base.html.twig" %}
 {% block title %}E-Přihlášky - Seznam dětí{% endblock %}
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/bower_components/datatables/datatables.min.css') }}">
+    {{ encore_entry_link_tags('datatables') }}
 {% endblock %}
 {% block content %}
     <section class="content-wrapper">
@@ -20,5 +20,5 @@
     </section>
 {% endblock %}
 {% block javascripts %}
-    <script src="{{ asset("adminlte/bower_components/datatables/datatables.min.js") }}"></script>
+    {{ encore_entry_script_tags('datatables') }}
 {% endblock %}
