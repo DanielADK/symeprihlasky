@@ -9,7 +9,6 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Serializer\Filter\GroupFilter;
 use ApiPlatform\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
@@ -21,6 +20,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Unique;
+
 #[ApiResource(
     operations: [
         new Get(),
@@ -30,48 +30,52 @@ use Symfony\Component\Validator\Constraints\Unique;
         new GetCollection(security: 'is_granted(\'ROLE_VIEW_APPLICATION\')')
     ],
     normalizationContext: ['groups' => ['read']],
-    denormalizationContext: ['groups' => ['write']])]
+    denormalizationContext: ['groups' => ['write']]
+)]
 #[ORM\Entity(repositoryClass: ApplicationRepository::class)]
 #[UniqueEntity("hash")]
 #[ApiFilter(filterClass: SearchFilter::class, properties: ['hash' => 'exact', 'event' => 'exact', 'person' => 'exact'])]
 #[ApiFilter(filterClass: DateFilter::class, properties: ['sign_date'])]
 #[ApiFilter(
     filterClass: GroupFilter::class,
-    arguments: ['parameterName' => 'groups', 'whitelist' => ['event', 'person', 'child', 'person.roles']])]
+    arguments: ['parameterName' => 'groups', 'whitelist' => ['event', 'person', 'child', 'person.roles']]
+)]
 #[ApiResource(
     uriTemplate: '/applications/{hash}/person/applications.{_format}',
     operations: [new GetCollection()],
     uriVariables: [
         'hash' => new Link(fromClass: self::class, identifiers: ['hash']),
-        'person' => new Link(fromClass: \App\Entity\Person::class, identifiers: [], expandedValue: 'person')
+        'person' => new Link(fromClass: Person::class, identifiers: [], expandedValue: 'person')
     ],
     status: 200,
     normalizationContext: ['groups' => ['read']],
     filters: [
         'annotated_app_entity_application_api_platform_core_bridge_doctrine_orm_filter_search_filter',
         'annotated_app_entity_application_api_platform_core_bridge_doctrine_orm_filter_date_filter',
-        'annotated_app_entity_application_api_platform_serializer_filter_group_filter'
-    ])]
+        'annotated_app_entity_application_api_platform_serializer_filter_group_filter']
+)]
 #[ApiResource(
     uriTemplate: '/children/{id}/applications.{_format}',
     operations: [new GetCollection()],
-    uriVariables: ['id' => new Link(fromClass: \App\Entity\Child::class, identifiers: ['id'])],
+    uriVariables: ['id' => new Link(fromClass: Child::class, identifiers: ['id'])],
     status: 200,
     normalizationContext: ['groups' => ['read']],
     filters: [
         'annotated_app_entity_application_api_platform_core_bridge_doctrine_orm_filter_search_filter',
         'annotated_app_entity_application_api_platform_core_bridge_doctrine_orm_filter_date_filter',
-        'annotated_app_entity_application_api_platform_serializer_filter_group_filter'])]
+        'annotated_app_entity_application_api_platform_serializer_filter_group_filter']
+)]
 #[ApiResource(
     uriTemplate: '/people/{id}/applications.{_format}',
     operations: [new GetCollection()],
-    uriVariables: ['id' => new Link(fromClass: \App\Entity\Person::class, identifiers: ['id'])],
+    uriVariables: ['id' => new Link(fromClass: Person::class, identifiers: ['id'])],
     status: 200,
     normalizationContext: ['groups' => ['read']],
     filters: [
         'annotated_app_entity_application_api_platform_core_bridge_doctrine_orm_filter_search_filter',
         'annotated_app_entity_application_api_platform_core_bridge_doctrine_orm_filter_date_filter',
-        'annotated_app_entity_application_api_platform_serializer_filter_group_filter'])]
+        'annotated_app_entity_application_api_platform_serializer_filter_group_filter']
+)]
 class Application
 {
     #[ORM\Id]

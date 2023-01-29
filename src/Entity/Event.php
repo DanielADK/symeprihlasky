@@ -21,15 +21,47 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints\NotBlank;
-#[ApiResource(operations: [new Get(security: 'is_granted(\'ROLE_VIEW_EVENT\')'), new Put(security: 'is_granted(\'ROLE_ADD_EVENT\')'), new Patch(security: 'is_granted(\'ROLE_EDIT_EVENT\')'), new GetCollection(security: 'is_granted(\'ROLE_VIEW_EVENT\')')], denormalizationContext: ['groups' => ['write']], normalizationContext: ['groups' => ['read']])]
+
+#[ApiResource(
+    operations: [
+        new Get(security: 'is_granted(\'ROLE_VIEW_EVENT\')'),
+        new Put(security: 'is_granted(\'ROLE_ADD_EVENT\')'),
+        new Patch(security: 'is_granted(\'ROLE_EDIT_EVENT\')'),
+        new GetCollection(security: 'is_granted(\'ROLE_VIEW_EVENT\')')
+    ],
+    normalizationContext: ['groups' => ['read']],
+    denormalizationContext: ['groups' => ['write']]
+)]
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 #[UniqueEntity("shortName")]
 #[ApiFilter(filterClass: BooleanFilter::class, properties: ['deleted'])]
 #[ApiFilter(filterClass: SearchFilter::class, properties: ['name_short' => 'partial', 'type' => 'exact'])]
 #[ApiFilter(filterClass: DateFilter::class, properties: ['dateStart', 'dateEnd'])]
 #[ApiFilter(filterClass: GroupFilter::class, arguments: ['parameterName' => 'groups', 'whitelist' => ['address']])]
-#[ApiResource(uriTemplate: '/addresses/{id}/events.{_format}', uriVariables: ['id' => new Link(fromClass: \App\Entity\Address::class, identifiers: ['id'])], status: 200, filters: ['annotated_app_entity_event_api_platform_core_bridge_doctrine_orm_filter_boolean_filter', 'annotated_app_entity_event_api_platform_core_bridge_doctrine_orm_filter_search_filter', 'annotated_app_entity_event_api_platform_core_bridge_doctrine_orm_filter_date_filter', 'annotated_app_entity_event_api_platform_serializer_filter_group_filter'], normalizationContext: ['groups' => ['read']], operations: [new GetCollection()])]
-#[ApiResource(uriTemplate: '/applications/{hash}/event.{_format}', uriVariables: ['hash' => new Link(fromClass: \App\Entity\Application::class, identifiers: ['hash'])], status: 200, filters: ['annotated_app_entity_event_api_platform_core_bridge_doctrine_orm_filter_boolean_filter', 'annotated_app_entity_event_api_platform_core_bridge_doctrine_orm_filter_search_filter', 'annotated_app_entity_event_api_platform_core_bridge_doctrine_orm_filter_date_filter', 'annotated_app_entity_event_api_platform_serializer_filter_group_filter'], normalizationContext: ['groups' => ['read']], operations: [new Get()])]
+#[ApiResource(
+    uriTemplate: '/addresses/{id}/events.{_format}',
+    operations: [new GetCollection()],
+    uriVariables: ['id' => new Link(fromClass: Address::class, identifiers: ['id'])],
+    status: 200,
+    normalizationContext: ['groups' => ['read']],
+    filters: [
+        'annotated_app_entity_event_api_platform_core_bridge_doctrine_orm_filter_boolean_filter',
+        'annotated_app_entity_event_api_platform_core_bridge_doctrine_orm_filter_search_filter',
+        'annotated_app_entity_event_api_platform_core_bridge_doctrine_orm_filter_date_filter',
+        'annotated_app_entity_event_api_platform_serializer_filter_group_filter']
+)]
+#[ApiResource(
+    uriTemplate: '/applications/{hash}/event.{_format}',
+    operations: [new Get()],
+    uriVariables: ['hash' => new Link(fromClass: Application::class, identifiers: ['hash'])],
+    status: 200,
+    normalizationContext: ['groups' => ['read']],
+    filters: [
+        'annotated_app_entity_event_api_platform_core_bridge_doctrine_orm_filter_boolean_filter',
+        'annotated_app_entity_event_api_platform_core_bridge_doctrine_orm_filter_search_filter',
+        'annotated_app_entity_event_api_platform_core_bridge_doctrine_orm_filter_date_filter',
+        'annotated_app_entity_event_api_platform_serializer_filter_group_filter']
+)]
 class Event
 {
     #[ApiProperty(identifier: true)]
