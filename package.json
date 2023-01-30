@@ -48,6 +48,7 @@
         "pdfmake": "0.2.5",
         "tata-js": "^0.1.5",
         "terser-webpack-plugin": "^5.3.3",
+        "test": "^3.2.1",
         "yarn": "^1.22.18"
     }
 }

@@ -1,14 +1,16 @@
+"use strict";
 import $ from 'jquery';
 import '../datatables';
 import {ajaxPrepare} from "../admin";
 
-function reloadEventsStats() {
+function reloadEventsStats()
+{
     var table = $('#events').DataTable();
-    document.getElementById("countOfEvents").innerText = table.rows().data().length;
-    document.getElementById("countOfActive").innerText =
-        table.rows().data().filter(function(row) {
+    $("#countOfEvents").html(table.rows().data().length);
+    $("#countOfActive").html(
+        table.rows().data().filter(function (row) {
             return row.activeApplication;
-        }).length;
+        }).length);
 }
 
 let columns = [
@@ -63,45 +65,44 @@ let columns = [
         }
     },
 ];
-let adminCols = [
+
+var adminCols = [
     {
         "data": null,
-        render: function(data) {
-            return  '<div class="btn-group-vertical">' +
-                '<a href="/admin/akce/zobrazit/'+data.shortName+'" class="btn btn-block btn-sm btn-info"><i class="fa fa-fw fa-info"></i>Informace</a>' +
-                '<a href="/admin/akce/upravit/'+data.shortName+'" class="btn btn-block btn-sm btn-success"><i class="fa fa-fw fa-wrench"></i>Upravit</a>' +
-                '</div>'
+        render: function (data) {
+            return '<div class="btn-group-vertical">' +
+                '<a href="/admin/akce/zobrazit/' + data.shortName + '" class="btn btn-block btn-sm btn-info"><i class="fa fa-fw fa-info"></i>Informace</a>' +
+                '<a href="/admin/akce/upravit/' + data.shortName + '" class="btn btn-block btn-sm btn-success"><i class="fa fa-fw fa-wrench"></i>Upravit</a>' +
+                '</div>';
         }
     },
     {
         "data": null,
-        render: function(data) {
+        render: function (data) {
             if (data.deleted) {
                 return '<span class="label label-danger">SMAZÁN!</span>'
             } else {
                 return '<span class="label label-default">Nikoliv</span>';
             }
         }
-    }
-];
+    }];
 
-$(document).ready(function () {
-    $('#events').DataTable({
-        "ajax": {
-            "url": ajaxURL,
-            "dataSrc": ""
-        },
-        buttons: [
-            {
+    $(document).ready(function () {
+        $('#events').DataTable({
+            ajax: {
+                url: ajaxURL,
+                dataSrc: ""
+            },
+            buttons: [{
                 text: '<i class=\"fa fa-refresh\" id="tableRefresh"></i>',
                 action: function (e, dt) {
                     dt.ajax.reload();
                     reloadEventsStats();
                 }
             }, "print", 'csv'],
-        "columns": (admin) ? columns.concat(adminCols) : columns,
-        "order": [[7, 'asc'], [3, 'asc']],
-        "fnInitComplete": reloadEventsStats
-    });
+            columns: (admin) ? columns.concat(adminCols) : columns,
+            fnInitComplete: reloadEventsStats,
+            order: [[7, 'asc'], [3, 'asc']]
+        });
 
-});
+    });

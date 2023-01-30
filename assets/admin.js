@@ -1,6 +1,6 @@
 export function customPopUpMin(object) {
     window.scrollTo(0,0);
-    object.fadeTo(5000,500).slideUp(1000, function() {
+    object.fadeTo(5000,500).slideUp(1000, function () {
         object.slideUp(1000);
     });
 }
@@ -25,7 +25,7 @@ function twoDigitDate(date) { return ("0" + date).slice(-2); }
  * @returns It is a function that returns a string.
  */
 export function ajaxPrepare(typ, data) {
-    let date;
+    let date, age;
     if (typ === 'address') {
         return '<a target="_blank" href="https://mapy.cz/zakladni?q=' +
             data.street.replace(' ', '+') + '+' +
@@ -87,14 +87,14 @@ export function ajaxPrepare(typ, data) {
         return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1) + "." + date.getFullYear();
     } else if (typ === 'birthDateWithAge') {
         date = new Date(data);
-        let age = new Date(Date.now() - date.getTime()).getUTCFullYear()-1970;
+        age = new Date(Date.now() - date.getTime()).getUTCFullYear()-1970;
         return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1)  + "." + date.getFullYear()
             + " (" + age + " let)";
 
     } else if (typ === 'signDateTime') {
         date = new Date(data);
         return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1)  + "." + date.getFullYear()
-            + " " + twoDigitDate(date.getHours()) + "." + twoDigitDate(date.getMinutes())  + "." + twoDigitDate(date.getSeconds());
+            + " " + twoDigitDate(date.getHours()) + ":" + twoDigitDate(date.getMinutes())  + ":" + twoDigitDate(date.getSeconds());
     } else if (typ === 'email') {
         return '<a href="mailto:' + data + '">' +
             data +
