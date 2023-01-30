@@ -90,7 +90,11 @@ export function ajaxPrepare(typ, data) {
         age = new Date(Date.now() - date.getTime()).getUTCFullYear()-1970;
         return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1)  + "." + date.getFullYear()
             + " (" + age + " let)";
-
+    } else if (typ === 'age') {
+        let start = new Date(data[0]);
+        let end = new Date(data[1]);
+        age = new Date(end.getTime() - start.getTime()).getUTCFullYear()-1970;
+        return age;
     } else if (typ === 'signDateTime') {
         date = new Date(data);
         return twoDigitDate(date.getDate()) + "." + twoDigitDate(date.getMonth()+1)  + "." + date.getFullYear()
@@ -99,12 +103,10 @@ export function ajaxPrepare(typ, data) {
         return '<a href="mailto:' + data + '">' +
             data +
             '</a>';
-
     } else if (typ === 'parent') {
         return '<a href="/admin/rodic/zobrazit/' + data.id + '">' +
             data.name + ' ' + data.surname +
             '</a>';
-
     } else if (typ === 'phone') {
         if (data === null)
             return '<span class=\"label label-danger\">NEVYPLNĚNO!</span>';
@@ -115,7 +117,7 @@ export function ajaxPrepare(typ, data) {
 
     } else if (typ === 'fullname') {
         return data.name + ' ' + data.surname;
-    }else if (typ === 'capacity') {
+    } else if (typ === 'capacity') {
         return data == -1 ? "Neomezená" : data;
     } else if (typ === 'fullEvent') {
         return data.shortName + ',<br>' + data.fullName;
@@ -133,8 +135,10 @@ export function ajaxPrepare(typ, data) {
         }
     } else if (typ === 'role') {
         let retval = "";
-        if (typeof data !== 'object') { data = JSON.parse(data); }
-        data.forEach(function(role) {
+        if (typeof data !== 'object') {
+            data = JSON.parse(data);
+        }
+        data.forEach(function (role) {
             switch (role) {
                 case "ROLE_ADMIN":
                     retval = retval + ' <span class="label label-danger">Admin</span>';

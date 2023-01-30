@@ -1,4 +1,7 @@
 "use strict";
+import {customPopUpMin, ajaxPrepare} from "../admin";
+import $ from "jquery";
+
 function unsignPerson(hash) {
     $.ajax({
         type: "DELETE",
