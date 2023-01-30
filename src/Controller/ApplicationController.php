@@ -13,9 +13,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\SecurityBundle\Security;
 use TCPDF;
 
 class ApplicationController extends AbstractController {
+
     private function getHeader(TCPDF $pdf): void {
         // Logo -> T.O.Severka
         $pdf->Image('../public/images/logoSEVERKA-CB.png',163,25,30);
@@ -36,18 +38,26 @@ class ApplicationController extends AbstractController {
         // Arial italic 8
         $pdf->SetFont('dejavuserifcondensed','I',8);
         // Page number
-        $pdf->Cell(0,0,'((Přihláška vytvořena přes systém elektronických přihlášek na webu www.eprihlasky.osadaseverka.cz))',0,0,'R');
+        $pdf->Cell(0,0,
+            '((Přihláška vytvořena přes systém elektronických přihlášek na webu www.eprihlasky.osadaseverka.cz))',
+            0,0,'R');
     }
     private function addInfecticity(TCPDF $pdf): void {
         $pdf->SetFont('dejavuserifcondensed','',11);
         $pdf->SetXY(15, 210);
-        $pdf->Cell(0,10,'Součástí této přihlášky je potvrzení dětského lékaře o způsobilosti dítěte zúčastnit se zotavovací akce',0,0,'L');
+        $pdf->Cell(0,10,
+            'Součástí této přihlášky je potvrzení dětského lékaře o způsobilosti dítěte zúčastnit se zotavovací akce',
+            0,0,'L');
 
         $pdf->SetXY(15, 215);
-        $pdf->Cell(0,10,'a potvrzení o bezinfekčnosti, které se předává v den odjezdu na letní tábor a není starší jednoho dne.',0,0,'L');
+        $pdf->Cell(0,10,
+            'a potvrzení o bezinfekčnosti, které se předává v den odjezdu na letní tábor a není starší jednoho dne.',
+            0,0,'L');
 
         $pdf->SetXY(32, 220);
-        $pdf->Cell(0,10,'po naplnění stavu 40 dětí na letním táboře si vyhrazujeme právo odmítnout další zájemce.',0,0,'L');
+        $pdf->Cell(0,10,
+            'po naplnění stavu 40 dětí na letním táboře si vyhrazujeme právo odmítnout další zájemce.'
+            ,0,0,'L');
 
         $pdf->SetFont('dejavuserifcondensed', 'B', 11);
         $pdf->SetXY(15, 220);
@@ -142,7 +152,7 @@ class ApplicationController extends AbstractController {
      * @throws Exception
      */
     #[Route('/prihlaska/{hash}', name: 'application_pdf')]
-    public function application(Request $request, ManagerRegistry $doctrine, string $hash, bool $regen = false): Response {
+    public function application(Request $request, ManagerRegistry $doctrine, Security $security, string $hash, bool $regen = false): Response {
         $hash = strtoupper($hash);
 
         /* If application was already generated */
@@ -156,8 +166,11 @@ class ApplicationController extends AbstractController {
         if ($hash != "PRAZDNA") {
             if ($app == null) {
                 $this->addFlash("warning", "Tato přihláška neexistuje");
-                return new RedirectResponse($this->generateUrl("admin_person_list"));
-                // TODO
+                if (!$security->isGranted('ROLE_INSTRUCTOR'))
+                    // TODO -> login to parent-home
+                    return new RedirectResponse($this->generateUrl("login"));
+                else
+                    return new RedirectResponse($this->generateUrl("admin_home"));
             } else
                 $app = $app[0];
         }
