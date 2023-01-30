@@ -20,65 +20,25 @@
                     <i class="fa fa-home"></i> <span>Úvodní stránka</span>
                 </a>
             </li>
-            <li class="treeview {% if section=="event" %}active{% endif %}">
-                <a href="#"><i class="fa fa-map-signs"></i>
-                    <span>Akce</span><span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i></span></a>
-                <ul class="treeview-menu">
-                    <li {% if route_name=='admin_event_list' or route_name=='admin_event_view' %}class="active"{% endif %}>
-                        <a href="{{ path('admin_event_list') }}">
-                            <i class="fa fa-list nav-icon"></i><span>Seznam akcí</span>
-                        </a>
-                    </li>
-                {% if is_granted("ROLE_EDIT_EVENT") %}
-                    <li {% if route_name=='admin_event_edit' %}class="active"{% endif %}>
-                        <a href="#">
-                            <i class="fa fa-edit"></i><span>Správa akcí</span>
-                        </a>
-                    </li>
-                {% endif %}
-                </ul>
-            </li>
             {% if is_granted("ROLE_VIEW_CHILDREN") %}
-            <li class="treeview {% if section=="child" %}active{% endif %}">
-                <a href="#"><i class="nav-icon fa fa-child"></i>
-                    <span>Děti</span><span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i></span></a>
-                <ul class="treeview-menu">
-                    <li {% if route_name=='admin_child_list' or route_name=='admin_child_view' %}class="active"{% endif %}>
-                        <a href="{{ path('admin_child_list') }}">
-                            <i class="fa fa-list"></i><span>Seznam dětí</span>
-                        </a>
-                    </li>
-                    {% if is_granted("ROLE_EDIT_CHILDREN") %}
-                        <li {% if route_name=='admin_child_edit' %}class="active"{% endif %}>
-                            <a href="#">
-                                <i class="fa fa-edit"></i><span>Správa dětí</span>
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </li>
+                <li class=" {% if section=="event" %}active{% endif %}" >
+                    <a href="{{ path('admin_event_list') }}" {% if section=="event" %}class="active"{% endif %}>
+                    <i class="fa fa-map-signs"></i><span>Akce</span>
+                    </a>
+                </li>
             {% endif %}
-            {% if is_granted("ROLE_VIEW_PERSON") %}
-                <li class="treeview {% if section=="person" %}active{% endif %}">
-                    <a href="#"><i class="nav-icon fa fa-users"></i>
-                        <span>Dospělí</span><span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i></span></a>
-                    <ul class="treeview-menu">
-                        <li {% if route_name=='admin_person_list' or route_name=='admin_person_view' %}class="active"{% endif %}>
-                            <a href="{{ path('admin_person_list') }}">
-                                <i class="fa fa-list"></i><span>Seznam dospělých</span>
-                            </a>
-                        </li>
-                        {% if is_granted("ROLE_EDIT_PERSON") %}
-                            <li {% if route_name=='admin_person_edit' %}class="active"{% endif %}>
-                                <a href="#">
-                                    <i class="fa fa-edit"></i><span>Správa dospělých</span>
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
+            {% if is_granted("ROLE_VIEW_CHILDREN") %}
+                <li class="{% if section=="child" %}active{% endif %}" >
+                    <a href="{{ path('admin_child_list') }}" {% if section=="child" %}class="active"{% endif %}>
+                    <i class="nav-icon fa fa-child"></i><span>Děti</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if is_granted("ROLE_VIEW_PERSON") or is_granted("ROLE_EDIT_PERSON") %}
+                <li class="{% if section=="person" %}active{% endif %}">
+                    <a href="{{ path('admin_person_list') }}" {% if section=="person" %}class="active"{% endif %}>
+                    <i class="nav-icon fa fa-users"></i><span>Dospělí</span>
+                    </a>
                 </li>
             {% endif %}
             {% if is_granted("ROLE_VIEW_LOGS") %}
