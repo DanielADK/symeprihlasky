@@ -1,22 +1,23 @@
+"use strict";
 import $ from 'jquery';
 import "../datatables"
 import {ajaxPrepare} from "../admin";
 
 function reloadPersonStats() {
     let table = $('#people').DataTable();
-    document.getElementById("countOfChildren").innerText = table.rows().data().length;
-    document.getElementById("countOfGirls").innerText =
+    $("#countOfChildren").html(table.rows().data().length);
+    $("#countOfGirls").html(
         table.rows().data().filter(function(row) {
             return row.sex === "F";
-        }).length;
-    document.getElementById("countOfBoys").innerText =
+        }).length);
+    $("#countOfBoys").html(
         table.rows().data().filter(function(row) {
             return row.sex === "M";
-        }).length;
-    document.getElementById("countOfMembers").innerText =
+        }).length);
+    $("#countOfMembers").html(
         table.rows().data().filter(function(row) {
             return row.member === true;
-        }).length;
+        }).length);
 }
 
 
