@@ -138,10 +138,9 @@ export function ajaxPrepare(typ: string, data: any): string {
             }
         case 'role':
             let retval = "";
-            if (typeof data !== 'object') {
+            if (typeof data !== 'object')
                 data = JSON.parse(data);
-            }
-            data.forEach(function (role) {
+            data.forEach(function (role: string): void {
                 switch (role) {
                     case "ROLE_ADMIN":
                         retval += ' <span class="label label-danger">Admin</span>';
