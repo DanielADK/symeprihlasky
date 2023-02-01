@@ -29,6 +29,7 @@
     </div>
 </section>
 <script>
+{% block javascripts %}
     var ajaxSignedList;
     {% if is_granted("ROLE_EDIT_APPLICATION") or is_granted("ROLE_DELETE_APPLICATION") %}
     ajaxSignedList = "/api/applications?groups[]=person.roles&groups[]=child&event={{ event.id }}";
@@ -36,4 +37,6 @@
     ajaxSignedList = "/api/applications?deleted=false&groups[]=person.roles&groups[]=child&event={{ event.id }}";
     {% endif %}
     var event_dateStart = "{{ event.dateStart|date("d-m-Y") }}";
+{% endblock %}
 </script>
+{{ encore_entry_script_tags('event-signed') }}

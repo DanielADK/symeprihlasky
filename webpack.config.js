@@ -39,6 +39,8 @@ Encore
     .addEntry('children-list', './assets/datatables/children-list')
         // Event - list
     .addEntry('event-list', './assets/datatables/event-list')
+    .addEntry('event-patch', './assets/form-ajax/event-patch')
+    .addEntry('event-signed', './assets/datatables/event-signed')
         // Person - list
     .addEntry('person-list', './assets/datatables/person-list')
         // Own children - list

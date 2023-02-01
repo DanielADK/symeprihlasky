@@ -2,8 +2,6 @@
 {% extends "Admin/base.html.twig" %}
 {% block title %}E-Přihlášky - Úprava akce {{ event.shortName }}{% endblock %}
 {% block stylesheets %}
-{#    {{ encore_entry_link_tags('datatables') }}#}
-    <link rel="stylesheet" type="text/css" href="{{ asset('adminlte/bower_components/datatables/datatables.min.css') }}">
 {% endblock %}
 {% block content %}
     <section class="content-wrapper">
@@ -23,6 +21,4 @@
     </section>
 {% endblock %}
 {% block javascripts %}
-    <script src="{{ asset("adminlte/bower_components/datatables/datatables.min.js") }}"></script>
-{#    {{ encore_entry_script_tags('datatables') }}#}
 {% endblock %}

@@ -1,6 +1,6 @@
 {# /src/templates/Admin/Event/single-event-edit.html.twig #}
 
-<section class="col-xs-12 col-md-12 col-lg-6">
+<section class="col-sm-12 col-md-12 col-lg-6">
     <div class="box box-success">
         <div class="box-header">
             <i class="fa fa-list"></i>
@@ -16,8 +16,8 @@
                 <input type="hidden" name="id" value="{{ event.id }}">
                 {# Zkratka, celé jméno, typ akce, cena #}
                 <div class="row">
-                    <div class="form-group col-lg-4">
-                        <label for="name">Zkratka akce:</label>
+                    <div class="form-group col-lg-6">
+                        <label for="shortName">Zkratka akce:</label>
 
                         <div class="input-group">
                             <div class="input-group-addon">
@@ -29,8 +29,8 @@
                         </div>
 
                     </div>
-                    <div class="form-group col-lg-8">
-                        <label for="surname">Celý název akce:</label>
+                    <div class="form-group col-lg-6">
+                        <label for="fullName">Celý název akce:</label>
 
                         <div class="input-group">
                             <div class="input-group-addon">
@@ -58,35 +58,33 @@
                                 Pro vedoucí
                             </option>
                         </select>
+                        <br>
+                        <label for="dateRange">Datum konání:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" class="form-control pull-right" id="dateRange" name="dateRange"
+                                    value="{{ event.dateStart|date("d.m.Y") }} - {{ event.dateEnd|date("d.m.Y") }}">
+                        </div>
                     </div>
                     <div class="form-group col-lg-6">
-                        <label for="email">Cena pro členy</label>
+                        <label for="priceMember">Cena pro členy</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                            <input type="email" class="form-control pull-right" name="priceMember" id="priceMember"
+                            <input type="number" class="form-control pull-right" name="priceMember" id="priceMember"
                                    data-default="{{ event.priceMember }}" required
                                    value="{{ event.priceMember }}">
                         </div>
-                        <label for="email">Cena pro nečleny <i>(neplatí-li, nastavte hodnotu: -1)</i></label>
+                        <br>
+                        <label for="priceOther">Cena pro nečleny <i>(neplatí-li, nastavte hodnotu: -1)</i></label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                            <input type="email" class="form-control pull-right" name="priceOther" id="priceOther"
+                            <input type="number" class="form-control pull-right" name="priceOther" id="priceOther"
                                    data-default="{{ event.priceOther }}" required
                                    value="{{ event.priceOther }}">
                         </div>
                     </div>
-                <div class="form-group col-lg-5">
-                    <label for="birthDate">Datum konání:</label>
-
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                        </div>
-                        <input type="date" class="form-control pull-right" id="birthDate" name="birthDate"
-                               data-default="{{ event. is empty ? "": person.birthDate|date('Y-m-d') }}"
-                               value="{{ person.birthDate is empty ? "": person.birthDate|date('Y-m-d') }}" data-inputmask="'alias': 'dd.mm.yyyy'" data-mask="">
-                    </div>
-                </div>
                 </div>
 
                 <h3>Místo konání</h3>
@@ -94,7 +92,7 @@
                 <div class="row">
                     <input type="hidden" name="address.id"
                            value="{{ event.address.id is empty ? "": event.address.id }}">
-                    <div class="form-group col-lg-6">
+                    <div class="form-group col-lg-12">
                         <label for="address.street">Ulice:</label>
 
                         <div class="input-group">
@@ -105,9 +103,8 @@
                                    data-default="{{ event.address.street }}" required
                                    value="{{ event.address.street }}">
                         </div>
-
                     </div>
-                    <div class="form-group col-lg-6">
+                    <div class="form-group col-lg-12">
                         <label for="address.city">Město:</label>
 
                         <div class="input-group">
@@ -120,7 +117,7 @@
                         </div>
 
                     </div>
-                    <div class="form-group col-lg-4">
+                    <div class="form-group col-lg-12">
                         <label for="address.postcode">PSČ:</label>
 
                         <div class="input-group">
@@ -136,7 +133,20 @@
                 </div>
                 <h3>Ostatní</h3>
                 {# Kapacita, aktivní přihláška, smazáno #}
-                <div class="row">
+                <div class="row col-lg-6">
+                    <label for="address.postcode">PSČ:</label>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-map-pin"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right smartform-zip" name="address.postcode" id="address.postcode"
+                               data-default="{{ event.address.postcode }}" required
+                               value="{{ event.address.postcode }}">
+                    </div>
+
+                </div>
+                <div class="row col-lg-offset-6">
                     <div class="form-group col-lg-4 col-md-4 pull-right">
                         <label></label>
                         <input type="submit" onclick="editEvent(event)" class="btn btn-block btn-success" style="margin-top: 60px">
@@ -155,4 +165,4 @@
         smartform.setClientId('XF9XMJ5oqQ');
     }
 </script>
-<script src="{{ asset("js/form-ajax/event-patch.js") }}"></script>
+{{ encore_entry_script_tags("event-patch") }}

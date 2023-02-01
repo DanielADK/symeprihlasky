@@ -3,7 +3,7 @@ import $ from 'jquery';
 import '../datatables';
 import {ajaxPrepare} from "../admin";
 
-function reloadEventsStats()
+export function reloadEventsStats()
 {
     var table = $('#events').DataTable();
     $("#countOfEvents").html(table.rows().data().length);

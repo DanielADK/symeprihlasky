@@ -32,6 +32,7 @@
         </div>
     </div>
 </section>
+{{ encore_entry_script_tags('event-list') }}
 {% block javascripts %}
 <script defer>
     let ajaxURL;
@@ -44,5 +45,4 @@
     admin = false;
     {% endif %}
 </script>
-{{ encore_entry_script_tags("event-list") }}
 {% endblock %}
